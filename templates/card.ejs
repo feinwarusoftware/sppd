@@ -441,6 +441,9 @@
 
                 for (let i = 0; i < upgrade - 1; i++) {
 
+                    if (currentCard.TechTree2.Slots[i].id !== undefined) {
+                        continue;
+                    }
                     if (currentCard.TechTree2.Slots[i].property === "MaxHealth") {
 
                         stats.Health += currentCard.TechTree2.Slots[i].value;
@@ -1056,7 +1059,7 @@
 
                         if (healthIncrease !== 0) {
 
-                            healthIncreaseSpan.innerText = "+" + healthIncrease;
+                            healthIncreaseSpan.innerText = "+" + (Math.round(healthIncrease * 100) / 100);
                         } else {
 
                             healthIncreaseSpan.innerText = "";
@@ -1064,7 +1067,7 @@
 
                         if (damageIncrease !== 0) {
 
-                            damageIncreaseSpan.innerText = "+" + damageIncrease;
+                            damageIncreaseSpan.innerText = "+" + (Math.round(damageIncrease * 100) / 100);
                         } else {
 
                             damageIncreaseSpan.innerText = "";
@@ -1088,7 +1091,7 @@
                                     "ChargedPowerRadius"] / 2) * 100) / 100;
                             } else {
 
-                                kSpan.innerText = stats[k];
+                                kSpan.innerText = Math.round(stats[k] * 100) / 100;
                             }
 
                             for (let k2 in currentCard) {
@@ -1103,7 +1106,7 @@
 
                                         const statIncrease = stats[k] - currentCard[k2];
 
-                                        if (statIncrease !== 0) {
+                                        if (statIncrease !== 0 && isNaN(statIncrease) === false) {
 
                                             kIncreaseSpan.innerText = "+" + Math.round(statIncrease *
                                                 100) / 100;
