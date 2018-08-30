@@ -366,7 +366,7 @@
             //get them cards
             const getCards = new XMLHttpRequest();
             getCards.open("GET",
-                `https://gist.githubusercontent.com/MattheousDT/3f45f903f05c1f56cdf7bd528d77dcd1/raw/8437377e475f1f13081d78e3b50d3dbc7b11fbbc/cards_15aug.json`,
+                `https://gist.githubusercontent.com/Dragon1320/2acbd4d0be75d8629cf86f6b51681307/raw/4ddbfebf47d1e7533f2f1e92abbbb9047a92a2fa/cards.json`,
                 false);
 
             getCards.send();
@@ -1203,7 +1203,7 @@
                                         currentCard.Image === "KennySciCard" || currentCard.Image ===
                                         "CraigFanCard" || currentCard.Image === "SpellHyperdriveCard" ||
                                         currentCard.Image === "WendySciCard" || currentCard.Image ===
-                                        "TimmySciCard") {
+                                        "TimmySciCard" || currentCard.Image === "CraigMysCard") {
 
                                         descSpan.innerText = currentCard.Description.replace(`{${k}}`,
                                             Math
