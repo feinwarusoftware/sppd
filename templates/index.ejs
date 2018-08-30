@@ -519,6 +519,7 @@
                 }
                 */
 
+                // Yes i realise i couldve used classes for this, fuck you.
                 // Sort selector handling.
                 let currentSort;
 
@@ -784,6 +785,10 @@
 
                 const renderCards = n => {
 
+                    // lol jquery
+                    const tilt = $('.js-tilt').tilt();
+                    tilt.tilt.destroy.call(tilt);
+
                     loadMore.style.display = "none";
 
                     let loopCount;
@@ -814,7 +819,13 @@
                         cardList.shift();
                     }
 
-                    setTimeout(function () {
+                    $('.js-tilt').tilt({
+                        scale: 1.05,
+                        glare: true,
+                        maxGlare: 0.25
+                    });
+                    
+                    setTimeout(() => {
 
                         changeCardSize();
                         mobileArtCompensator();
@@ -825,16 +836,6 @@
                             loadMore.style.display = "block";
                         }
                     }, 200);
-
-                    // lol jquery
-                    const tilt = $('.js-tilt').tilt();
-                    tilt.tilt.destroy.call(tilt);
-
-                    $('.js-tilt').tilt({
-                        scale: 1.05,
-                        glare: true,
-                        maxGlare: 0.25
-                    });
                 }
 
                 const clearCards = () => {

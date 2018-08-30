@@ -399,7 +399,6 @@
 
                 const stats = {};
 
-
                 for (let k in currentCard) {
 
                     if (k.startsWith("Power") === true && currentCard[k] !== null && currentCard[k] !==
@@ -442,6 +441,7 @@
                 for (let i = 0; i < upgrade - 1; i++) {
 
                     if (currentCard.TechTree2.Slots[i].id !== undefined) {
+                        stats.ability = true;
                         continue;
                     }
                     if (currentCard.TechTree2.Slots[i].property === "MaxHealth") {
@@ -722,7 +722,7 @@
                                                         <i class="fa fa-shield-alt" aria-hidden="true"></i> <span id="damage">${cardsYay[i].Damage}</span> <sup><span class="badge orange" id="damage-increase-amount"></span></sup>
                                                     </span></span>
                                                 </h4>
-                                                <h5 id="desc" class="font-italic">${cardsYay[i].Description}</h5>
+                                                <h5 id="desc" class="font-italic">${cardsYay[i].Image === "KyleAdvCard" || cardsYay[i].Image === "TokenAdvCard" ? "Special Power Locked." : cardsYay[i].Description}</h5>
                                             </div>
                                             
                                             <div class="pt-4">
@@ -830,9 +830,9 @@
                                             <span>${cardsYay[i].AgroRangeMultiplier}x</span>
                                         </li>
                                     </ul>
-                                    <h5 class="font-weight-bold ThemeText">Power Information</h5>
+                                    <h5 id="power-info-heading" class="font-weight-bold ThemeText">Power Information</h5>
                                     <ul class="list-unstyled">
-                                        <li class="power-stat">
+                                        <li class="power-stat kylehack">
                                             <span class="font-weight-bold dark-grey-text">Attack Boost:</span>
                                             <span id="PowerAttackBoost" class="power-stat-value">${cardsYay[i].PowerAttackBoost}</span> <span class="badge ThemeColour" id="PowerAttackBoost-increase-amount" style""></span>
                                         </li>
@@ -844,7 +844,7 @@
                                             <span class="font-weight-bold dark-grey-text">Power Damage:</span>
                                             <span id="PowerDamage" class="power-stat-value">${cardsYay[i].PowerDamage}</span> <span class="badge ThemeColour" id="PowerDamage-increase-amount" style""></span>
                                         </li>
-                                        <li class="power-stat">
+                                        <li class="power-stat kylehack">
                                             <span class="font-weight-bold dark-grey-text">Duration:</span>
                                             <span id="PowerDuration" class="power-stat-value">${cardsYay[i].PowerDuration}</span> <span class="badge ThemeColour" id="PowerDuration-increase-amount"></span>
                                         </li>
@@ -884,11 +884,11 @@
                                             <span class="font-weight-bold dark-grey-text">Target Amount:</span>
                                             <span id="PowerTarget" class="power-stat-value">${cardsYay[i].Image === "SpellCockMagicCard" ? 1 : 0}</span> <span class="badge ThemeColour" id="PowerTarget-increase-amount" style""></span>
                                         </li>
-                                        <li class="power-stat">
+                                        <li class="power-stat kylehack tokenhack">
                                             <span class="font-weight-bold dark-grey-text">${cardsYay[i].Id === 209 || cardsYay[i].Id === 40 || cardsYay[i].Id === 1286 || cardsYay[i].Id === 1273 ? "Power Radius:" : "Charged Power Radius:"}</span>
                                             <span id="PowerRange" class="power-stat-value">${cardsYay[i].ChargedPowerRadius / 2}</span> <span class="badge ThemeColour" id="PowerRange-increase-amount" style""></span>
                                         </li>
-                                        <li class="power-stat">
+                                        <li class="power-stat kylehack tokenhack">
                                             <span class="font-weight-bold dark-grey-text">Charged Power Regen:</span>
                                             <span class="power-stat-value">${Math.round(cardsYay[i].ChargedPowerRegen * 100) / 100}</span> 
                                         </li>
@@ -929,35 +929,51 @@
 
                     //replace redlynx's cunty shit
 
-                    $("#desc").text(function () {
-                        return $(this).text().replace(
-                            "{PowerDurationMin}-{PowerDurationMax}", (cardsYay[i].PowerDuration -
-                                1) + "-" + (cardsYay[i].PowerDuration + 1) +
-                            " seconds");
-                    });
-                    $("#desc").text(function () {
-                        return $(this).text().replace("{PowerHeroPoison}", cardsYay[i].PowerPoisonAmount);
-                    });
-                    $("#desc").text(function () {
-                        if (cardsYay[i].PowerHeroDamage === null) {
-                            return $(this).text().replace("{PowerHeroDamage}", cardsYay[i].PowerDamage);
-                        } else {
-                            return $(this).text().replace("{PowerHeroDamage}", cardsYay[i].PowerHeroDamage);
-                        }
-                    });
-                    $("#desc").text(function () {
-                        return $(this).text().replace("{PowerDuration}", cardsYay[i].PowerDuration +
-                            " seconds");
-                    });
-                    $("#desc").text(function () {
-                        return $(this).text().replace("{PowerHeal}", cardsYay[i].PowerHeal);
-                    });
-                    $("#desc").text(function () {
-                        return $(this).text().replace("{PowerAttackBoost}", cardsYay[i].PowerAttackBoost);
-                    });
-                    $("#desc").text(function () {
-                        return $(this).text().replace("{PowerTargetAmount}", "1");
-                    });
+                    const repalceRedlynxCuntyShit = () => {
+
+                        $("#desc").text(function () {
+                            return $(this).text().replace(
+                                "{PowerDurationMin}-{PowerDurationMax}", (Math.round([i].PowerDuration *
+                                        100) / 100 -
+                                    1) + "-" + (Math.round(cardsYay[i].PowerDuration * 100) /
+                                    100 + 1) +
+                                " seconds");
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerHeroPoison}", Math.round(cardsYay[
+                                i].PowerPoisonAmount * 100) / 100);
+                        });
+                        $("#desc").text(function () {
+                            if (cardsYay[i].PowerHeroDamage === null) {
+                                return $(this).text().replace("{PowerHeroDamage}", Math.round(
+                                    cardsYay[i].PowerDamage * 100) / 100);
+                            } else {
+                                return $(this).text().replace("{PowerHeroDamage}", Math.round(
+                                    cardsYay[i].PowerHeroDamage * 100) / 100);
+                            }
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerDuration}", Math.round(cardsYay[i]
+                                    .PowerDuration * 100) / 100 +
+                                " seconds");
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerHeal}", Math.round(cardsYay[i].PowerHeal *
+                                100) / 100);
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerAttackBoost}", Math.round(cardsYay[
+                                i].PowerAttackBoost * 100) / 100);
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerTargetAmount}", "1");
+                        });
+                        $("#desc").text(function () {
+                            return $(this).text().replace("{PowerMaxHealthBoost}", Math.round(
+                                cardsYay[i].PowerMaxHPGain * 100) / 100);
+                        });
+                    }
+
                     //Hide unnessasary power stats
                     $(".power-stat-value:contains('null')").parent().hide()
                     //$(".power-stat-value:contains('0')").parent().hide()
@@ -969,8 +985,9 @@
                         $(e).html($(e).html().replace(/null/g, 'N/A'));
                     });
 
-                    const upgrades = [];
+                    repalceRedlynxCuntyShit();
 
+                    const upgrades = [];
 
                     for (let h = 0; h < cardsYay[i].TechTree2.Slots.length; h++) {
                         //console.log(cardsYay[i].TechTree2.Slots[h])
@@ -1059,7 +1076,8 @@
 
                         if (healthIncrease !== 0) {
 
-                            healthIncreaseSpan.innerText = "+" + (Math.round(healthIncrease * 100) / 100);
+                            healthIncreaseSpan.innerText = "+" + (Math.round(healthIncrease * 100) /
+                                100);
                         } else {
 
                             healthIncreaseSpan.innerText = "";
@@ -1067,7 +1085,8 @@
 
                         if (damageIncrease !== 0) {
 
-                            damageIncreaseSpan.innerText = "+" + (Math.round(damageIncrease * 100) / 100);
+                            damageIncreaseSpan.innerText = "+" + (Math.round(damageIncrease * 100) /
+                                100);
                         } else {
 
                             damageIncreaseSpan.innerText = "";
@@ -1075,9 +1094,53 @@
 
                         //
 
+                        // locked ability handling cos redlynx gay
+                        if ((currentCard.Image === "KyleAdvCard" || currentCard.Image ===
+                                "TokenAdvCard") && stats.ability !== true) {
+
+                            descSpan.innerText = "Special Power Locked.";
+
+                            for (let stat of powerStats) {
+
+                                stat.style.display = "none";
+                            }
+
+                            powerInfoHeading.innerHTML =
+                                `Power Information? <span><i class="red-text fa fa-close "><i></span>`;
+
+                        } else if (currentCard.Image === "SpellCockMagicCard") {
+
+                            descSpan.innerText = currentCard.Description.replace("{PowerTargetAmount}",
+                                level);
+
+                        } else {
+
+                            descSpan.innerText = currentCard.Description;
+                        }
+
+                        if ((currentCard.Image === "KyleAdvCard" || currentCard.Image ===
+                                "TokenAdvCard") && stats.ability === true) {
+
+                            powerInfoHeading.innerHTML = "Power Information";
+
+                            if (currentCard.Image === "KyleAdvCard") {
+                                for (let stat of kyleHack) {
+
+                                    stat.style.display = "block";
+                                }
+                            }
+
+                            if (currentCard.Image === "TokenAdvCard") {
+                                for (let stat of tokenHack) {
+
+                                    stat.style.display = "block";
+                                }
+                            }
+                        }
+
                         for (let k in stats) {
 
-                            if (k === "Health" || k === "Damage") {
+                            if (k === "Health" || k === "Damage" || k === "ability") {
 
                                 continue;
                             }
@@ -1089,9 +1152,85 @@
 
                                 kSpan.innerText = Math.round((stats[k] - currentCard[
                                     "ChargedPowerRadius"] / 2) * 100) / 100;
-                            } else {
+
+                                if (currentCard.Description.indexOf("{PowerRange}") !== -1 &&
+                                    descSpan.innerText !== "Special Power Locked.") {
+
+                                    descSpan.innerText = currentCard.Description.replace(
+                                        "{PowerRange}",
+                                        Math.round((stats[k] - currentCard["ChargedPowerRadius"] /
+                                            2) * 100) / 100);
+                                }
+
+                            } else if (k === "PowerMaxHPGain") {
 
                                 kSpan.innerText = Math.round(stats[k] * 100) / 100;
+
+                                if (currentCard.Description.indexOf("{PowerMaxHealthBoost}") !== -1 &&
+                                    descSpan.innerText !== "Special Power Locked.") {
+
+                                    descSpan.innerText = currentCard.Description.replace(
+                                        "{PowerMaxHealthBoost}",
+                                        Math.round(stats[k] * 100) / 100);
+                                }
+
+                            } else {
+
+                                if (isNaN(stats[k])) {
+
+                                    kSpan.innerText = "Infinite";
+                                } else {
+
+                                    kSpan.innerText = Math.round(stats[k] * 100) / 100;
+                                }
+
+                                if ((currentCard.Description.indexOf(`{${k}}`) !== -1 && descSpan.innerText !==
+                                        "Special Power Locked.") || ((currentCard.Image ===
+                                        "MarcusGenCard" ||
+                                        currentCard.Image === "SpellDynamiteCard" || currentCard.Image ===
+                                        "ClydeAdvCard" || currentCard.Image ===
+                                        "SpellLightningBoltCard" || currentCard.Image ===
+                                        "TweekAdvCard") && k === "PowerDamage")) {
+
+                                    if (currentCard.Image === "SpellFreezeCard" || currentCard.Image ===
+                                        "KennyMysCard" || currentCard.Image === "KyleFanCard" ||
+                                        currentCard.Image === "SpellMindControlCard" || currentCard.Image ===
+                                        "MrhankeyGenCard" || currentCard.Image === "ButtersFanCard" ||
+                                        currentCard.Image === "StanMysCard" || currentCard.Image ===
+                                        "SpellPowerBindCard" || currentCard.Image === "KennyFanCard" ||
+                                        currentCard.Image === "SpellRegenerationCard" || currentCard.Image ===
+                                        "WendyFanCard" || currentCard.Image === "StanFanCard" ||
+                                        currentCard.Image === "KennySciCard" || currentCard.Image ===
+                                        "CraigFanCard" || currentCard.Image === "SpellHyperdriveCard" ||
+                                        currentCard.Image === "WendySciCard" || currentCard.Image ===
+                                        "TimmySciCard") {
+
+                                        descSpan.innerText = currentCard.Description.replace(`{${k}}`,
+                                            Math
+                                            .round(stats[k] * 100) / 100 + " seconds");
+                                    } else if (currentCard.Image === "MarcusGenCard" && k ===
+                                        "PowerDamage") {
+
+                                        descSpan.innerText = currentCard.Description.replace(
+                                            `{PowerHeroDamage}`,
+                                            Math
+                                            .round(stats[k] * 100) / 100);
+                                    } else if ((currentCard.Image === "SpellDynamiteCard" ||
+                                            currentCard.Image === "ClydeAdvCard" || currentCard.Image ===
+                                            "SpellLightningBoltCard" || currentCard.Image ===
+                                            "TweekAdvCard") && k === "PowerDamage") {
+
+                                        descSpan.innerText = currentCard.Description.replace(
+                                            `{PowerHeroDamage}`,
+                                            Math
+                                            .round(stats[k] * 100) / 100 / 10);
+                                    } else {
+
+                                        descSpan.innerText = currentCard.Description.replace(`{${k}}`,
+                                            Math
+                                            .round(stats[k] * 100) / 100);
+                                    }
+                                }
                             }
 
                             for (let k2 in currentCard) {
@@ -1157,6 +1296,14 @@
                                 }
                             }
                         }
+
+                        repalceRedlynxCuntyShit();
+
+                        // Power duration add 'seconds'.
+                        if (powerDurationSpan.style.display !== "none") {
+
+                            powerDurationSpan.innerText += " seconds";
+                        }
                     });
 
                     /* $("#tags").html("");
@@ -1169,7 +1316,8 @@
                     */
                     $("#collapse1").collapse();
                     $(".ThemeText").addClass(cardsYay[i].Theme + "Text");
-                    $(".ThemeColour").addClass(cardsYay[i].Theme);
+                    $(
+                        ".ThemeColour").addClass(cardsYay[i].Theme);
 
                     //Attack Information
                     if (cardsYay[i].CanAttack === false) {
@@ -1187,7 +1335,7 @@
                                         </li>
                                         <li>
                                             <span class="font-weight-bold dark-grey-text">Pre-Attack Delay:</span>
-                                            <span>${cardsYay[i].PreAttackDelay}</span>
+                                            <span>${Math.round(cardsYay[i].PreAttackDelay * 100) / 100}</span>
                                         </li>
                                         <li>
                                             <span class="font-weight-bold dark-grey-text">Knockback:</span>
@@ -1240,6 +1388,47 @@
                 };
 
             }; //END OF FOR LOOP
+
+            const descSpan = document.getElementById("desc");
+            const powerInfoHeading = document.getElementById("power-info-heading");
+            const powerStats = document.getElementsByClassName("power-stat");
+
+            const powerDurationSpan = document.getElementById("PowerDuration");
+
+            // locked ability handling teehee
+            const kyleHack = document.getElementsByClassName("kylehack");
+            const tokenHack = document.getElementsByClassName("tokenhack");
+
+            if (currentCard.Image === "KyleAdvCard" || currentCard.Image === "TokenAdvCard") {
+
+                for (let stat of powerStats) {
+
+                    stat.style.display = "none";
+                }
+            }
+
+            let hasPowerStats = false;
+            for (let stat of powerStats) {
+
+                if (stat.style.display !== "none") {
+
+                    hasPowerStats = true;
+                    break;
+                }
+            }
+
+            if (hasPowerStats === false) {
+
+                powerInfoHeading.innerHTML =
+                    `Power Information? <span><i class="red-text fa fa-close "><i></span>`;
+            }
+
+            // Power duration add 'seconds'.
+            if (powerDurationSpan.style.display !== "none") {
+
+                powerDurationSpan.innerText += " seconds";
+            }
+
             if (currentCard.Type === "Spell") {
                 $(".filtrable:contains('Upgrade')").hide();
                 $(".select-dropdown").attr("value", "Level 1")
@@ -1270,7 +1459,6 @@
             let x = window.matchMedia("(max-width: 991.98px)")
             stickyFuckOffLmao(x) // Call listener function at run time
             x.addListener(stickyFuckOffLmao) // Attach listener function on state changes
-
 
             const healthSpan = document.getElementById("health");
             const damageSpan = document.getElementById("damage");
@@ -1340,7 +1528,7 @@
 
         //shit to do when people try to resize to see if i've forgot to do stuff but i havent because im a world class web dev
         $(window).resize(function () {
-            
+
             changeCardSize();
             //mobileArtCompensator();
         })
