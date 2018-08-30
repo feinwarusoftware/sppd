@@ -1,0 +1,25 @@
+{
+  "name": "sppd",
+  "version": "1.0.0",
+  "description": "South Park Phone Destroyer card website.",
+  "main": "index.js",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feinwarusoftware/sppd.git"
+  },
+  "author": "!Dragon1320, Mattheous, TowelRoyale, Umustalldie2",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/feinwarusoftware/sppd/issues"
+  },
+  "homepage": "https://github.com/feinwarusoftware/sppd#readme"
+}
