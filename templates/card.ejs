@@ -27,8 +27,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
@@ -195,6 +194,17 @@
                 padding-top: 20px;
             }
         }
+        @media (min-width: 992px) {
+            .fixed-action-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            #filters {
+                padding-top:20px;
+            }
+        }
 
         @media (min-width: 2300px) {
             .col-xxl-3 {
@@ -238,6 +248,10 @@
         /* .cardCol {
             outline: red dashed 
         } */
+
+        nav {
+    transform: translateZ(200px);
+}
     </style>
 
     <div class="preload">
@@ -268,7 +282,11 @@
     <main>
 
         <div class="container pb-5 pt-5">
-
+            <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px; transform: translateZ(200px)">
+                <a href="/" class="btn-floating red">
+                    <i style="padding-right: 3px" class="fa fa-chevron-left"></i>
+                </a>
+            </div>
             <div class="row pt-5">
                 <!-- Sidebar -->
                 <div class="col-lg-4 col-12 col-aids-8 pt-2">
@@ -1512,7 +1530,9 @@
 
             }, 100)
 
-
+            $(".btn-floating").click(function () {
+                window.location.href = "/";
+            })
         });
 
         window.onload = () => {
@@ -1524,6 +1544,7 @@
                     stopper: "#sticky-stopper"
                 });
             });
+
         }
 
         //shit to do when people try to resize to see if i've forgot to do stuff but i havent because im a world class web dev

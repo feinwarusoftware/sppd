@@ -79,13 +79,12 @@
             -webkit-clip-path: polygon(15% 8%, 88% 8%, 93% 11%, 93% 88%, 88% 91%, 13% 91%, 9% 87%, 9% 11%);
             clip-path: polygon(15% 8%, 88% 8%, 93% 11%, 93% 88%, 88% 91%, 13% 91%, 9% 87%, 9% 11%);
             transform: translateY(22px);
-            outline: red dashed;
         }
 
         .cardContainer {
             width: 90%;
             position: absolute;
-            z-index: 10;
+            z-index: 1;
             transform-style: preserve-3d;
             will-change: transform;
             transform: perspective(500px) rotateX(0deg) rotateY(0deg);
@@ -94,7 +93,7 @@
         .cardFrame {
             width: 100%;
             position: absolute;
-            z-index: 20;
+            z-index: 2;
             transform: translateZ(15px) translateY(-100%);
             cursor: pointer;
         }
@@ -179,6 +178,10 @@
 .breadcrumb-item+.breadcrumb-item::before{
     color: white;
 }
+
+nav {
+    transform: translateZ(200px);
+}
         /* .cardCol {
             outline: red dashed 
         } */
@@ -206,7 +209,6 @@
 </head>
 
 <body class="">
-
     <%- include partials/navbar.ejs %>
     <div class="view jarallax" data-jarallax='{"speed": 0.5}' style="background: url('https://vgtimes.ru/uploads/gallery/main/147200/1510317416_3989.jpg');">
         <div class="mask rgba-black-light">
@@ -234,7 +236,7 @@
 
         <div id="filters-scroll" class="container pb-5 pt-5">
 
-            <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+            <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px; transform: translateZ(200px)">
                 <a href="#filters" class="btn-floating red">
                     <i class="fa fa-filter"></i>
                 </a>
@@ -523,7 +525,7 @@
                 // Sort selector handling.
                 let currentSort;
 
-                const sortButtons = document.getElementsByClassName("sortbutton");
+                const sortButtons = Array.from(document.getElementsByClassName("sortbutton"));
 
                 const sortNameAZ = document.getElementById("sort-nameaz");
                 const sortNameZA = document.getElementById("sort-nameza");
@@ -534,7 +536,7 @@
 
                 const clearSortHighlight = () => {
 
-                    for (btn of sortButtons) {
+                    for (let btn of sortButtons) {
 
                         btn.classList.remove("dark-grey-text");
                         btn.classList.remove("blue-text");
@@ -610,7 +612,7 @@
                 // Theme selector handling.
                 let currentTheme;
 
-                const themeButtons = document.getElementsByClassName("theme-radio");
+                const themeButtons = Array.from(document.getElementsByClassName("theme-radio"));
 
                 const themeAll = document.getElementById("theme-all");
                 const themeAdventure = document.getElementById("theme-adventure");
@@ -689,7 +691,7 @@
                 // Rarity selector handling.
                 let currentRarity;
 
-                const rarityButtons = document.getElementsByClassName("rarity-radio");
+                const rarityButtons = Array.from(document.getElementsByClassName("rarity-radio"));
 
                 const rarityAll = document.getElementById("rarity-all");
                 const rarityCommon = document.getElementById("rarity-common");
@@ -807,6 +809,7 @@
                                 <div class="col-lg-4 col-md-6 col-6 cardCol">
                                     <a href="/${cardList[0].art.slice(0, -4)}">
                                         <div class="js-tilt cardContainer" data-tilt data-tilt-perspective="500">
+                                        
                                             <img class="img-fluid cardBg" src="/img/backgrounds/${cardList[0].art}">
                                             <div class="cardFrame">
                                                 <img class="img-fluid" src="/img/frames/frame_${cardList[0].art.slice(0, -4)}.png">
