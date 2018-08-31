@@ -15,19 +15,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>AWESOM-O //
-
+        <%= card.Name %>
     </title>
 
     <link rel="icon" type="image/png" href="/img/favicon.png" />
     <link rel="shortcut icon" type="image/png" href="/img/favicon.png" />
     <meta name="theme-color" content="#ff594f">
-    <meta id="meta-desc" name="description" content="View this card on AWESOM-O">
+    <meta id="meta-desc" name="description" content="View <%= card.Name %> on AWESOM-O">
     <meta name="author" content="Feinwaru Software">
-    <link rel="alternate" href="/" hreflang="x-default" />
+
+    <meta property="og:site_name" content="AWESOM-O" />
+    <meta property="og:title" content="<%= card.Name %>" />
+    <meta property="og:image" content="/img/backgrounds/<%= card.Image %>.jpg" />
+    <meta property="og:description" content="⚡<%= card.ManaCost %> ❤️<%= card.Type === 'Spell' ? 'N/A' : card.Health %> ⚔️<%= card.Type === 'Spell' ? 'N/A' : card.Damage %>
+    
+    View full stats on AWESOM-O!" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
@@ -1118,9 +1125,9 @@
 
                             descSpan.innerText = "Special Power Locked.";
 
-                            for (let stat of powerStats) {
+                            for (let i = 0; i < powerStats.length; i++) {
 
-                                stat.style.display = "none";
+                                powerStats[0].style.display = "none";
                             }
 
                             powerInfoHeading.innerHTML =
@@ -1142,16 +1149,16 @@
                             powerInfoHeading.innerHTML = "Power Information";
 
                             if (currentCard.Image === "KyleAdvCard") {
-                                for (let stat of kyleHack) {
+                                for (let i = 0; i < kyleHack.length; i++) {
 
-                                    stat.style.display = "block";
+                                    kyleHack[i].style.display = "block";
                                 }
                             }
 
                             if (currentCard.Image === "TokenAdvCard") {
-                                for (let stat of tokenHack) {
+                                for (let i = 0; i < tokenHack.length; i++) {
 
-                                    stat.style.display = "block";
+                                    tokenHack[i].style.display = "block";
                                 }
                             }
                         }
@@ -1221,7 +1228,8 @@
                                         currentCard.Image === "KennySciCard" || currentCard.Image ===
                                         "CraigFanCard" || currentCard.Image === "SpellHyperdriveCard" ||
                                         currentCard.Image === "WendySciCard" || currentCard.Image ===
-                                        "TimmySciCard" || currentCard.Image === "CraigMysCard") {
+                                        "TimmySciCard" || currentCard.Image === "CraigMysCard" ||
+                                        currentCard.Image === "ButtersSciCard") {
 
                                         descSpan.innerText = currentCard.Description.replace(`{${k}}`,
                                             Math
@@ -1419,16 +1427,24 @@
 
             if (currentCard.Image === "KyleAdvCard" || currentCard.Image === "TokenAdvCard") {
 
-                for (let stat of powerStats) {
+                for (let i = 0; i < powerStats.length; i++) {
 
-                    stat.style.display = "none";
+                    powerStats[i].style.display = "none";
                 }
             }
 
             let hasPowerStats = false;
-            for (let stat of powerStats) {
+            for (let i = 0; i < powerStats.length; i++) {
 
-                if (stat.style.display !== "none") {
+                if (powerStats[i] === undefined) {
+                    powerStats[i] = {};
+                }
+
+                if (powerStats[i].style === undefined) {
+                    powerStats[i].style = {};
+                }
+
+                if (powerStats[i].style.display !== "none") {
 
                     hasPowerStats = true;
                     break;
@@ -1509,7 +1525,7 @@
 
             $("#share-card").click(function () {
                 var dummy = document.createElement('input'),
-                    text = window.location.href;
+                    text = window.location.href + "?utm_source=clipboard";
 
                 document.body.appendChild(dummy);
                 dummy.value = text;
@@ -1517,8 +1533,6 @@
                 document.execCommand('copy');
                 document.body.removeChild(dummy);
             });
-
-            $("title").text("AWESOM-O // " + currentCard.Name)
 
 
             //mobileArtCompensator();

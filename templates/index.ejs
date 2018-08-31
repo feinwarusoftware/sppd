@@ -98,6 +98,16 @@
             cursor: pointer;
         }
 
+        .cardHide {
+            background-color: #eee;
+            width: 100%;
+            height: 40vh;
+            position: absolute;
+            z-index: 20;
+            transform: translateZ(50px);
+            margin-top: -10px;
+        }
+
         .sortbutton {
             cursor: pointer;
         }
@@ -175,12 +185,24 @@
             
         }
 
-.breadcrumb-item+.breadcrumb-item::before{
-    color: white;
-}
+        .breadcrumb-item+.breadcrumb-item::before{
+            color: white;
+        }
 
-nav {
-    transform: translateZ(200px);
+        nav {
+            transform: translateZ(200px);
+        }
+
+        .gay {
+            position: relative;
+            z-index: 50;
+            transform: translateZ(198px);
+        }
+
+        .btn-outline-grey {
+    border: 2px solid #696969!important;
+    background-color: transparent!important;
+    color: #696969!important;
 }
         /* .cardCol {
             outline: red dashed 
@@ -208,7 +230,7 @@ nav {
 
 </head>
 
-<body class="">
+<body>
     <%- include partials/navbar.ejs %>
     <div class="view jarallax" data-jarallax='{"speed": 0.5}' style="background: url('https://vgtimes.ru/uploads/gallery/main/147200/1510317416_3989.jpg');">
         <div class="mask rgba-black-light">
@@ -261,6 +283,12 @@ nav {
                                         <input id="search" class="form-control" type="text" placeholder="Enter a card name"
                                             aria-label="Search">
                                     </div>
+                                    <form class="md-form">
+                                        <a id="clearFilters" href="#filters-active" class="btn btn-outline-grey btn-rounded btn-sm my-1 ml-auto">Clear
+                                            Filters</a>
+                                        <a id="searchBtn" href="#filters-active" class="btn btn-feinwaru btn-rounded btn-sm my-1 mr-auto"
+                                            style="color: white">Search</a>
+                                    </form>
                             </div>
                             <div class="col-md-6 col-lg-12 mb-5">
                                 <!-- Panel -->
@@ -373,7 +401,6 @@ nav {
                                     <li id="filter-active-rarity" class="breadcrumb-item white-text">All Rarities</li>
                                     <li id="filter-active-search" class="breadcrumb-item white-text"></li>
                                 </ol>
-
                             </div>
                         </div>
                     </div>
@@ -405,16 +432,34 @@ nav {
                             </div>
                         -->
                     </div>
-                    <div class="row pt-2 dark-grey-text">
-
-                        <button id="load-more" type="button" class="btn btn-flat btn-lg mx-auto" style="display: none;">LOAD
-                            MORE CARDS</button>
+                    <div id="no-cards" class="row pt-2 dark-grey-text" style="display:none">
+                        <div class="mx-auto pt-2">
+                            <h2 class="font-weight-bold text-center">No cards found :(</h2>
+                        </div>
+                    </div>
+                    <div id="load-more-div" class="row pt-2 dark-grey-text">
+                        <div class="mx-auto pt-2">
+                            <!--Small yellow-->
+                            <div class="preloader-wrapper small active">
+                                <div id="loading-circle" class="spinner-layer spinner-yellow-only" style="border-color: #00ff00;">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="orange">
+        <div id="disclaimer-div" class="gay">
             <div class="container">
                 <div class="row py-4 d-flex align-items-center">
 
@@ -480,6 +525,33 @@ nav {
             $(document).ready(function () {
                 $('.mdb-select').material_select();
 
+                // Random theme colour for discplaimer div and card loading circle.
+                const disclaimerDiv = document.getElementById("disclaimer-div");
+                const loadingCircle = document.getElementById("loading-circle");
+
+                const randomColour = Math.floor(Math.random() * 5);
+                switch (randomColour) {
+                    case 0:
+                        disclaimerDiv.classList.add("Neutral");
+                        loadingCircle.style["border-color"] = "#857468";
+                        break;
+                    case 1:
+                        disclaimerDiv.classList.add("Adventure");
+                        loadingCircle.style["border-color"] = "#4f80ba";
+                        break;
+                    case 2:
+                        disclaimerDiv.classList.add("Sci-Fi");
+                        loadingCircle.style["border-color"] = "#db571d";
+                        break;
+                    case 3:
+                        disclaimerDiv.classList.add("Mystical");
+                        loadingCircle.style["border-color"] = "#4b9b38";
+                        break;
+                    case 4:
+                        disclaimerDiv.classList.add("Fantasy");
+                        loadingCircle.style["border-color"] = "#d34f5f";
+                        break;
+                }
 
                 //get them cards
                 const getCards = new XMLHttpRequest();
@@ -490,15 +562,16 @@ nav {
                 const cardsYay = JSON.parse(getCards.response);
                 //const cardsList = $("#cardsList");
                 const displayCards = document.getElementById("cardsList");
-                const loadMore = document.getElementById("load-more");
+                //const loadMoreDiv = document.getElementById("load-more-div");
                 const searchBox = document.getElementById("search");
 
                 const filterTheme = document.getElementById("filter-active-theme");
                 const filterRarity = document.getElementById("filter-active-rarity");
                 const filterSearch = document.getElementById("filter-active-search");
 
-                const renderAmount = 12;
+                const noCardsFound = document.getElementById("no-cards");
 
+                const renderAmount = 12;
 
                 //sorting
 
@@ -521,11 +594,14 @@ nav {
                 }
                 */
 
+                // Dynamic card loading.
+                let loadingCards = false;
+
                 // Yes i realise i couldve used classes for this, fuck you.
                 // Sort selector handling.
                 let currentSort;
 
-                const sortButtons = Array.from(document.getElementsByClassName("sortbutton"));
+                const sortButtons = document.getElementsByClassName("sortbutton");
 
                 const sortNameAZ = document.getElementById("sort-nameaz");
                 const sortNameZA = document.getElementById("sort-nameza");
@@ -536,10 +612,10 @@ nav {
 
                 const clearSortHighlight = () => {
 
-                    for (let btn of sortButtons) {
+                    for (let i = 0; i < sortButtons.length; i++) {
 
-                        btn.classList.remove("dark-grey-text");
-                        btn.classList.remove("blue-text");
+                        sortButtons[i].classList.remove("dark-grey-text");
+                        sortButtons[i].classList.remove("blue-text");
                     }
                 }
 
@@ -612,7 +688,7 @@ nav {
                 // Theme selector handling.
                 let currentTheme;
 
-                const themeButtons = Array.from(document.getElementsByClassName("theme-radio"));
+                const themeButtons = document.getElementsByClassName("theme-radio");
 
                 const themeAll = document.getElementById("theme-all");
                 const themeAdventure = document.getElementById("theme-adventure");
@@ -623,9 +699,9 @@ nav {
 
                 const clearThemeHighlight = () => {
 
-                    for (btn of themeButtons) {
+                    for (let i = 0; i < themeButtons.length; i++) {
 
-                        btn.checked = false;
+                        themeButtons[i].checked = false;
                     }
                 }
 
@@ -691,7 +767,7 @@ nav {
                 // Rarity selector handling.
                 let currentRarity;
 
-                const rarityButtons = Array.from(document.getElementsByClassName("rarity-radio"));
+                const rarityButtons = document.getElementsByClassName("rarity-radio");
 
                 const rarityAll = document.getElementById("rarity-all");
                 const rarityCommon = document.getElementById("rarity-common");
@@ -701,9 +777,9 @@ nav {
 
                 const clearRarityHighlight = () => {
 
-                    for (btn of rarityButtons) {
+                    for (let i = 0; i < rarityButtons.length; i++) {
 
-                        btn.checked = false;
+                        rarityButtons[i].checked = false;
                     }
                 }
 
@@ -759,11 +835,13 @@ nav {
 
                 //
 
+                /*
                 loadMore.onclick = function () {
 
                     this.style.display = "none";
                     renderCards(renderAmount);
                 }
+                */
 
                 //
                 let currentSearch = "";
@@ -781,17 +859,73 @@ nav {
                     }
                 });
 
+                const searchBtn = document.getElementById("searchBtn");
+                const clearFilters = document.getElementById("clearFilters");
+
+                searchBtn.onclick = function () {
+
+                    currentSearch = searchBox.value;
+                    searchBox.value = "";
+
+                    sortCards(currentSearch);
+                    clearCards();
+                    renderCards(renderAmount);
+
+                    jump("filters-active");
+                    window.scrollBy(0, -70);
+
+                    return false;
+                }
+
+                clearFilters.onclick = function () {
+
+                    currentSearch = "";
+                    searchBox.value = "";
+
+                    clearSortHighlight();
+                    clearThemeHighlight();
+                    clearRarityHighlight();
+
+                    currentSort = "sort-nameaz";
+                    sortNameAZ.classList.add("sortbutton");
+                    sortNameAZ.classList.add("blue-text");
+
+                    currentTheme = "theme-all";
+                    themeAll.checked = true;
+
+                    currentRarity = "rarity-all";
+                    rarityAll.checked = true;
+
+                    sortCards(currentSearch);
+                    clearCards();
+                    renderCards(renderAmount);
+
+                    jump("filters-active");
+                    window.scrollBy(0, -70);
+
+                    return false;
+                }
+
                 //
 
                 let cardList = [];
+                let cardsFound = false;
 
                 const renderCards = n => {
+
+                    if (cardsFound === false) {
+
+                        noCardsFound.style.display = "block";
+                    } else {
+
+                        noCardsFound.style.display = "none";
+                    }
 
                     // lol jquery
                     const tilt = $('.js-tilt').tilt();
                     tilt.tilt.destroy.call(tilt);
 
-                    loadMore.style.display = "none";
+                    //loadMore.style.display = "none";
 
                     let loopCount;
                     if (cardList.length < n) {
@@ -806,7 +940,8 @@ nav {
 
                         cardsList.innerHTML +=
                             `
-                                <div class="col-lg-4 col-md-6 col-6 cardCol">
+                            <div class="col-lg-4 col-md-6 col-6 cardCol">
+                                <div class="cardOverlay cardHide"></div>
                                     <a href="/${cardList[0].art.slice(0, -4)}">
                                         <div class="js-tilt cardContainer" data-tilt data-tilt-perspective="500">
                                         
@@ -816,7 +951,7 @@ nav {
                                             </div>
                                         </div>
                                     </a>
-                                </div>
+                            </div>
                             `
 
                         cardList.shift();
@@ -827,16 +962,21 @@ nav {
                         glare: true,
                         maxGlare: 0.25
                     });
-                    
+
                     setTimeout(() => {
 
                         changeCardSize();
                         mobileArtCompensator();
 
-                        // only add a load more button one the other cards have loaded
-                        if (cardList.length !== 0) {
+                        $(".cardHide").removeClass("cardHide");
 
-                            loadMore.style.display = "block";
+                        // only add a load more button one the other cards have loaded
+                        if (cardList.length === 0) {
+
+                            document.getElementById("load-more-div").style.display = "none";
+                        } else {
+
+                            loadingCards = false;
                         }
                     }, 200);
                 }
@@ -856,12 +996,12 @@ nav {
 
                     cardList = [];
 
-                    for (let card of cardsYay) {
+                    for (let i = 0; i < cardsYay.length; i++) {
 
                         // Theme sorting.
 
                         // Remove 'theme-' from the start of currentTheme.
-                        if (currentTheme.slice(6).toLowerCase() !== card.theme.toLowerCase() &&
+                        if (currentTheme.slice(6).toLowerCase() !== cardsYay[i].theme.toLowerCase() &&
                             currentTheme !== "theme-all") {
 
                             continue;
@@ -870,20 +1010,20 @@ nav {
                         // Rarity sorting.
 
                         // Remove 'rarity-' from the start of currentRarity.
-                        if (currentRarity.slice(7).toLowerCase() !== card.rarity.toLowerCase() &&
+                        if (currentRarity.slice(7).toLowerCase() !== cardsYay[i].rarity.toLowerCase() &&
                             currentRarity !== "rarity-all") {
 
                             continue;
                         }
 
                         // legacy json shit
-                        if (search !== null && (card.name instanceof Array ? card.name[0] : card.name).toLowerCase()
+                        if (search !== null && (cardsYay[i].name instanceof Array ? cardsYay[i].name[0] : cardsYay[i].name).toLowerCase()
                             .indexOf(search.toLowerCase()) === -1) {
 
                             continue;
                         }
 
-                        cardList.push(card);
+                        cardList.push(cardsYay[i]);
                     }
 
                     switch (currentSort) {
@@ -924,6 +1064,14 @@ nav {
                             });
                             break;
                     }
+
+                    if (cardList.length === 0) {
+
+                        cardsFound = false;
+                    } else {
+
+                        cardsFound = true;
+                    }
                 }
 
                 sortCards(currentSearch);
@@ -932,6 +1080,7 @@ nav {
 
                 //change size responsively
                 const changeCardSize = function () {
+                    //$(".cardHide").css("height", $(".cardFrame").height());
                     $(".cardCol").css("height", $(".cardFrame").height());
                 };
 
@@ -945,6 +1094,12 @@ nav {
                         $(".cardBg").css("transform", "translateY(" + compensate + "px)");
                     };
                 };
+
+                function jump(h) {
+                    var url = location.href; //Save down the URL without hash.
+                    location.href = "#" + h; //Go to the target element.
+                    history.replaceState(null, null, url); //Don't like hashes. Changing it back.
+                }
 
                 /*
                 //make dat grid
@@ -1185,17 +1340,8 @@ nav {
                 }
                 */
                 $(".btn-floating").click(function () {
-
-                    if ($("#filters").hasClass("collapse")) {
-                        $("#filters").toggleClass("collapse", "collapse-show");
-                        $(".btn-floating").attr("href", "#filters-scroll")
-                    } else {
-                        $("#filters").toggleClass("collapse", "collapse-show");
-                        $(".btn-floating").attr("href", "#filters-active")
-                    }
+                    $(".btn-floating").attr("href", "#filters-scroll")
                     //alert("ahh")
-
-
                 })
                 /*
 
@@ -1238,6 +1384,17 @@ nav {
 
                 document.onkeypress = function (e) {
                     document.getElementById("search").focus();
+                }
+
+                window.onscroll = () => {
+
+                    const loadMoreDiv = document.getElementById("load-more-div");
+                    if (loadMoreDiv.getBoundingClientRect().top - window.innerHeight <= 0 && loadingCards ===
+                        false) {
+
+                        loadingCards = true;
+                        renderCards(renderAmount);
+                    }
                 }
             });
 
