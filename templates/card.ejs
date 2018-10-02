@@ -11,6 +11,22 @@
 
   gtag('config', 'UA-124885614-2');
 </script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#454545"
+    },
+    "button": {
+      "background": "#ff5b4f",
+      "text": "#ffffff"
+    }
+  }
+})});
+</script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -391,7 +407,7 @@
             //get them cards
             const getCards = new XMLHttpRequest();
             getCards.open("GET",
-                `https://gist.githubusercontent.com/Dragon1320/2acbd4d0be75d8629cf86f6b51681307/raw/4ddbfebf47d1e7533f2f1e92abbbb9047a92a2fa/cards.json`,
+                `https://gist.githubusercontent.com/MattheousDT/b7149d3932d930ce2fc9ce9056379787/raw/acfb03ac3bfef59990f3d3594b148c38a17388c4/cards.json`,
                 false);
 
             getCards.send();
