@@ -248,7 +248,8 @@
 
 <body>
     <%- include partials/navbar.ejs %>
-    <div class="view jarallax" data-jarallax='{"speed": 0.5}' style="background: url('https://vgtimes.ru/uploads/gallery/main/147200/1510317416_3989.jpg');">
+    <!-- original image https://vgtimes.ru/uploads/gallery/main/147200/1510317416_3989.jpg -->
+    <div class="view jarallax" data-jarallax='{"speed": 0.5}' style="background: url('https://i.ytimg.com/vi/AkbtSJBDXAo/maxresdefault.jpg');">
         <div class="mask rgba-black-light">
             <div class="container h-100 d-flex justify-content-center align-items-center">
                 <div class="row pt-5 mt-3">
@@ -263,7 +264,7 @@
                                     </h1>
                                     <h2 class=" white-text">
                                             <strong>
-                                                October 2018 Update
+                                                Father Maxi Update!
                                             </strong>
                                         </h2>
                                 </li>
@@ -577,7 +578,7 @@
                 //get them cards
                 const getCards = new XMLHttpRequest();
                 getCards.open("GET",
-                    `https://gist.githubusercontent.com/Dragon1320/bf299e83244151715e3852a5776f3495/raw/9b027599b3a0a1d08e4f85bde956c503a176bcc3/cards-old.json`,
+                    `/js/card-stats-old.json`,
                     false);
                 getCards.send();
                 const cardsYay = JSON.parse(getCards.response);

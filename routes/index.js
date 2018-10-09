@@ -5,7 +5,7 @@
 const express = require("express");
 const router = express.Router();
 
-const cards = require("../static/cards.json");
+const cards = require("../static/js/card-stats.json");
 
 router.get("/", (req, res) => {
 
