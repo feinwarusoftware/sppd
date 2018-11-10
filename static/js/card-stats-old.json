@@ -15465,7 +15465,7 @@
     "name": "Indian Brave",
     "theme": "Adventure",
     "rarity": "Epic",
-    "art": "KidMeleeAdvCard.jpg",
+    "art": "KidmeleeAdvCard.jpg",
     "class": "Tank",
     "energy": 1,
     "attack_info": {
