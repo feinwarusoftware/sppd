@@ -31,17 +31,17 @@ window.cookieconsent.initialise({
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>AWESOM-O //
-        <%= card.Name %>
+        <%= card.Name[0] %>
     </title>
 
     <link rel="icon" type="image/png" href="/img/favicon.png" />
     <link rel="shortcut icon" type="image/png" href="/img/favicon.png" />
     <meta name="theme-color" content="#ff594f">
-    <meta id="meta-desc" name="description" content="View <%= card.Name %> on AWESOM-O">
+    <meta id="meta-desc" name="description" content="View <%= card.Name[0] %> on AWESOM-O">
     <meta name="author" content="Feinwaru Software">
 
     <meta property="og:site_name" content="AWESOM-O" />
-    <meta property="og:title" content="<%= card.Name %>" />
+    <meta property="og:title" content="<%= card.Name[0] %>" />
     <meta property="og:image" content="/img/backgrounds/<%= card.Image %>.jpg" />
     <meta property="og:description" content="⚡<%= card.ManaCost %> ❤️<%= card.Type === 'Spell' ? 'N/A' : card.Health %> ⚔️<%= card.Type === 'Spell' ? 'N/A' : card.Damage %>
     
@@ -850,7 +850,6 @@ window.cookieconsent.initialise({
                                     </div>
                                     <h5 class="font-weight-bold ThemeText">AWESOM-O Commands</h5>
                                     <ul id="awesomo-commands" class="list-unstyled">
-                                        <code>-card ${cardsYay[i].Name.toLowerCase()}</code>
                                     </ul>
                                     <h5 class="font-weight-bold ThemeText">General Information</h5>
                                     <ul class="list-unstyled align">
@@ -1417,17 +1416,17 @@ window.cookieconsent.initialise({
                                     `
                         )
                     };
-                }
 
-                if (cardsYay[i].name instanceof Array) {
-                    for (let c = 0; c < cardsYay[i].name.length; c++) {
+                                    if (cardsYay[i].Name instanceof Array) {
+                    for (let c = 0; c < cardsYay[i].Name.length; c++) {
                         $("#awesomo-commands").append(
                             `<li class="mt-2">
-                                            <span class="font-weight-bold dark-grey-text"><code>-card ${cardsYay[i].name[c].toLowerCase()}</code></span>
+                                            <span class="font-weight-bold dark-grey-text"><code>-card ${cardsYay[i].Name[c].toLowerCase()}</code></span>
                                         </li>`
                         );
                     }
                 };
+                }
 
             }; //END OF FOR LOOP
 
