@@ -6638,7 +6638,7 @@
       "CanAttack": true,
       "Name": ["Little Choirboy"],
       "Description": "Those bells really hurt!",
-      "Image": "ChoirBoyMysCard",
+      "Image": "ChoirboyMysCard",
       "ManaCost": 2,
       "Damage": "60",
       "Health": "60",
