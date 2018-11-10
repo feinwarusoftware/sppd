@@ -43621,7 +43621,7 @@
       "Visible": false,
       "CanAttack": true,
       "Name": ["Snake", "Danger Noodle"],
-      "Description": "",
+      "Description": "Beware of the snek!",
       "Image": "SnakeGenCard",
       "ManaCost": 1,
       "Damage": "10",
