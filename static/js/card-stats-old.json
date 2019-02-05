@@ -15613,7 +15613,7 @@
     "name": "Little Choirboy",
     "theme": "Mystical",
     "rarity": "Epic",
-    "art": "ChoirboyMysCard.jpg",
+    "art": "ChoirBoyMysCard.jpg",
     "class": "Tank",
     "energy": 2,
     "attack_info": {
@@ -16051,4 +16051,36 @@
         }]
     }],
     "spawn_count": null
+},
+{
+    "type": "dev-test",
+    "name": "Swordsman Garrison",
+    "theme": "Adventure",
+    "rarity": "Rare",
+    "art": "MrgarrisonAdvCard.jpg",
+    "energy": 5
+},
+{
+    "type": "dev-test",
+    "name": "Mr. Slave Executioner",
+    "theme": "Adventure",
+    "rarity": "Epic",
+    "art": "MrslaveFanCard.jpg",
+    "energy": 5
+},
+{
+    "type": "dev-test",
+    "name": "Alien Drone",
+    "theme": "Sci-Fi",
+    "rarity": "Epic",
+    "art": "DroneSciCard.jpg",
+    "energy": 4
+},
+{
+    "type": "dev-test",
+    "name": "Santa Claus",
+    "theme": "Neutral",
+    "rarity": "Epic",
+    "art": "SantaGenCard.jpg",
+    "energy": 5
 }]

@@ -187,7 +187,7 @@ window.cookieconsent.initialise({
             color: white;
         }
 
-        .Gen {
+        .GenText {
             color: #857468;
         }
 
@@ -926,7 +926,7 @@ window.cookieconsent.initialise({
                                         </li>
                                         <li class="power-stat kylehack tokenhack">
                                             <span class="font-weight-bold dark-grey-text">${cardsYay[i].Id === 209 || cardsYay[i].Id === 40 || cardsYay[i].Id === 1286 || cardsYay[i].Id === 1273 ? "Power Radius:" : "Charged Power Radius:"}</span>
-                                            <span id="PowerRange" class="power-stat-value">${cardsYay[i].ChargedPowerRadius / 2}</span> <span class="badge ThemeColour" id="PowerRange-increase-amount" style""></span>
+                                            <span id="PowerRange" class="power-stat-value">${cardsYay[i].ChargedPowerRadius === "Global" ? "Global" : cardsYay[i].ChargedPowerRadius / 2}</span> <span class="badge ThemeColour" id="PowerRange-increase-amount" style""></span>
                                         </li>
                                         <li class="power-stat kylehack tokenhack">
                                             <span class="font-weight-bold dark-grey-text">Charged Power Regen:</span>
