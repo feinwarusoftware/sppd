@@ -16055,7 +16055,7 @@
 {
     "type": "dev-test",
     "name": "Swordsman Garrison",
-    "theme": "Adventure",
+    "theme": "Fantasy",
     "rarity": "Rare",
     "art": "MrgarrisonAdvCard.jpg",
     "energy": 5
@@ -16063,7 +16063,7 @@
 {
     "type": "dev-test",
     "name": "Mr. Slave Executioner",
-    "theme": "Adventure",
+    "theme": "Fantasy",
     "rarity": "Epic",
     "art": "MrslaveFanCard.jpg",
     "energy": 5
