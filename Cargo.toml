@@ -1,0 +1,13 @@
+[package]
+name = "sppd"
+version = "0.1.0"
+authors = ["Dragon1320 <lukasznie1320@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0.89", features = ["derive"] }
+rocket = "0.4.0"
+rocket_contrib = "0.4.0"
+mongodb = "0.3.12"
+bson = "0.13.0"
+serde_json = "1.0.39"
