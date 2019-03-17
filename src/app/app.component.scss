@@ -1,0 +1,17 @@
+//Colours
+$feinwaru: #ff594f;
+$feinwarudark: #c93d36;
+$feinwarugreen: #14b252;
+$sppd: #1E98A1;
+$darkgrey: #222;
+$dwhite: #eee;
+
+svg {
+  &.banner {
+    margin-top: 60px;
+
+    image {
+      background-position: center;
+    }
+  }
+}
