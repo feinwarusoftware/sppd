@@ -3,8 +3,21 @@ $feinwaru: #ff594f;
 $feinwarudark: #c93d36;
 $feinwarugreen: #14b252;
 $sppd: #1E98A1;
+$lightgrey: #c5c5c5;
+$grey: #707070;
 $darkgrey: #222;
 $dwhite: #eee;
+
+//Card Colours
+$Rare: #BB4600;
+$Epic: #C1C1C1;
+$Legendary: #E9B845;
+
+$Adventure: #4f80ba;
+$Fantasy: #d34f5f;
+$General: #857468;
+$Mystical: #4b9b38;
+$Sci-Fi: #db571d;
 
 svg {
   &.banner {
@@ -14,4 +27,15 @@ svg {
       background-position: center;
     }
   }
+}
+
+#info {
+  position: absolute;
+  top: 80px;
+  right: 30px;
+}
+
+app-card {
+  width: 100%;
+  height: 100%;
 }

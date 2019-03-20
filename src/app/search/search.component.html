@@ -1,0 +1,52 @@
+<div class="row">
+  <div id="search" class="col-12">
+    <input class="form-control form-control-lg" type="text" placeholder="Search 102 cards for...">
+    <i class="fas fa-search fa-lg"></i>
+  </div>
+</div>
+<div id="result-bar" class="row my-5">
+  <div id="results" class="col-10">
+    <h2 class="font-weight-bold mb-0">102 Matching Results</h2>
+  </div>
+  <div id="views" class="col-2 text-right">
+    <i active class="fas fa-th"></i>
+    <i class="fas fa-th-list"></i>
+    <i class="fas fa-spinner"></i>
+  </div>
+</div>
+<div class="row mt-5">
+  <div id="filters" class="col-3">
+    <div id="order" class="mb-4">
+      <h4 class="font-weight-bold">Order By</h4>
+      <div class="divider"></div>
+      <p selected><i class="fa fa-sort-amount-down"></i> Name</p>
+      <p>Energy</p>
+      <p>Theme</p>
+    </div>
+    <div class="mb-4">
+      <h4 class="font-weight-bold">Theme</h4>
+      <div class="divider"></div>
+      <p selected><span></span> Adventure</p>
+      <p><span></span> Fantasy</p>
+      <p><span></span> General</p>
+      <p><span></span> Mystical</p>
+      <p><span></span> Sci-Fi</p>
+    </div>
+    <div>
+      <h4 class="font-weight-bold">Rarity</h4>
+      <div class="divider"></div>
+      <p selected><span></span> Common</p>
+      <p><span></span> Rare</p>
+      <p><span></span> Epic</p>
+      <p><span></span> Legendary</p>
+    </div>
+  </div>
+  
+  <div id="cards" class="col-9">
+    <div class="row">
+      <div *ngFor="let card of cards">
+        <div class=".app-card"></div>
+      </div>
+    </div>
+  </div>
+</div>

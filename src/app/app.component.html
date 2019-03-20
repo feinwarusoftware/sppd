@@ -1,11 +1,25 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-navbar></app-navbar>
-<svg xmlns="http://www.w3.org/2000/svg" class="w-100 banner" viewBox="0 0 1920 491.125">
-  <defs>
-    <clipPath id="banner">
-       <path d="M-1,325.3s370.314,177.1,930.267,91.215S1919,502.764,1919,502.764V11.639L-.991,11.684Z" transform="translate(1 -11.639)" />
-    </clipPath>
-  </defs>
-  <image xlink:href="https://cdn.discordapp.com/attachments/508629797421973504/551874102495805440/unknown.png" clip-path="url(#banner)"></image>
-</svg>
+<div>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-100 banner" viewBox="0 0 1920 491.125" style="filter:brightness(0.5)">
+    <defs>
+      <clipPath id="banner">
+        <path d="M-1,325.3s370.314,177.1,930.267,91.215S1919,502.764,1919,502.764V11.639L-.991,11.684Z" transform="translate(1 -11.639)" />
+      </clipPath>
+    </defs>
+    <image [attr.xlink:href]="bannerImg.image" clip-path="url(#banner)"></image>
+  </svg>
+  <div class="container d-flex justify-content-center align-items-center">
+    <div style="position:absolute; top:30px;" class="row pt-5 mt-3 justify-content-center w-100">
+      <div class="col-12 col-md-9 col-lg-6 mb-3" style="padding-left:100px; padding-right:100px;">
+        <img class="img-fluid" src="assets/img/sppd_white.svg">
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="container">
+  <app-search></app-search>
+</div>
+
 <app-footer></app-footer>
