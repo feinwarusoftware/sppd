@@ -5,3 +5,6 @@
 # react
 ui/node_modules
 ui/dist
+
+# node
+src/node_modules

@@ -1,2 +1,2 @@
-( cd ui && npx webpack --config webpack.prod.js ) 
-cargo run
+( cd ui && npx webpack --config webpack.dev.js )
+( cd src && node . )
