@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "ui", "template.html"));
 });
 
-app.use(api_routes);
+app.use("/api/v1", api_routes);
 
 app.use((req, res, next) => {
 

@@ -119,4 +119,18 @@ router.get("/cards/:id", (req, res) => {
         });
 });
 
+router.post("/cards/:id", (req, res) => {
+    const card = new CardModel({
+        
+    });
+});
+
+router.patch("/cards/:id", (req, res) => {
+
+});
+
+router.delete("/cards/:id", (req, res) => {
+
+});
+
 module.exports = router;
