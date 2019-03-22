@@ -1,0 +1,56 @@
+//Colours
+$feinwaru: #ff594f;
+$feinwarudark: #c93d36;
+$feinwarugreen: #14b252;
+$sppd: #1E98A1;
+$lightgrey: #c5c5c5;
+$grey: #707070;
+$darkgrey: #222;
+$dwhite: #eee;
+
+//Card Colours
+$Rare: #BB4600;
+$Epic: #C1C1C1;
+$Legendary: #E9B845;
+
+$Adventure: #4f80ba;
+$Fantasy: #d34f5f;
+$General: #857468;
+$Mystical: #4b9b38;
+$Sci-Fi: #db571d;
+
+//Imports
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700,900');
+@import "src/components/footer";
+@import "src/components/navbar";
+@import "src/components/langbar";
+@import "src/components/search";
+@import "src/components/cardgrid";
+
+body {
+    font-family: "Roboto", "sans-serif";
+    background-color: $dwhite;
+}
+
+svg {
+    &.banner {
+      margin-top: 60px;
+  
+      image {
+        background-position: center;
+      }
+    }
+  }
+
+  //MDB Shit
+.light-blue-text  {
+    color: #03a9f4!important;
+}
+
+.red-text {
+    color: #f44336!important;
+}
+
+.orange-text {
+    color: #ff9800!important;
+}
