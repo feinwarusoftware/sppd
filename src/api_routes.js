@@ -56,24 +56,43 @@ router.get("/cards", (req, res) => {
     const page = req.query.page || 0;
     const limit = Math.min(req.query.limit || cardPageLimit, cardPageLimit);
 
-    CardModel
-        .find({
-            ...( name == null ? {} : { name: `/${name}/i` } ),
-            ...( theme == null ? {} : { theme } ),
-            ...( rarity == null ? {} : { rarity } )
-        })
-        .sort(sort == null ? {} : { [sort]: order })
-        .skip(page * limit)
-        .limit(limit)
-        .select({ __v: 0 })
+    //
+    
+    const search = {
+        ...( name == null ? {} : { name: { $regex: name, $options: "i" } } ),
+        ...( theme == null ? {} : { theme } ),
+        ...( rarity == null ? {} : { rarity } )
+    };
 
-        .then(cards => {
-            res.json({
-                code: 200,
-                success: true,
-                data: cards,
-                error: null
-            });
+    CardModel
+        .count(search)
+        .then(total => {
+            CardModel
+                .find(search)
+                .sort(sort == null ? {} : { [sort]: order })
+                .skip(page * limit)
+                .limit(limit)
+                .select({ __v: 0 })
+        
+                .then(cards => {
+                    res.json({
+                        code: 200,
+                        success: true,
+                        data: {
+                            total,
+                            cards
+                        },
+                        error: null
+                    });
+                })
+                .catch(error => {
+                    res.json({
+                        code: 500,
+                        success: false,
+                        data: null,
+                        error
+                    });
+                });
         })
         .catch(error => {
             res.json({
