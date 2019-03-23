@@ -7,6 +7,8 @@ const CardModel = require("./card_model");
 const cardPageLimit = 12;
 
 router.get("/", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     // returns basic api info
 
     // TODO: add more info
@@ -21,6 +23,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/docs", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     // returns md docs
 
     // TODO: make this not suck
@@ -40,11 +44,14 @@ router.get("/docs", (req, res) => {
 });
 
 router.get("/cards", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    
     // name
     // theme
     // rarity
     // sort (name | theme | rarity | energy | damage | health)
     // order (1 | -1)
+
 
     const name = req.query.name;
     const theme = req.query.theme;
@@ -66,6 +73,7 @@ router.get("/cards", (req, res) => {
 
     CardModel
         .count(search)
+        
         .then(total => {
             CardModel
                 .find(search)
@@ -104,7 +112,34 @@ router.get("/cards", (req, res) => {
         });
 });
 
+router.post("/cards", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    const card = new CardModel(req.body);
+
+    card
+        .save()
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
 router.get("/cards/:id", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     // id = mongo_id
 
     CardModel
@@ -138,18 +173,52 @@ router.get("/cards/:id", (req, res) => {
         });
 });
 
-router.post("/cards/:id", (req, res) => {
-    const card = new CardModel({
-        
-    });
-});
-
 router.patch("/cards/:id", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
+    CardModel
+        .updateOne({ _id: req.params.id }, req.body)
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
 });
 
 router.delete("/cards/:id", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
+    CardModel
+        .deleteOne({ _id: req.params.id })
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
 });
 
 module.exports = router;

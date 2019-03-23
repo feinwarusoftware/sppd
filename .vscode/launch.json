@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Testing...",
+            "program": "${workspaceFolder}/src/utils.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/ui/node_modules/webpack/bin/webpack.js"
         }

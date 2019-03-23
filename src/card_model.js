@@ -123,7 +123,7 @@ const cardSchema = new mongoose.Schema({
     theme: {
         default: "fantasy",
         type: String,
-        enum: ["adventure", "mystical", "sci-fi", "fantasy", "neutral"]
+        enum: ["adventure", "mystical", "sci-fi", "fantasy", "general"]
     },
 
     // adv stats
@@ -144,8 +144,7 @@ const cardSchema = new mongoose.Schema({
         type: Number
     },
     aoe_attack_type: {
-        default: false,
-        type: Boolean
+        default: false
     },
     aoe_damage_percentage: {
         default: 0,
