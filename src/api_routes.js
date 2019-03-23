@@ -72,26 +72,41 @@ router.get("/cards", (req, res) => {
     };
 
     CardModel
-        .count(search)
-        
+        .count()
+
         .then(total => {
             CardModel
-                .find(search)
-                .sort(sort == null ? {} : { [sort]: order })
-                .skip(page * limit)
-                .limit(limit)
-                .select({ __v: 0 })
-        
-                .then(cards => {
-                    res.json({
-                        code: 200,
-                        success: true,
-                        data: {
-                            total,
-                            cards
-                        },
-                        error: null
-                    });
+                .count(search)
+                
+                .then(matched => {
+                    CardModel
+                        .find(search)
+                        .collation({ locale: "en" })
+                        .sort(sort == null ? {} : { [sort]: order })
+                        .skip(page * limit)
+                        .limit(limit)
+                        .select({ __v: 0 })
+                
+                        .then(cards => {
+                            res.json({
+                                code: 200,
+                                success: true,
+                                data: {
+                                    total,
+                                    matched,
+                                    cards
+                                },
+                                error: null
+                            });
+                        })
+                        .catch(error => {
+                            res.json({
+                                code: 500,
+                                success: false,
+                                data: null,
+                                error
+                            });
+                        });
                 })
                 .catch(error => {
                     res.json({
