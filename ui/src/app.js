@@ -5,13 +5,15 @@ import "../src/static/css/fa_all.scss";
 import "../style.scss";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { Home, Error } from "./views";
+import Home from "./views/Home.jsx";
+import Card from "./views/Card.jsx";
+import Error from "./views/Error.jsx";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" component={Home} exact />
-      <Route component={Error} />
+      <Route exact path="/" component={Home} exact />
+      <Route exact path="/:card" component={Card} />
     </Switch>
         
   </BrowserRouter>,

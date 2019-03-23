@@ -25,6 +25,7 @@
     right: 16px;
     top: 17px;
     color: $lightgrey;
+    cursor:pointer;
   }
 }
 
@@ -117,10 +118,28 @@
       }
 
       &[active="true"] {
-        margin-left: 0;
+        margin-left: 5px;
         color: $sppd;
         font-weight: 700;
       }
     }
+  }
+}
+
+.btn-sppd {
+  border-radius: 25px;
+  background-color: $sppd;
+  border-color: $sppd;
+  color: white;
+
+  &:hover {
+    color:white;
+  }
+
+  &:focus {
+    -webkit-box-shadow: 0px 0px 8px 0px rgba($sppd, 1);
+    -moz-box-shadow: 0px 0px 8px 0px rgba($sppd, 1);
+    box-shadow: 0px 0px 8px 0px rgba($sppd, 1);
+    color:white;
   }
 }

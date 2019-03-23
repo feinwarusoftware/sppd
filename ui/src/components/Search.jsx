@@ -1,184 +1,345 @@
 import React, { Component } from "react";
 import { CardGrid, CardList } from "./index";
+import Cookies from "universal-cookie";
 
 const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi"];
 const rarities = ["common", "rare", "epic", "legendary"];
+const orderBy = ["name", "theme", "rarity", "energy", "health", "damage"];
+
+const cookies = new Cookies();
+
+const defaultView = "grid";
+const defaultAutoload = false;
 
 class Search extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      view: "grid",
-      error: null,
-      isLoaded: false,
-
-      // filters
-      filter: {
-        sort: null,
+      cards: {
+        loaded: false,
+        error: null,
+        total: 0,
+        matched: 0,
+        list: []
+      },
+      filters: {
+        name: null,
         theme: null,
-        rarity: null
-      }
+        rarity: null,
+        sort: null,
+        order: null
+      },
+      options: {
+        view: cookies.get("view") || defaultView,
+        autoload: cookies.get("autoload") === "true" || defaultAutoload
+      },
+
+      // old
+      view: cookies.get("view") || defaultView,
+
+      error: null,
+      isLoaded: false
     };
 
+    this.scrollRef = React.createRef();
   }
+
+  _encodeUrl(url, params) {
+    if (Object.keys(params).length === 0) {
+      return url;
+    }
+
+    const [k, v] = Object.entries(params)[0];
+    url += `?${k}=${v}`;
+
+    for (let [k, v] of Object.entries(params).slice(1)) {
+      url += `&${k}=${v}`;
+    }
+
+    return url;
+  }
+
+  _fetchCards(params) {
+    const baseUrl = "http://dragon.feinwaru.com/api/v1/cards";
+
+    const encodedUrl = this._encodeUrl(baseUrl, params);
+
+    console.log(encodedUrl);
+
+    return new Promise((resolve, reject) => {
+      fetch(encodedUrl)
+        .then(res => res.json())
+        .then(res => {
+          if (res.error != null) {
+            return reject(res.error);
+          }
+
+          resolve(res.data);
+        })
+        .catch(error => reject);
+    });
+  }
+
+  _updateCards(filters) {
+    if (filters == null) {
+      filters = this.state.filters;
+    }
+
+    let params = {};
+    for (let [k, v] of Object.entries(filters)) {
+      if (v != null) {
+        params[k] = v;
+      }
+    }
+
+    this._fetchCards(params)
+
+      .then(data => {
+        this.setState({
+          cards: {
+            loaded: true,
+            error: null,
+            total: data.total,
+            matched: data.matched,
+            list: data.cards
+          }
+        });
+      })
+      .catch(error => {
+        this.setState({
+          cards: {
+            loaded: true,
+            error,
+            total: 0,
+            matched: 0,
+            list: []
+          }
+        });
+      });
+  }
+
+  _changeView(view) {
+    // set cookie
+    cookies.set("view", view, { path: "/" });
+
+    // set state
+    this.setState({
+      options: {
+        ...this.state.options,
+        view
+      }
+    });
+
+    // reload cards
+    this._updateCards();
+  }
+
+  _changeFilter(filter, value) {
+    let filters = {};
+
+    if (filter instanceof Object) {
+      for (let [k, v] of Object.entries(filter)) {
+        if (v === "") {
+          fitler[k] = null;
+        }
+      }
+      filters = {
+        ...this.state.filters,
+        ...filter
+      };
+    } else {
+      filters = {
+        ...this.state.filters,
+        ...{ [filter]: value === "" ? null : value }
+      };
+    }
+
+    this.setState({
+      filters
+    });
+
+    this._updateCards(filters);
+  }
+
+  loadMoreCards() {
+    if (this.state.cards.list.length === this.state.cards.matched) {
+      return;
+    }
+
+    let params = {};
+    for (let [k, v] of Object.entries(this.state.filters)) {
+      if (v != null) {
+        params[k] = v;
+      }
+    }
+    params.page = this.state.cards.list.length / 12;
+
+    this._fetchCards(params)
+
+      .then(data => {
+        this.setState({
+          cards: {
+            loaded: true,
+            error: null,
+            total: data.total,
+            matched: data.matched,
+            list: [...this.state.cards.list, ...data.cards]
+          }
+        });
+      })
+      .catch(error => {
+        this.setState({
+          cards: {
+            loaded: true,
+            error,
+            total: 0,
+            matched: 0,
+            list: []
+          }
+        });
+      });
+  }
+
+  _handleScroll = event => {
+    if (this.scrollRef == null || this.scrollRef.current == null) {
+      return;
+    }
+
+    const top = this.scrollRef.current.getBoundingClientRect().top;
+
+    if (
+      top >= 0 &&
+      top <= window.innerHeight &&
+      this.state.options.autoload === true
+    ) {
+      this.scrollRef = null;
+      this.loadMoreCards();
+    }
+  };
 
   componentDidMount() {
-    let request = "http://localhost/api/v1/cards";
+    window.addEventListener("scroll", this._handleScroll);
 
-    fetch(request)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            cards: result.data.cards
-          });
-        },
-        // warning (nsfw): we don't swallow
-        // Salies note: in fact, I do.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+    this._updateCards();
   }
 
-  changeView = view => {
-    this.setState({ view });
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this._handleScroll);
   }
+
+  gridView = () => {
+    this._changeView("grid");
+  };
+
+  listView = () => {
+    this._changeView("list");
+  };
 
   // Adolf Fitler
   filterTheme = theme => {
-    if (theme === this.state.filter.theme) {
-      theme = null;
+    if (theme === this.state.filters.theme) {
+      return this._changeFilter("theme", null);
     }
 
-    let request = "http://localhost/api/v1/cards";
-
-    let first = true;
-
-    if (theme != null) {
-      if (first === true) {
-        request += "?";
-        first = false;
-      } else {
-        request += "&";
-      }
-      request += `theme=${theme}`;
-    }
-
-    if (this.state.filter.rarity != null) {
-      if (first === true) {
-        request += "?";
-        first = false;
-      } else {
-        request += "&";
-      }
-      request += `rarity=${this.state.filter.rarity}`;
-    }
-
-    fetch(request)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            cards: result.data.cards,
-            filter: {
-              theme,
-              rarity: this.state.filter.rarity
-            }
-          });
-        },
-        // warning (nsfw): we don't swallow
-        // Salies note: in fact, I do.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-            filter: {
-              theme,
-              rarity: this.state.filter.rarity
-            }
-          });
-        }
-      );
-  }
+    this._changeFilter("theme", theme);
+  };
 
   filterRarity = rarity => {
-    if (rarity === this.state.filter.rarity) {
-      rarity = null;
+    if (rarity === this.state.filters.rarity) {
+      return this._changeFilter("rarity", null);
     }
 
-    let request = "http://localhost/api/v1/cards";
+    this._changeFilter("rarity", rarity);
+  };
 
-    let first = true;
+  filterName = name => {
+    this._changeFilter("name", name);
+  };
 
-    if (this.state.filter.theme != null) {
-      if (first === true) {
-        request += "?";
-        first = false;
+  clearFilterName = () => {
+    this._changeFilter("name", null);
+  };
+
+  toggleSort = sort => {
+    if (this.state.filters.sort == null || this.state.filters.sort !== sort) {
+      this._changeFilter({
+        sort,
+        order: 1
+      });
+    } else {
+      if (this.state.filters.order === 1) {
+        this._changeFilter({
+          sort,
+          order: -1
+        });
       } else {
-        request += "&";
+        this._changeFilter({
+          sort: null,
+          order: null
+        });
       }
-      request += `theme=${this.state.filter.theme}`;
     }
+  };
 
-    if (rarity != null) {
-      if (first === true) {
-        request += "?";
-        first = false;
-      } else {
-        request += "&";
-      }
-      request += `rarity=${rarity}`;
-    }
+  toggleAutoload = () => {
+    if (this.state.options.autoload === false) {
+      cookies.set("autoload", true, { path: "/" });
 
-    fetch(request)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            cards: result.data.cards,
-            filter: {
-              rarity,
-              theme: this.state.filter.theme
-            }
-          });
-        },
-        // warning (nsfw): we don't swallow
-        // Salies note: in fact, I do.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-            filter: {
-              rarity,
-              theme: this.state.filter.theme
-            }
-          });
+      this.setState({
+        options: {
+          ...this.state.options,
+          autoload: true
         }
-      );
-  }
+      });
+    } else {
+      cookies.set("autoload", false, { path: "/" });
+
+      this.setState({
+        options: {
+          ...this.state.options,
+          autoload: false
+        }
+      });
+    }
+  };
 
   render() {
     let cardsYay = [];
 
-    if (this.state.isLoaded && this.state.error == null){
-      
-        cardsYay = this.state.cards.map((e, i) => {
-          if (this.state.view === "grid") {
-            return <CardGrid key={i} name={e.name} image={e.image} rarity={e.rarity} theme={e.theme} health={e.health} energy={e.mana_cost} damage={e.damage} characterType={e.character_type} />
-          } else if (this.state.view === "list"){
-            return <CardList key={i} name={e.name} description={e.description} image={e.image} rarity={e.rarity} theme={e.theme} health={e.health} energy={e.mana_cost} damage={e.damage} characterType={e.character_type} />
-          }
+    if (this.state.cards.loaded === true && this.state.error == null) {
+      cardsYay = this.state.cards.list.map((e, i) => {
+        if (this.state.options.view === "grid") {
+          return (
+            <CardGrid
+              key={i}
+              name={e.name}
+              image={e.image}
+              rarity={e.rarity}
+              theme={e.theme}
+              health={e.health}
+              energy={e.mana_cost}
+              damage={e.damage}
+              characterType={e.character_type}
+            />
+          );
+        } else if (this.state.options.view === "list") {
+          return (
+            <CardList
+              key={i}
+              name={e.name}
+              description={e.description}
+              image={e.image}
+              rarity={e.rarity}
+              theme={e.theme}
+              health={e.health}
+              energy={e.mana_cost}
+              damage={e.damage}
+              characterType={e.character_type}
+            />
+          );
         }
-        );
+      });
     }
 
     return (
@@ -188,62 +349,156 @@ class Search extends Component {
             <input
               className="form-control form-control-lg"
               type="text"
-              placeholder="Search 102 cards for..."
+              placeholder={"Search " + this.state.cards.total + " cards for..."}
+              onKeyPress={e => {
+                if (e.key === "Enter") {
+                  this.filterName(e.target.value);
+                }
+              }}
+              ref="search"
             />
-            <i className="fas fa-search fa-lg" />
+            <i
+              className={
+                this.state.filters.name == null
+                  ? "fas fa-lg fa-search"
+                  : "fas fa-lg fa-times"
+              }
+              onClick={() => {
+                if (
+                  this.state.filters.name == null &&
+                  this.refs.search.value != null
+                ) {
+                  this.filterName(this.refs.search.value);
+                } else {
+                  this.refs.search.value = "";
+                  this.clearFilterName();
+                }
+              }}
+            />
           </div>
         </div>
         <div id="result-bar" className="row my-5">
           <div id="results" className="col-10">
-            <h2 className="font-weight-bold mb-0">{cardsYay.length} Matching Results</h2>
+            <h2 className="font-weight-bold mb-0">
+              {this.state.cards.matched} Matching Results
+            </h2>
           </div>
           <div id="views" className="col-2 text-right">
-            <i onClick={() => this.changeView("grid")} active={(this.state.view === "grid").toString()} className="fas fa-th" />
-            <i onClick={() => this.changeView("list")} active={(this.state.view === "list").toString()} className="fas fa-th-list" />
-            <i className="fas fa-spinner" />
+            <i
+              onClick={() => this.gridView()}
+              active={(this.state.options.view === "grid").toString()}
+              className="fas fa-th"
+            />
+            <i
+              onClick={() => this.listView()}
+              active={(this.state.options.view === "list").toString()}
+              className="fas fa-th-list"
+            />
+            <i
+              onClick={() => this.toggleAutoload()}
+              active={(this.state.options.autoload === true).toString()}
+              className="fas fa-spinner"
+            />
           </div>
         </div>
         <div className="row mt-5">
           <div id="filters" className="col-3">
-            <div id="order" className="mb-4">
+            <div id="order" className="mb-5">
               <h4 className="font-weight-bold">Order By</h4>
               <div className="divider" />
-              <p active="true">
-                <i className="fa fa-sort-amount-down" /> Name
-              </p>
-              <p>Energy</p>
-              <p>Rarity</p>
-              <p>Theme</p>
-              <p>Damage</p>
-              <p>Health</p>
+              {/*
+                <p active="true">
+                  <i className="fa fa-sort-amount-down" /> Name
+                </p>
+                <p>Energy</p>
+                <p>Theme</p>
+                <p>Rarity</p>
+                <p>Damage</p>
+                <p>Health</p>
+              */}
+
+              {[
+                orderBy.map((e, i) => (
+                  <p
+                    key={i}
+                    onClick={() => this.toggleSort(e)}
+                    active={(this.state.filters.sort === e).toString()}
+                    className={`capitalism`}
+                  >
+                    <i
+                      className={`${
+                        this.state.filters.sort === e
+                          ? this.state.filters.order === 1
+                            ? "fa fa-sort-amount-up"
+                            : this.state.filters.order === -1
+                            ? "fa fa-sort-amount-down"
+                            : ""
+                          : ""
+                      }`}
+                    />{" "}
+                    {e}
+                  </p>
+                ))
+              ]}
             </div>
             <div className="mb-4">
               <h4 className="font-weight-bold">Theme</h4>
               <div className="divider" />
-              {
-                [themes.map((e, i) => 
-                  <p key={i} onClick={() => this.filterTheme(e)} active={(this.state.filter.theme === e).toString()} className="capitalism">
+              {[
+                themes.map((e, i) => (
+                  <p
+                    key={i}
+                    onClick={() => this.filterTheme(e)}
+                    active={(this.state.filters.theme === e).toString()}
+                    className="capitalism"
+                  >
                     <span /> {e}
                   </p>
-                )]
-              }
+                ))
+              ]}
             </div>
             <div>
               <h4 className="font-weight-bold">Rarity</h4>
               <div className="divider" />
-              {
-                [rarities.map((e, i) => 
-                  <p key={i} onClick={() => this.filterRarity(e)} active={(this.state.filter.rarity === e).toString()} className="capitalism">
+              {[
+                rarities.map((e, i) => (
+                  <p
+                    key={i}
+                    onClick={() => this.filterRarity(e)}
+                    active={(this.state.filters.rarity === e).toString()}
+                    className="capitalism"
+                  >
                     <span /> {e}
                   </p>
-                )]
-              }
+                ))
+              ]}
             </div>
           </div>
 
           <div id="cards" className="col-9">
-            <div className="row">
-              {[cardsYay]}
+            <div className="row">{[cardsYay]}</div>
+            <div className="row justify-content-center">
+              {this.state.cards.list.length !== this.state.cards.matched &&
+              this.state.options.autoload === false ? (
+                <button
+                  onClick={() => this.loadMoreCards()}
+                  className="mt-5 px-4 btn btn-sppd"
+                >
+                  Load More...
+                </button>
+              ) : (
+                ""
+              )}
+
+              {this.state.cards.list.length !== this.state.cards.matched &&
+              this.state.options.autoload === true ? (
+                <>
+                  <div ref={this.scrollRef} />
+                  <p>ayy</p>
+                </>
+              ) : (
+                <p>oof</p>
+              )}
             </div>
           </div>
         </div>

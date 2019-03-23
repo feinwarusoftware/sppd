@@ -56,6 +56,8 @@ class Index extends Component {
                 ].image
               }
               clipPath="url(#banner)"
+              width="1920"
+              height="500"
             />
           </svg>
           <div className="container d-flex justify-content-center align-items-center">

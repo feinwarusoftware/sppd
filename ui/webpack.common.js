@@ -11,7 +11,8 @@ module.exports = {
     },
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "dist"),
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -36,10 +37,13 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+      },
     plugins: [
         new CleanWebpackPlugin(["dist"]),
         new HtmlWebpackPlugin({
-            title: "Feinwaru Software",
+            title: "Feinwaru SPPD // ",
             template: "./template.html"
         })
     ]
