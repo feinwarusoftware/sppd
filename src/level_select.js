@@ -117,7 +117,7 @@ alteredCard = [alteredStats].reduce((a, c) => {
   return a;
 }, alteredCard);
 
-alteredCard.description.replace(/\{(.*?)\}/g, match => {
+alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
   const bracketless = match.slice(1, match.length - 1);
 
   if (alteredCard[bracketless] == null) {
@@ -130,6 +130,10 @@ alteredCard.description.replace(/\{(.*?)\}/g, match => {
     return alteredCard[bracketless];
   }
 });
+
+if (alteredCard.is_power_locked === true) {
+  alteredCard.description = "Power locked at this level/upgrade."
+}
 
 console.log((card => {
   delete card.tech_tree;
