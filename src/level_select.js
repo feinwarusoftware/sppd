@@ -107,7 +107,11 @@ alteredCard = [alteredStats].reduce((a, c) => {
       if (a.power_type === k) {
         a.power_amount += v;
       } else {
-        return console.error("error applying upgrade stats 2");
+        if (a[k] != null) {
+          a[k] += v;
+        } else {
+          return console.error("error applying upgrade stats 2");
+        }
       }
     } else {
       return console.error("error applying upgrade stats 3");

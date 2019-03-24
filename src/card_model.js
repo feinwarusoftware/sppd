@@ -29,11 +29,13 @@ const typeTypes = [
 ];
 
 const characterTypeTypes = [
-    "assasin",
+    "assassin",
     "melee",
     "tank",
     "ranged",
-    "totel"
+    "totem",
+
+    null
 ];
 
 const themeTypes = [
@@ -61,6 +63,11 @@ const powerTypes = [
     "power_hero_poison",
     "power_attack_boost",
     "power_attack_decrease",
+
+    // spell target count
+    "power_target",
+
+    null
 ];
 
 const upgradeTypes = [
@@ -70,9 +77,13 @@ const upgradeTypes = [
     // increase power stats
     ...powerTypes,
 
+    "power_duration",
+    "power_range",
+
     // increases the units passive stats
     "stat_max_health",
-    "stat_damage"
+    "stat_damage",
+    "stat_charged_power_regen"
 ];
 
 const slotSchema = new mongoose.Schema({

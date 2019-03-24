@@ -85,7 +85,7 @@ router.get("/cards", (req, res) => {
                         .sort(sort == null ? {} : { [sort]: order })
                         .skip(page * limit)
                         .limit(limit)
-                        .select({ __v: 0 })
+                        .select({ __v: 0, tech_tree: 0 })
                 
                         .then(cards => {
                             res.json({

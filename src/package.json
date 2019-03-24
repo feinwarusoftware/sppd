@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "mongoose": "^5.4.19",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.3.0"
   }
 }
