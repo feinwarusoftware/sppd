@@ -5,7 +5,7 @@ class CardGrid extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="grid-card col-4 text-center mb-4">
+        <div className="grid-card col-6 col-lg-4 col-xl-3 text-center mb-4">
           <div
             className="grid-img img-fluid"
             style={{

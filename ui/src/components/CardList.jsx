@@ -34,7 +34,7 @@ class CardGrid extends Component {
               }}
             />
           </div> */}
-        <div className="grid-card col-6 mb-3">
+        <div className="grid-card col-12 col-sm-6 mb-3">
           <div
             className="inner"
             style={{

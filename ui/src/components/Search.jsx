@@ -345,7 +345,7 @@ class Search extends Component {
     return (
       <React.Fragment>
         <div className="row">
-          <div id="search" className="col-12">
+          <div id="search" className="col-12 px-sm-0">
             <input
               className="form-control form-control-lg"
               type="text"
@@ -378,12 +378,12 @@ class Search extends Component {
           </div>
         </div>
         <div id="result-bar" className="row my-5">
-          <div id="results" className="col-10">
+          <div id="results" className="col-7 col-md-10 pl-sm-0">
             <h2 className="font-weight-bold mb-0">
               {this.state.cards.matched} Matching Results
             </h2>
           </div>
-          <div id="views" className="col-2 text-right">
+          <div id="views" className="col- col-md-2 text-right pr-sm-0">
             <i
               onClick={() => this.gridView()}
               active={(this.state.options.view === "grid").toString()}
@@ -402,8 +402,9 @@ class Search extends Component {
           </div>
         </div>
         <div className="row mt-5">
-          <div id="filters" className="col-3">
-            <div id="order" className="mb-5">
+          <div id="filters" className="col-12 col-md-3 pl-md-0 mb-5">
+          <div className="row">
+            <div id="order" className="col-6 col-sm-4 col-md-12 mb-5">
               <h4 className="font-weight-bold">Order By</h4>
               <div className="divider" />
               {/*
@@ -441,7 +442,7 @@ class Search extends Component {
                 ))
               ]}
             </div>
-            <div className="mb-4">
+            <div className="col-6 col-sm-4 col-md-12 mb-4">
               <h4 className="font-weight-bold">Theme</h4>
               <div className="divider" />
               {[
@@ -457,7 +458,7 @@ class Search extends Component {
                 ))
               ]}
             </div>
-            <div>
+            <div className="col-6 col-sm-4 col-md-12 ">
               <h4 className="font-weight-bold">Rarity</h4>
               <div className="divider" />
               {[
@@ -473,9 +474,10 @@ class Search extends Component {
                 ))
               ]}
             </div>
+            </div>
           </div>
 
-          <div id="cards" className="col-9">
+          <div id="cards" className="col-12 col-md-9">
             <div className="row">{[cardsYay]}</div>
             <div className="row justify-content-center">
               {this.state.cards.list.length !== this.state.cards.matched &&

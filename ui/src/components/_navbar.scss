@@ -45,4 +45,10 @@ nav {
       opacity: 0.5;
     }
   }
+
+  @media (max-width: 767px){
+    ul {
+      display:none;
+    }
+  }
 }

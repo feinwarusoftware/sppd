@@ -1,8 +1,60 @@
 import React, { Component } from "react";
 import { Navbar, Footer, Search } from "../components";
 
+const rarities = ["common", "rare", "epic", "legendary"];
+
 export default class Card extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      card:{
+        loaded: false,
+        data: {}
+      }
+    }
+  }
+
+  getCard(cardId){
+    const url = `http://dragon.feinwaru.com/api/v1/cards/${cardId}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(info => {
+      console.log(info.data);
+      this.setState({card:{loaded:true, data:info.data}})
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  fixDescription(card){
+    if (alteredCard.is_power_locked === true) {
+      alteredCard.description = "Power locked at this level/upgrade."
+    }
+    else{
+      alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
+        const bracketless = match.slice(1, match.length - 1);
+      
+        if (alteredCard[bracketless] == null) {
+          if (bracketless === alteredCard.power_type) {
+            return alteredCard.power_amount;
+          } else {
+            return "undefined";
+          }
+        } else {
+          return alteredCard[bracketless];
+        }
+      });
+    }
+  }
+
   render() {
+    if (this.state.card.loaded === false) {
+      this.getCard('5c9801d83e3f9d0448ddacda');
+    }
+
     return (
       <div>
         <Navbar />
@@ -10,24 +62,24 @@ export default class Card extends Component {
           <div className="row">
             <div className="col-4" />
             <div id="card-info" className="col-8">
-              <h1 className="font-weight-bold">Bounty Hunter Kyle</h1>
+              <h1 className="font-weight-bold">{this.state.card.data.name}</h1>
               <h5 id="desc" className="my-3 font-italic">
                 Flying. Gives 1 bonus damage to all allies when he hits an
                 enemy. Heals 40 Health to all allies when he kills an enemy.
               </h5>
               <h4 id="class" className="font-weight-bold">
-                Epic | Ranged
+                <span className="capitalism">{rarities[this.state.card.data.rarity ]}</span> | <span className="capitalism">{this.state.card.data.character_type}</span>
               </h4>
               <h4 id="quickstats" className="font-weight-bold">
                 <span className="light-blue-text">
-                  <i className="fa fa-bolt" aria-hidden="true" /> 12
+                  <i className="fa fa-bolt" aria-hidden="true" /> {this.state.card.data.mana_cost}
                 </span>{" "}
                 <span className="red-text pl-2">
-                  <i className="fa fa-heart" aria-hidden="true" /> 12
+                  <i className="fa fa-heart" aria-hidden="true" /> {this.state.card.data.health}
                 </span>{" "}
                 <span className="orange-text pl-2">
                   <i className="fas fa-swords" aria-hidden="true" />{" "}
-                  <span id="damage">23</span>
+                  <span id="damage">{this.state.card.data.damage}</span>
                 </span>
               </h4>
 
