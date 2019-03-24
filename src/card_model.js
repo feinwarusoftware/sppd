@@ -2,60 +2,95 @@
 
 const mongoose = require("mongoose");
 
-const powerTypes = [
-    "none",
-    "heal",
-    "hero_heal",
-    "max_hp_gain",
-    "max_hp_loss",
-    "summon_level",
-    "damage",
-    "poison_amount",
-    "hero_poison",
-    "attack_boost",
-    "attack_decrease"
+const defValidEnum = list => ({
+    default: list[0],
+    type: String,
+    enum: list
+});
+
+const defValidString = {
+    default: "",
+    type: String
+};
+
+const defValidNumber = {
+    default: 0,
+    type: Number
+};
+
+const defValidBool = {
+    default: false,
+    type: Boolean
+};
+
+const typeTypes = [
+    "character",
+    "spell"
 ];
 
-const cardTechTreeSlotSchema = new mongoose.Schema({
-    property: {
-        default: "none",
-        type: String,
-        enum: powerTypes
-    },
-    value: {
-        default: 0,
-        type: Number
-    }
+const characterTypeTypes = [
+    "assasin",
+    "melee",
+    "tank",
+    "ranged",
+    "totel"
+];
+
+const themeTypes = [
+    "adventure",
+    "mystical",
+    "sci-fi",
+    "fantasy",
+    "general"
+];
+
+const castAreaTypes = [
+    "own_side",
+    "anywhere"
+];
+
+const powerTypes = [
+    "power_heal",
+    "power_hero_heal",
+    "power_max_hp_gain",
+    "power_max_hp_loss",
+    "power_summon_level",
+    "power_damage",
+    "power_hero_damage",
+    "power_poison",
+    "power_hero_poison",
+    "power_attack_boost",
+    "power_attack_decrease",
+];
+
+const upgradeTypes = [
+    // unlocks a locked power
+    "power_unlock",
+
+    // increase power stats
+    ...powerTypes,
+
+    // increases the units passive stats
+    "stat_max_health",
+    "stat_damage"
+];
+
+const slotSchema = new mongoose.Schema({
+    property: defValidEnum(upgradeTypes),
+    value: defValidNumber
 }, {
     _id: false
 });
 
-const cardTechTreeEvolveSchema = new mongoose.Schema({
-    slots: [ cardTechTreeSlotSchema ]
+const levelSchema = new mongoose.Schema({
+    slots: [ slotSchema ]
 }, {
     _id: false
 });
 
-const cardTechTreeSchema = new mongoose.Schema({
-    slots: [ cardTechTreeSlotSchema ],
-    evolve: [ cardTechTreeEvolveSchema ]
-}, {
-    _id: false
-});
-
-const cardRequirementsSchema = new mongoose.Schema({
-    min_episode_completed: {
-        default: 0,
-        type: Number
-    },
-    min_player_level: {
-        default: 0,
-        type: Number
-    },
-    min_pvp_rank: {
-        default: 0,
-        type: Number
-    }
+const techTreeSchema = new mongoose.Schema({
+    slots: [ slotSchema ],
+    levels: [ levelSchema ]
 }, {
     _id: false
 });
@@ -63,158 +98,52 @@ const cardRequirementsSchema = new mongoose.Schema({
 const cardSchema = new mongoose.Schema({
     // _id
 
-    // basic info
-    visible: {
-        default: true,
-        type: Boolean
-    },
-    can_attack: {
-        default: true,
-        type: Boolean
-    },
-
-    // basic visible
     name: {
         required: true,
         type: String
     },
-    aliases: [ String ],
-    description: {
-        default: null,
-        type: String  
-    },
-    image: {
-        default: null,
-        type: String
-    },
+    description: defValidString,
+    image: defValidString,
+    mana_cost: defValidNumber,
+    damage: defValidNumber,
+    health: defValidNumber,
+    type: defValidEnum(typeTypes),
+    character_type: defValidEnum(characterTypeTypes),
+    rarity: defValidNumber,
+    theme: defValidEnum(themeTypes),
 
-    // basic stats
-    mana_cost: {
-        default: 0,
-        type: Number
-    },
-    damage: {
-        default: 0,
-        type: Number
-    },
-    health: {
-        default: 0,
-        type: Number
-    },
-    health_loss: {
-        default: 0,
-        type: Number
-    },
-    type: {
-        default: "character",
-        type: String,
-        enum: ["character", "spell"]
-    },
-    character_type: {
-        default: "melee",
-        type: String,
-        enum: ["ranged", "assasin", "melee", "tank", "totem"]
-    },
-    rarity: {
-        default: "common",
-        type: String,
-        enum: ["common", "rare", "epic", "legendary"]
-    },
-    theme: {
-        default: "fantasy",
-        type: String,
-        enum: ["adventure", "mystical", "sci-fi", "fantasy", "general"]
-    },
+    cast_area: defValidEnum(castAreaTypes),
 
-    // adv stats
-    attack_range: {
-        default: 0,
-        type: Number
-    },
-    time_to_reach_max_velocity: {
-        default: 0,
-        type: Number
-    },
-    max_velocity: {
-        default: 0,
-        type: Number
-    },
-    time_in_between_attacks: {
-        default: 0,
-        type: Number
-    },
-    aoe_attack_type: {
-        default: false
-    },
-    aoe_damage_percentage: {
-        default: 0,
-        type: Number
-    },
-    aoe_radius: {
-        default: 0,
-        type: Number
-    },
-    aoe_knockback_percentage: {
-        default: 0,
-        type: Number
-    },
-    targeting_type: {
-        default: "ground",
-        type: String,
-        enum: ["ground", "both"]
-    },
-    pre_attack_delay: {
-        default: 0,
-        type: Number
-    },
-    cast_area: {
-        default: "ownside",
-        type: String,
-        enum: ["ownside", "anywhere"]
-    },
-    child_unit_limit: {
-        default: 0,
-        type: Number
-    },
-    agro_range_multiplier: {
-        default: 0,
-        type: Number
-    },
-    knockback_impulse: {
-        default: 0,
-        type: Number
-    },
-    knockback_angle_degrees: {
-        default: 0,
-        type: Number
-    },
-    requirements: cardRequirementsSchema,
+    max_velocity: defValidNumber,
+    time_to_reach_max_velocity: defValidNumber,
+    agro_range_multiplier: defValidNumber,
 
-    // power stats
-    power_type: {
-        default: "none",
-        type: String,
-        enum: powerTypes
-    },
-    power_duration: {
-        default: 0,
-        type: Number
-    },
-    power_amount: {
-        default: 0,
-        type: Number
-    },
-    charged_power_regen: {
-        default: 0,
-        type: Number
-    },
-    charged_power_radius: {
-        default: 0,
-        type: Number
-    },
-    
-    // tech tree
-    tech_tree: cardTechTreeSchema
+    can_attack: defValidBool,
+    attack_range: defValidNumber,
+    pre_attack_delay: defValidNumber,
+    knockback: defValidNumber,
+    knockback_angle: defValidNumber,
+    time_between_attacks: defValidNumber,
+
+    has_power: defValidBool,
+    power_type: defValidEnum(powerTypes),
+    power_amount: defValidNumber,
+    power_duration: defValidNumber,
+    is_power_charged: defValidBool,
+    charged_power_regen: defValidNumber,
+    charged_power_radius: defValidNumber,
+    is_power_locked: defValidBool,
+
+    has_aoe: defValidBool,
+    aoe_damage_percentage: defValidNumber,
+    aoe_knockback_percentage: defValidNumber,
+    aoe_radius: defValidNumber,
+
+    min_episode_completed: defValidNumber,
+    min_pvp_rank: defValidNumber,
+    min_player_level: defValidNumber,
+
+    tech_tree: techTreeSchema
 });
 
 module.exports = mongoose.model("Card", cardSchema);
