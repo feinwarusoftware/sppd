@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Navbar, Footer, Search } from "../components";
 
 const rarities = ["common", "rare", "epic", "legendary"];
+const castArea = {
+  own_area:"Own Area",
+  anywhere:"Anywhere"
+}
 
 export default class Card extends Component {
 
@@ -21,33 +25,33 @@ export default class Card extends Component {
     fetch(url)
     .then(res => res.json())
     .then(info => {
-      console.log(info.data);
-      this.setState({card:{loaded:true, data:info.data}})
+      let card = info.data;
+      console.log(card);
+      //fixes card description (I guess)
+      if (card.is_power_locked === true) {
+        card.description = "Power locked at this level/upgrade."
+      }
+      else{
+        card.description = card.description.replace(/\{(.*?)\}/g, match => {
+          const bracketless = match.slice(1, match.length - 1);
+        
+          if (card[bracketless] == null) {
+            if (bracketless === card.power_type) {
+              return card.power_amount;
+            } else {
+              return "undefined";
+            }
+          } else {
+            return card[bracketless];
+          }
+        });
+      }
+
+      this.setState({card:{loaded:true, data:card}})
     })
     .catch(error => {
       console.log(error);
     });
-  }
-
-  fixDescription(card){
-    if (alteredCard.is_power_locked === true) {
-      alteredCard.description = "Power locked at this level/upgrade."
-    }
-    else{
-      alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
-        const bracketless = match.slice(1, match.length - 1);
-      
-        if (alteredCard[bracketless] == null) {
-          if (bracketless === alteredCard.power_type) {
-            return alteredCard.power_amount;
-          } else {
-            return "undefined";
-          }
-        } else {
-          return alteredCard[bracketless];
-        }
-      });
-    }
   }
 
   render() {
@@ -64,8 +68,7 @@ export default class Card extends Component {
             <div id="card-info" className="col-8">
               <h1 className="font-weight-bold">{this.state.card.data.name}</h1>
               <h5 id="desc" className="my-3 font-italic">
-                Flying. Gives 1 bonus damage to all allies when he hits an
-                enemy. Heals 40 Health to all allies when he kills an enemy.
+                {this.state.card.data.description}
               </h5>
               <h4 id="class" className="font-weight-bold">
                 <span className="capitalism">{rarities[this.state.card.data.rarity ]}</span> | <span className="capitalism">{this.state.card.data.character_type}</span>
@@ -174,25 +177,25 @@ export default class Card extends Component {
                   <span className="font-weight-bold dark-grey-text">
                     Cast Area:
                   </span>
-                  <span>Own Side</span>
+                  <span>{castArea[this.state.card.data.cast_area]}</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Max Velocity:
                   </span>
-                  <span>0.855</span>
+                  <span>{this.state.card.data.max_velocity}</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Time To Reach Max Velocity:
                   </span>
-                  <span>0.1 seconds</span>
+                  <span>{this.state.card.data.time_to_reach_max_velocity} seconds</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Agro Range Multiplier:
                   </span>
-                  <span>1.2x</span>
+                  <span>{this.state.card.data.agro_range_multiplier}x</span>
                 </li>
               </ul>
 
