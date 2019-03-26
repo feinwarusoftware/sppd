@@ -3,6 +3,33 @@ import { colours } from "../utils";
 
 class CardGrid extends Component {
   render() {
+    let rarityString;
+    switch(this.props.rarity) {
+      case 0: {
+        rarityString = "common";
+        break;
+      };
+      case 1: {
+        rarityString = "rare";
+        break;
+      };
+      case 2: {
+        rarityString = "epic";
+        break;
+      };
+      case 3: {
+        rarityString = "legendary";
+        break;
+      }
+    }
+
+    let charTypeString;
+    if (this.props.type === "spell") {
+      charTypeString = "spell";
+    } else {
+      charTypeString = this.props.characterType;
+    }
+
     return (
       <React.Fragment>
         {/* <div className="card-list-img grid-card col-2 text-center">
@@ -45,15 +72,15 @@ class CardGrid extends Component {
               })`,
               borderImageSource: `linear-gradient(180deg, ${
                 colours[
-                  this.props.rarity === "common"
+                  rarityString === "common"
                     ? this.props.theme
-                    : this.props.rarity
+                    : rarityString
                 ]
               } 0%, ${
                 colours[
-                  this.props.rarity === "common"
+                  rarityString === "common"
                     ? this.props.theme
-                    : this.props.rarity
+                    : rarityString
                 ]
               } 30%, ${colours[this.props.theme]} 30%, ${
                 colours[this.props.theme]
@@ -63,7 +90,7 @@ class CardGrid extends Component {
             <div className="inner-content px-3">
               <h4 className="mt-2 mb-0 font-weight-bold">{this.props.name}</h4>
               <h5 className="mt-0 font-weight-bold capitalism">
-                {this.props.rarity} | {this.props.characterType}
+                {rarityString} | {charTypeString}
               </h5>
               <h6 className="font-weight-bold">
                 <span className="light-blue-text">

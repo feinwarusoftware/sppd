@@ -3,11 +3,30 @@
 const router = require("express").Router();
 
 const CardModel = require("./card_model");
+const UpdateModel = require("./update_model");
 
 const cardPageLimit = 12;
+const updatePageLimit = 12;
+
+const resForbidden = {
+    code: 403,
+    success: false,
+    data: null,
+    error: "You are forbidden from accessing this route."
+};
+
+const apiToken = process.env.token || (() => { throw("api token not specified") })();
+
+const allowCors = res => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+};
+
+const validateToken = token => {
+    return apiToken === token;
+}
 
 router.get("/", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
 
     // returns basic api info
 
@@ -23,7 +42,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/docs", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
 
     // returns md docs
 
@@ -32,11 +51,22 @@ router.get("/docs", (req, res) => {
         code: 200,
         success: true,
         data: {
+            key: {
+                "*": "requires token"
+            },
             routes: [
                 "GET /",
                 "GET /docs",
                 "GET /cards",
-                "GET /cards/:id"
+                "*POST /cards",
+                "GET /cards/:id",
+                "*PUT /cards/:id",
+                "*DELETE /cards/:id",
+                "GET /updated",
+                "*POST /updated",
+                "GET /updated/:id",
+                "*PUT /updated/:id",
+                "*DELETE /updated/:id",
             ]
         },
         error: null
@@ -44,7 +74,7 @@ router.get("/docs", (req, res) => {
 });
 
 router.get("/cards", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
     
     // name
     // theme
@@ -128,7 +158,11 @@ router.get("/cards", (req, res) => {
 });
 
 router.post("/cards", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
 
     const card = new CardModel(req.body);
 
@@ -154,8 +188,7 @@ router.post("/cards", (req, res) => {
 });
 
 router.get("/cards/:id", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    // id = mongo_id
+    allowCors(res);
 
     CardModel
         .findById(req.params.id)
@@ -163,7 +196,7 @@ router.get("/cards/:id", (req, res) => {
 
         .then(card => {
             if (card == null) {
-                return req.json({
+                return res.json({
                     code: 404,
                     success: true,
                     data: null,
@@ -189,7 +222,11 @@ router.get("/cards/:id", (req, res) => {
 });
 
 router.patch("/cards/:id", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
 
     CardModel
         .updateOne({ _id: req.params.id }, req.body)
@@ -213,9 +250,222 @@ router.patch("/cards/:id", (req, res) => {
 });
 
 router.delete("/cards/:id", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
 
     CardModel
+        .deleteOne({ _id: req.params.id })
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
+router.get("/updates", (req, res) => {
+    allowCors(res);
+
+    const title = req.query.title;
+    
+    const sort = req.query.sort;
+    const order = req.query.order || 1;
+
+    const search = {
+        ...( title == null ? {} : { title: { $regex: title, $options: "i" } } ),
+    };
+
+    const page = req.query.page || 0;
+    const limit = Math.min(req.query.limit || updatePageLimit, updatePageLimit);
+
+    UpdateModel
+        .count()
+
+        .then(total => {
+            if (total === 0) {
+                return res.json({
+                    code: 200,
+                    success: true,
+                    data: [],
+                    error: null
+                });
+            }
+
+            UpdateModel
+                .count(search)
+
+                .then(matched => {
+                    if (matched === 0) {
+                        return res.json({
+                            code: 200,
+                            success: true,
+                            data: [],
+                            error: null
+                        });
+                    }
+
+                    UpdateModel
+                        .find(search)
+                        .collation({ locale: "en" })
+                        .sort(sort == null ? {} : { [sort]: order })
+                        .skip(page * limit)
+                        .limit(limit)
+                        .select({ __v: 0 })
+        
+                        .then(updates => {
+                            return res.json({
+                                code: 200,
+                                success: true,
+                                data: {
+                                    total,
+                                    matched,
+                                    updates
+                                },
+                                error: null
+                            });
+                        })
+                        .catch(error => {
+                            res.json({
+                                code: 500,
+                                success: false,
+                                data: null,
+                                error
+                            });
+                        });
+                })
+                .catch(error => {
+                    res.json({
+                        code: 500,
+                        success: false,
+                        data: null,
+                        error
+                    });
+                });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
+router.post("/updates", (req, res) => {
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
+
+    const update = new UpdateModel(req.body);
+
+    update
+        .save()
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
+router.get("/updates/:id", (req, res) => {
+    allowCors(res);
+
+    UpdateModel
+        .findById(req.params.id)
+        .select({ __v: 0 })
+
+        .then(update => {
+            if (update == null) {
+                return res.json({
+                    code: 404,
+                    success: true,
+                    data: null,
+                    error: null
+                });
+            }
+
+            res.json({
+                code: 200,
+                success: true,
+                data: card,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
+router.patch("/updates/:id", (req, res) => {
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
+
+    UpdateModel
+        .updateOne({ _id: req.params.id }, req.body)
+
+        .then(() => {
+            res.json({
+                code: 200,
+                success: true,
+                data: null,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
+router.delete("/updates/:id", (req, res) => {
+    allowCors(res);
+
+    if (!validateToken(req.headers["xxx-access-token"])) {
+        return res.json(resForbidden);
+    }
+
+    UpdateModel
         .deleteOne({ _id: req.params.id })
 
         .then(() => {
