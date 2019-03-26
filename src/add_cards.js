@@ -30,7 +30,7 @@ try {
     
     let res;
     try {
-      res = await fetch("http://dragon.feinwaru.com/api/v1/cards", {
+      res = await fetch("http://localhost/api/v1/cards", {
         method: "post",
         body: JSON.stringify(converted),
         headers: { "Content-Type": "application/json" }

@@ -66,18 +66,23 @@ const convert = card => {
   switch(card.Theme) {
     case "Fan": {
       out.theme = "fantasy";
+      break;
     };
     case "Adv": {
       out.theme = "adventure";
+      break;
     };
     case "Sci": {
       out.theme = "sci-fi";
+      break;
     };
     case "Gen": {
       out.theme = "general";
+      break;
     };
     case "Mys": {
       out.theme = "mystical";
+      break;
     };
   }
 

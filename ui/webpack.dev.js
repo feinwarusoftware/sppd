@@ -11,7 +11,7 @@ module.exports = merge(common, {
         port: 80,
         host: "0.0.0.0",
         allowedHosts: [
-            "dragon.feinwaru.com"
+            "localhost"
         ],
         compress: true,
         contentBase: "./dist"

@@ -43,6 +43,9 @@ class Search extends Component {
     };
 
     this.scrollRef = React.createRef();
+
+    //
+    this.loadingMoreCards = false;
   }
 
   _encodeUrl(url, params) {
@@ -61,8 +64,12 @@ class Search extends Component {
   }
 
   _fetchCards(params) {
-    const baseUrl = "http://dragon.feinwaru.com/api/v1/cards";
+    const baseUrl = "http://localhost/api/v1/cards";
 
+    // its called mana cost in the json
+    if (params.sort === "energy") {
+      params.sort = "mana_cost";
+    }
     const encodedUrl = this._encodeUrl(baseUrl, params);
 
     console.log(encodedUrl);
@@ -131,8 +138,8 @@ class Search extends Component {
       }
     });
 
-    // reload cards
-    this._updateCards();
+    // reload cards - no need for this if its just a view change
+    // this._updateCards();
   }
 
   _changeFilter(filter, value) {
@@ -163,6 +170,11 @@ class Search extends Component {
   }
 
   loadMoreCards() {
+    if (this.loadingMoreCards === true) {
+      return;
+    }
+    this.loadingMoreCards = true;
+
     if (this.state.cards.list.length === this.state.cards.matched) {
       return;
     }
@@ -178,6 +190,8 @@ class Search extends Component {
     this._fetchCards(params)
 
       .then(data => {
+        this.loadingMoreCards = false;
+
         this.setState({
           cards: {
             loaded: true,
@@ -189,6 +203,8 @@ class Search extends Component {
         });
       })
       .catch(error => {
+        this.loadingMoreCards = false;
+
         this.setState({
           cards: {
             loaded: true,
@@ -213,7 +229,6 @@ class Search extends Component {
       top <= window.innerHeight &&
       this.state.options.autoload === true
     ) {
-      this.scrollRef = null;
       this.loadMoreCards();
     }
   };
@@ -223,6 +238,24 @@ class Search extends Component {
 
     this._updateCards();
   }
+
+  /*
+  componentDidMount() {
+    const options = {
+      root: this.rootRef.current,
+      rootMargin: "0px",
+      threshold: 1.0
+    }
+
+    const observer = new IntersectionObserver(() => {
+      this.loadMoreCards();
+    }, options);
+
+    observer.observe(this.rootRef.current);
+
+    this._updateCards();
+  }
+  */
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this._handleScroll);
@@ -245,12 +278,31 @@ class Search extends Component {
     this._changeFilter("theme", theme);
   };
 
+  _rarityAsInt = rarity => {
+    switch(rarity) {
+      case "common": {
+        return 0;
+      }
+      case "rare": {
+        return 1;
+      }
+      case "epic": {
+        return 2;
+      }
+      case "legendary": {
+        return 3;
+      }
+    }
+
+    return -1;
+  }
+
   filterRarity = rarity => {
-    if (rarity === this.state.filters.rarity) {
+    if (this._rarityAsInt(rarity) === this.state.filters.rarity) {
       return this._changeFilter("rarity", null);
     }
 
-    this._changeFilter("rarity", rarity);
+    this._changeFilter("rarity", this._rarityAsInt(rarity));
   };
 
   filterName = name => {
@@ -320,6 +372,7 @@ class Search extends Component {
               health={e.health}
               energy={e.mana_cost}
               damage={e.damage}
+              type={e.type}
               characterType={e.character_type}
             />
           );
@@ -335,6 +388,7 @@ class Search extends Component {
               health={e.health}
               energy={e.mana_cost}
               damage={e.damage}
+              type={e.type}
               characterType={e.character_type}
             />
           );
@@ -466,7 +520,7 @@ class Search extends Component {
                   <p
                     key={i}
                     onClick={() => this.filterRarity(e)}
-                    active={(this.state.filters.rarity === e).toString()}
+                    active={(this.state.filters.rarity === this._rarityAsInt(e)).toString()}
                     className="capitalism"
                   >
                     <span /> {e}
@@ -494,12 +548,9 @@ class Search extends Component {
 
               {this.state.cards.list.length !== this.state.cards.matched &&
               this.state.options.autoload === true ? (
-                <>
-                  <div ref={this.scrollRef} />
-                  <p>ayy</p>
-                </>
+                <div ref={this.scrollRef} />
               ) : (
-                <p>oof</p>
+                ""
               )}
             </div>
           </div>

@@ -21,7 +21,7 @@ export default class Card extends Component {
   }
 
   getCard(cardId){
-    const url = `http://dragon.feinwaru.com/api/v1/cards/${cardId}`;
+    const url = `http://localhost/api/v1/cards/${cardId}`;
     fetch(url)
     .then(res => res.json())
     .then(info => {
