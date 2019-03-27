@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { CardGrid, CardList } from "./index";
 import Cookies from "universal-cookie";
 
+import { Link } from "react-router-dom";
+
 const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi"];
 const rarities = ["common", "rare", "epic", "legendary"];
 const orderBy = ["name", "theme", "rarity", "energy", "health", "damage"];

@@ -162,6 +162,15 @@ const convert = card => {
     slots: e.Slots.map(transformSlot)
   }));
 
+  // no need to leep through level slots as
+  // currently there are no power unlocks on level up
+  for (let slot of out.tech_tree.slots) {
+    if (slot.property === "power_unlock") {
+      out.is_power_locked = true;
+      break;
+    }
+  }
+
   return out;
 }
 

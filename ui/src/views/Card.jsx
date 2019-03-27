@@ -7,55 +7,199 @@ const castArea = {
   anywhere:"Anywhere"
 }
 
+const testingCardId = "5c9a44366b2ebf33e83fa4c1";
+
 export default class Card extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
-      card:{
-        loaded: false,
-        data: {}
-      }
+      loaded: false,
+      error: null,
+      data: null,
+      // type: "u",
+      // value: 1,
+      altered: null
     }
   }
 
-  getCard(cardId){
-    const url = `http://localhost/api/v1/cards/${cardId}`;
+  fetchCardData = () => {
+    const url = `http://localhost/api/v1/cards/${testingCardId}`;
+
     fetch(url)
+    
     .then(res => res.json())
-    .then(info => {
-      let card = info.data;
-      console.log(card);
-      //fixes card description (I guess)
-      if (card.is_power_locked === true) {
-        card.description = "Power locked at this level/upgrade."
-      }
-      else{
-        card.description = card.description.replace(/\{(.*?)\}/g, match => {
-          const bracketless = match.slice(1, match.length - 1);
-        
-          if (card[bracketless] == null) {
-            if (bracketless === card.power_type) {
-              return card.power_amount;
-            } else {
-              return "undefined";
-            }
-          } else {
-            return card[bracketless];
-          }
+    .then(res => {
+      if (res.error != null) {
+        return this.setState({
+          loaded: true,
+          error: res.error
         });
       }
 
-      this.setState({card:{loaded:true, data:card}})
+      this.setState({
+        loaded: true,
+        data: res.data
+      });
     })
     .catch(error => {
-      console.log(error);
+      this.setState({
+        loaded: true,
+        error
+      });
     });
   }
 
+  updateCardData = (utype, uvalue) => {
+    const card = this.state.data;
+
+    const upgradeSequence = [4, 10, 10, 15, 15, 15];
+
+    const baseLevel = 1;
+    const baseUpgrade = 1;
+
+    const type = utype;
+    if (type == null) {
+      return console.error("no type specified");
+    }
+    if (type !== "u" && type !== "l") {
+      return console.error("incorrect type specified");
+    }
+
+    const value = parseInt(uvalue);
+    if (isNaN(value) === true) {
+      return console.error("no value specified");
+    }
+    if (typeof value !== "number") {
+      return console.error("incorrect value specified");
+    }
+    if (value < 1 || (type === "l" && value > 7) || (type === "u" && value > 70)) {
+      return console.error("out of bounds value specified");
+    }
+
+    let requiredLevels = 0;
+    let requiredUpgrades = 0;
+
+    if (type === "u") {
+      let currentLevels = 0;
+      let currentUpgrades = 0;
+
+      for (let i = 0; i < upgradeSequence.length; i++) {
+        currentUpgrades += upgradeSequence[i];
+        
+        if (value < (currentUpgrades + baseUpgrade + 1)) {
+          break;
+        }
+
+        currentLevels++;
+      }
+
+      requiredLevels = currentLevels;
+      requiredUpgrades = value - baseUpgrade;
+    }
+
+    if (type === "l") {
+      requiredLevels = value - baseLevel;
+      requiredUpgrades = upgradeSequence.slice(0, requiredLevels).reduce((a, c) => a + c, 0);
+    }
+
+    const addReduceSlot = (a, c) => a[c.property] == null ? { ...a, [c.property]: c.value } : { ...a, [c.property]: a[c.property] + c.value };
+    const alteredStats = card.tech_tree.slots.slice(0, requiredUpgrades).reduce(addReduceSlot, card.tech_tree.levels.slice(0, requiredLevels).reduce((a, c) => [ ...a, ...c.slots ], []).reduce(addReduceSlot, {}));
+
+    // stat merge
+    let alteredCard = { ...card };
+
+    if (alteredStats.power_unlock != null) {
+      alteredCard.is_power_locked = false;
+      delete alteredStats.power_unlock;
+    }
+
+    alteredCard = [alteredStats].reduce((a, c) => {
+      for (let [k, v] of Object.entries(c)) {
+        if (k.startsWith("stat_")) {
+          if (a[k.slice(5)] != null) {
+            a[k.slice(5)] += v;
+          } else if (a[k.slice(9)] != null) { 
+            a[k.slice(9)] += v;
+          } else {
+            return console.error("error applying upgrade stats 1");
+          }
+        } else if (k.startsWith("power_")) {
+          if (a.power_type === k) {
+            a.power_amount += v;
+          } else {
+            if (a[k] != null) {
+              a[k] += v;
+            } else {
+              return console.error("error applying upgrade stats 2");
+            }
+          }
+        } else {
+          return console.error("error applying upgrade stats 3");
+        }
+      }
+
+      return a;
+    }, alteredCard);
+
+    alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
+      const bracketless = match.slice(1, match.length - 1);
+
+      if (alteredCard[bracketless] == null) {
+        if (bracketless === alteredCard.power_type) {
+          return alteredCard.power_amount;
+        } else {
+          return "undefined";
+        }
+      } else {
+        return alteredCard[bracketless];
+      }
+    });
+
+    if (alteredCard.is_power_locked === true) {
+      alteredCard.description = "Power locked at this level/upgrade."
+    }
+
+    this.setState({
+      altered: alteredCard
+    });
+  }
+
+  handleDropdownChange = change => {
+    const dropdownText = change.target.value;
+    const split = dropdownText.split(" ");
+    
+    let type = null;
+    let value = null;
+
+    if (split[0].toLowerCase() === "upgrade") {
+      type = "u";
+    } else {
+      type = "l";
+    }
+
+    const num = parseInt(split[1]);
+    // yes i realise im handling this error twice now, fuck me
+    if (isNaN(num) === true) {
+      return console.error("u/l value nan");
+    }
+
+    value = num;
+
+    this.updateCardData(type, value);
+  }
+
   render() {
-    if (this.state.card.loaded === false) {
-      this.getCard('5c9801d83e3f9d0448ddacda');
+    if (this.state.loaded === false || this.state.error != null) {
+      this.fetchCardData();
+      
+      return <h1>loading...</h1>
+    }
+
+    if (this.state.altered == null) {
+      this.updateCardData("u", 1);
+
+      return <h1>still loading...</h1>
     }
 
     return (
@@ -65,30 +209,30 @@ export default class Card extends Component {
           <div className="row">
             <div className="col-4" />
             <div id="card-info" className="col-8">
-              <h1 className="font-weight-bold">{this.state.card.data.name}</h1>
+              <h1 className="font-weight-bold">{this.state.altered.name}</h1>
               <h5 id="desc" className="my-3 font-italic">
-                {this.state.card.data.description}
+                {this.state.altered.description}
               </h5>
               <h4 id="class" className="font-weight-bold">
-                <span className="capitalism">{rarities[this.state.card.data.rarity ]}</span> | <span className="capitalism">{this.state.card.data.character_type}</span>
+                <span className="capitalism">{rarities[this.state.altered.rarity]}</span> | <span className="capitalism">{this.state.altered.type === "spell" ? "spell" : this.state.altered.character_type}</span>
               </h4>
               <h4 id="quickstats" className="font-weight-bold">
                 <span className="light-blue-text">
-                  <i className="fa fa-bolt" aria-hidden="true" /> {this.state.card.data.mana_cost}
+                  <i className="fa fa-bolt" aria-hidden="true" /> {this.state.altered.mana_cost}
                 </span>{" "}
                 <span className="red-text pl-2">
-                  <i className="fa fa-heart" aria-hidden="true" /> {this.state.card.data.health}
+                  <i className="fa fa-heart" aria-hidden="true" /> {this.state.altered.health}
                 </span>{" "}
                 <span className="orange-text pl-2">
-                  <i className="fas fa-swords" aria-hidden="true" />{" "}
-                  <span id="damage">{this.state.card.data.damage}</span>
+                  <i className="fas fa-swords" aria-hidden="true" />
+                  <span id="damage">{this.state.altered.damage}</span>
                 </span>
               </h4>
 
               <h4 className="font-weight-bold mt-3">Select an upgrade level</h4>
               <div className="divider" />
               <div className="form-group">
-                <select className="form-control" id="exampleFormControlSelect1">
+                <select className="form-control" id="exampleFormControlSelect1" onChange={change => this.handleDropdownChange(change)}>
                   <option>Upgrade 1 / 70</option>
                   <option>Upgrade 2 / 70</option>
                   <option>Upgrade 3 / 70</option>
@@ -176,25 +320,25 @@ export default class Card extends Component {
                   <span className="font-weight-bold dark-grey-text">
                     Cast Area:
                   </span>
-                  <span>{castArea[this.state.card.data.cast_area]}</span>
+                  <span>{castArea["temp"]}</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Max Velocity:
                   </span>
-                  <span>{this.state.card.data.max_velocity}</span>
+                  <span>{"temp"}</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Time To Reach Max Velocity:
                   </span>
-                  <span>{this.state.card.data.time_to_reach_max_velocity} seconds</span>
+                  <span>{"temp"} seconds</span>
                 </li>
                 <li>
                   <span className="font-weight-bold dark-grey-text">
                     Agro Range Multiplier:
                   </span>
-                  <span>{this.state.card.data.agro_range_multiplier}x</span>
+                  <span>{"temp"}x</span>
                 </li>
               </ul>
 

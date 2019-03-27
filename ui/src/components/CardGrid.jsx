@@ -1,8 +1,28 @@
 import React, { Component } from "react";
 import { colours } from "../utils";
 
+import { Redirect } from "react-router";
+
 class CardGrid extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: false
+    };
+  }
+
+  handleCardClick = () => {
+    this.setState({
+      redirect: true
+    });
+  }
+
   render() {
+    if (this.state.redirect === true) {
+      return <Redirect push to="/card"/>
+    }
+
     let rarityString;
     switch(this.props.rarity) {
       case 0: {
@@ -34,6 +54,8 @@ class CardGrid extends Component {
       <React.Fragment>
         <div className="grid-card col-6 col-lg-4 col-xl-3 text-center mb-4">
           <div
+            onClick={() => this.handleCardClick()}
+
             className="grid-img img-fluid"
             style={{
               backgroundImage: `url(${

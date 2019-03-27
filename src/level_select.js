@@ -88,9 +88,9 @@ const alteredStats = card.tech_tree.slots.slice(0, requiredUpgrades).reduce(addR
 // stat merge
 let alteredCard = { ...card };
 
-if (alteredStats.is_power_locked != null) {
-  alteredCard.is_power_locked = alteredStats.is_power_locked;
-  delete alteredStats.is_power_locked;
+if (alteredStats.power_unlock != null) {
+  alteredCard.is_power_locked = false;
+  delete alteredStats.power_unlock;
 }
 
 alteredCard = [alteredStats].reduce((a, c) => {
