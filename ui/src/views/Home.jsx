@@ -4,6 +4,23 @@ import { Navbar, Footer, Search } from "../components";
 class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = { width: window.innerWidth };
+  }
+
+  componentDidMount = () => {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  }
+
+  render() {
 
     let images = [
       {
@@ -28,9 +45,8 @@ class Index extends Component {
       }
     ];
 
-    this.state = { images };
-  }
-  render() {
+    let randomImage = images[Math.floor(Math.random() * images.length)]
+
     return (
       <div>
         <Navbar />
@@ -38,7 +54,7 @@ class Index extends Component {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-100 banner"
-            viewBox="0 0 1920 491.125"
+            viewBox={`${this.state.width > 1920 ? "0" : (1920 - this.state.width) / 2} 0 ${this.state.width > 1920 ? "1920" : this.state.width} 491.125`}
             filter="brightness(.5)"
           >
             <defs>
@@ -50,11 +66,7 @@ class Index extends Component {
               </clipPath>
             </defs>
             <image
-              xlinkHref={
-                this.state.images[
-                  Math.floor(Math.random() * this.state.images.length)
-                ].image
-              }
+              xlinkHref={randomImage.image}
               clipPath="url(#banner)"
               width="1920"
               height="500"

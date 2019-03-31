@@ -15,7 +15,7 @@ const resForbidden = {
     error: "You are forbidden from accessing this route."
 };
 
-const apiToken = process.env.token || (() => { throw("api token not specified") })();
+const apiToken = process.env.token || (() => { throw("api token not specified"); })();
 
 const allowCors = res => {
     res.setHeader("Access-Control-Allow-Origin", "*");

@@ -29,8 +29,8 @@ class Search extends Component {
         name: null,
         theme: null,
         rarity: null,
-        sort: null,
-        order: null
+        sort: "name",
+        order: 1
       },
       options: {
         view: cookies.get("view") || defaultView,
@@ -66,7 +66,7 @@ class Search extends Component {
   }
 
   _fetchCards(params) {
-    const baseUrl = "http://localhost/api/v1/cards";
+    const baseUrl = "http://dragon.feinwaru.com/api/v1/cards";
 
     // its called mana cost in the json
     if (params.sort === "energy") {
