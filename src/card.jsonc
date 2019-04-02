@@ -40,28 +40,32 @@
     "knockback_angle": 0,
     "time_between_attacks": 0,
 
-    // does it have a power
-    // if true, fill out power header
-    "has_power": true,
+    /*
+        // DEPRECATED - see SPPD json rev 2
+    
+        // does it have a power
+        // if true, fill out power header
+        "has_power": true,
 
-    "power_type": "",
-    "power_amount": 0,
-    "power_duration": 0,
+        "power_type": "",
+        "power_amount": 0,
+        "power_duration": 0,
 
-    // charged power, following only
-    // applicable if this is true
-    "is_power_charged": true,
+        // charged power, following only
+        // applicable if this is true
+        "is_power_charged": true,
 
-    "charged_power_regen": 0,
-    "charged_power_radius": 0,
+        "charged_power_regen": 0,
+        "charged_power_radius": 0,
 
-    // if the power is locked
-    // if this is set to true,
-    // need to watch out for upgrades
-    "is_power_locked": false,
+        // if the power is locked
+        // if this is set to true,
+        // need to watch out for upgrades
+        "is_power_locked": false,
+    */
 
     // aoe info
-    // 
+    // preset if has_aoe is true
     "has_aoe": true,
 
     "aoe_type": "",
@@ -106,6 +110,10 @@
             SPPD JSON rev v2
 
     ------------------------------ */
+
+    // new - aliases
+    // empty if none
+    "aliases": [ "" ],
 
     // new - health_loss
     // only set if chracter_type is totem
