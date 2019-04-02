@@ -55,7 +55,19 @@ const convert = card => {
   let out = {};
 
   out.name = card.Name[0];
+  out.aliases = card.Name.slice(1);
+
   out.description = card.Description.replace(/(?<=\{)(.*?)(?=\})/g, match => snakeify(match));
+  if (out.description.includes("power_poison_amount")) {
+    out.description = out.description.replace("power_poison_amount", "power_poison");
+  }
+  if (out.description.includes("power_max_health_boost")) {
+    out.description = out.description.replace("power_max_health_boost", "power_max_hp_gain");
+  }
+  if (out.description.includes("power_target_amount")) {
+    out.description = out.description.replace("power_target_amount", "power_target");
+  }
+
   out.image = card.Image;
   out.mana_cost = parseInt(card.ManaCost);
   out.damage = parseInt(card.Damage);
@@ -135,7 +147,7 @@ const convert = card => {
   }
 
   out.has_aoe = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No";
-  out.aoe_type = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? card.AOEAttackType : null;
+  out.aoe_type = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? snakeify(card.AOEAttackType) : null;
   out.aoe_damage_percentage = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEDamagePercentage) : null;
   out.aoe_knockback_percentage = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEKnockbackPercentage) : null;
   out.aoe_radius = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOERadius) : null;

@@ -20,7 +20,16 @@ class CardGrid extends Component {
 
   render() {
     if (this.state.redirect === true) {
-      return <Redirect push to="/card"/>
+      return ( 
+        <Redirect
+          push
+          to={{
+            pathname: `/${this.props.image.includes("/") ? this.props.id : this.props.image}`,
+            state: {
+              id: this.props.id
+            }
+          }} />
+      );
     }
 
     let rarityString;

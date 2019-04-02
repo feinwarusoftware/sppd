@@ -5,91 +5,117 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = { width: window.innerWidth };
-  }
-
-  componentDidMount = () => {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-  
-  componentWillUnmount = () => {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-  
-  updateWindowDimensions = () => {
-    this.setState({ width: window.innerWidth });
-  }
-
-  render() {
+    this.nav = React.createRef();
 
     let images = [
       {
         image:
           "https://cdn.discordapp.com/attachments/508629797421973504/557583753048883210/unknown.png",
-        artist: "Phinbella Flynn"
+        artists: [{
+          name: "Phinbella Flynn",
+          link: "https://www.deviantart.com/phinbella-flynn/art/Kyle-of-the-Drows-Elves-758454504"
+        }]
       },
       {
         image:
           "https://cdn.discordapp.com/attachments/508629797421973504/557583946972659713/unknown.png",
-        artist: "Phinbella Flynn"
+        artists: [{
+          name: "Phinbella Flynn",
+          link: "https://www.deviantart.com/phinbella-flynn/art/Imp-Tweek-and-Pastor-Craig-759904344"
+        }]
       },
       {
         image:
           "https://cdn.discordapp.com/attachments/508629797421973504/557584096780615684/unknown.png",
-        artist: "Phinbella Flynn"
+        artists: [{
+          name: "Phinbella Flynn",
+          link: "https://www.deviantart.com/phinbella-flynn/art/Ninjew-761261363"
+        }]
       },
       {
         image:
           "https://cdn.discordapp.com/attachments/508629797421973504/557583867305918475/unknown.png",
-        artist: "Phinbella Flynn and FoxReed"
+        artists: [{
+          name: "Phinbella Flynn",
+          link: "https://www.deviantart.com/phinbella-flynn/art/Sci-Fi-battle-Collab-with-FoxReed-754690512"
+        },
+        {
+          name: "FoxReed",
+          link: "https://www.deviantart.com/foxreed/art/Sci-Fi-Battle-754690201"
+        }
+        ]
       }
     ];
 
-    let randomImage = images[Math.floor(Math.random() * images.length)]
+    this.randomImage = images[Math.floor(Math.random() * images.length)]
 
+  }
+
+  componentDidMount = () => {
+    this.updateWindowDimensions();
+    this.updateScrollPosition();
+    window.addEventListener('resize', this.updateWindowDimensions);
+    window.addEventListener('scroll', this.updateScrollPosition);
+
+
+    let navchild = this.nav.current.navbar.current;
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+    window.removeEventListener('scroll', this.updateScrollPosition);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  }
+
+  updateScrollPosition = () => {
+
+    if (window.scrollY < 60) {
+      this.nav.current.navbar.current.classList.add('trans')
+    } else {
+      this.nav.current.navbar.current.classList.remove('trans')
+    }
+
+    //this.setState({ scroll: window.scrollY });
+  }
+
+  render() {
     return (
       <div>
-        <Navbar />
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-100 banner"
-            viewBox={`${this.state.width > 1920 ? "0" : (1920 - this.state.width) / 2} 0 ${this.state.width > 1920 ? "1920" : this.state.width} 491.125`}
-            filter="brightness(.5)"
-          >
-            <defs>
-              <clipPath id="banner">
-                <path
-                  d="M-1,325.3s370.314,177.1,930.267,91.215S1919,502.764,1919,502.764V11.639L-.991,11.684Z"
-                  transform="translate(1 -11.639)"
-                />
-              </clipPath>
-            </defs>
-            <image
-              xlinkHref={randomImage.image}
-              clipPath="url(#banner)"
-              width="1920"
-              height="500"
-            />
-          </svg>
-          <div className="container d-flex justify-content-center align-items-center">
-            <div
-              style={{ position: "absolute", top: 30 }}
-              className="row pt-5 mt-3 justify-content-center w-100"
-            >
-              <div
-                className="col-12 col-md-9 col-lg-6 mb-3"
-                style={{ paddingLeft: 100, paddingRight: 100 }}
-              >
-                <img
-                  className="img-fluid"
-                  src={require("../static/img/sppd_white.svg")}
-                />
-              </div>
+        <Navbar ref={this.nav} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-100 banner"
+          viewBox={`${this.state.width > 1920 ? "0" : (1920 - this.state.width) / 2} 0 ${this.state.width > 1920 ? "1920" : this.state.width} 491.125`}
+          filter="brightness(.5)"
+        >
+          <defs>
+            <clipPath id="banner">
+              <path
+                d="M-1,325.3s370.314,177.1,930.267,91.215S1919,502.764,1919,502.764V11.639L-.991,11.684Z"
+                transform="translate(1 -11.639)"
+              />
+            </clipPath>
+          </defs>
+          <image
+            xlinkHref={this.randomImage.image}
+            clipPath="url(#banner)"
+            width="1920"
+            height="500"
+          />
+        </svg>
+        <div className="container my-5">
+          <div className="credits row" style={{ marginTop: "-80px", marginBottom: "10px", textAlign: "right" }}>
+            <div className="col-12">
+              {(() => {
+                const links = this.randomImage.artists.map(e => <a href={e.link}>{e.name}</a>);
+
+                return (<span> Banner: {links.map((ay, ya, yaa) => (ya === yaa.length - 1) ? ay : <span>{ay}, </span>)}</span>);
+              })()}
             </div>
           </div>
-        </div>
-        <div className="container my-5">
           <Search />
         </div>
         <Footer />

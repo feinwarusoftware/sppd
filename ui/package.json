@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.4.0",
     "bootstrap": "^4.2.1",
     "node-sass-glob-importer": "^5.3.1",
     "react": "^16.6.3",

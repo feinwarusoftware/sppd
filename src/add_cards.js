@@ -33,7 +33,10 @@ try {
       res = await fetch("http://localhost/api/v1/cards", {
         method: "post",
         body: JSON.stringify(converted),
-        headers: { "Content-Type": "application/json" }
+        headers: {
+          "Content-Type": "application/json",
+          "xxx-access-token": "rawrxd"
+        }
       }).then(res => res.json())
     } catch(error) {
       return console.error(`failed to add cards to the api: ${error}`);

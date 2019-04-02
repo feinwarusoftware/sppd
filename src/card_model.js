@@ -70,6 +70,13 @@ const powerTypes = [
     null
 ];
 
+const aoeTypes = [
+    "on_target",
+    "on_unit",
+
+    null
+];
+
 const upgradeTypes = [
     // unlocks a locked power
     "power_unlock",
@@ -113,6 +120,7 @@ const cardSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    aliases: [ String ],
     description: defValidString,
     image: defValidString,
     mana_cost: defValidNumber,
@@ -146,6 +154,7 @@ const cardSchema = new mongoose.Schema({
     is_power_locked: defValidBool,
 
     has_aoe: defValidBool,
+    aoe_type: defValidEnum(aoeTypes),
     aoe_damage_percentage: defValidNumber,
     aoe_knockback_percentage: defValidNumber,
     aoe_radius: defValidNumber,

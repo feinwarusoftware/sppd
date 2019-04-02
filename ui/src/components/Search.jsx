@@ -367,6 +367,7 @@ class Search extends Component {
           return (
             <CardGrid
               key={i}
+              id={e._id}
               name={e.name}
               image={e.image}
               rarity={e.rarity}
@@ -382,6 +383,7 @@ class Search extends Component {
           return (
             <CardList
               key={i}
+              id={e._id}
               name={e.name}
               description={e.description}
               image={e.image}
@@ -392,6 +394,8 @@ class Search extends Component {
               damage={e.damage}
               type={e.type}
               characterType={e.character_type}
+
+              card={e}
             />
           );
         }
@@ -441,16 +445,19 @@ class Search extends Component {
           </div>
           <div id="views" className="col- col-md-2 text-right pr-sm-0">
             <i
+              title="Grid View"
               onClick={() => this.gridView()}
               active={(this.state.options.view === "grid").toString()}
               className="fas fa-th"
             />
             <i
+              title="List View"
               onClick={() => this.listView()}
               active={(this.state.options.view === "list").toString()}
               className="fas fa-th-list"
             />
             <i
+              title="Toggle Scrolling Auto-loader"                                                        
               onClick={() => this.toggleAutoload()}
               active={(this.state.options.autoload === true).toString()}
               className="fas fa-spinner"

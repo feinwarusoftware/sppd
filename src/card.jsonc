@@ -19,7 +19,7 @@
     "cast_area": "",
 
     // the following only applicable
-    // if type id character (i.e. can move)
+    // if type is character (i.e. can move)
     "max_velocity": 0,
     "time_to_reach_max_velocity": 0,
     "agro_range_multiplier": 0,

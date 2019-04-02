@@ -9,6 +9,7 @@ footer {
     margin: -3px;
     margin-top: 0;
     width: 101%;
+    user-select: none;
   }
 
   .footer-contents {
@@ -41,5 +42,13 @@ footer {
   li a {
     letter-spacing: -0.02rem;
     line-height: 1.85rem;
+    color: white !important;
+    cursor: pointer;
+    transition: color 200ms;
+
+    &:hover {
+      color: $feinwaru !important;
+      text-decoration: none;
+    }
   }
 }

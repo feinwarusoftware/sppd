@@ -32,10 +32,10 @@ class Navbar extends Component {
                 <a>Random Card</a>
               </li>
               <li>
-                <a>Discord Bot</a>
+                <a href="https://awesomo.feinwaru.com/">Discord Bot</a>
               </li>
               <li>
-                <a className="support">Support Us</a>
+                <a href="https://patreon.com/awesomo" className="support">Support Us</a>
               </li>
               <li>
                 <a>

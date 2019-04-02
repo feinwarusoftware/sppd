@@ -7,7 +7,17 @@ const castArea = {
   anywhere:"Anywhere"
 }
 
-const testingCardId = "5c9a9761ed41413604ce3b84";
+const canvasHeightWidthRatio = 1.5
+
+const canvasWidth = 550;
+const canvasHeight = canvasWidth * canvasHeightWidthRatio;
+
+const bgHeightWidthRatio = 630 / 455;
+
+const bgWidth = 455;
+const bgHeight = bgWidth * bgHeightWidthRatio;
+
+const testingCardId = "5ca253c86a4a8125802add88";
 
 export default class Card extends Component {
   constructor(props) {
@@ -16,44 +26,79 @@ export default class Card extends Component {
     this.state = {
       loaded: false,
       error: null,
-      data: null,
-      // type: "u",
-      // value: 1,
-      altered: null
+      utype: null,
+      uvalue: null
     }
 
+    this.card = null;
+
     this.canvas = React.createRef();
+
+    // pre-loading
+    this._fetchCardData()
+        
+      .then(card => {
+
+        this.card = card;
+
+        this.setState({
+          loaded: true,
+          utype: "l",
+          uvalue: 1
+        });
+      })
+      .catch(error => {
+
+        this.setState({
+          loaded: true,
+          error
+        });
+      });
   }
 
-  fetchCardData = () => {
-    const url = `http://dragon.feinwaru.com/api/v1/cards/${testingCardId}`;
+  _fetchCardData = () => {
+    const url = `http://dragon.feinwaru.com/api/v1/cards/${this.props.location.state.id}`;
 
-    fetch(url)
+    return new Promise((resolve, reject) => {
+      fetch(url)
     
-    .then(res => res.json())
-    .then(res => {
-      if (res.error != null) {
-        return this.setState({
-          loaded: true,
-          error: res.error
-        });
-      }
+        .then(res => res.json())
+        .then(res => {
+          if (res.error != null) {
+            /*
+            return this.setState({
+              loaded: true,
+              error: res.error
+            });
+            */
 
-      this.setState({
-        loaded: true,
-        data: res.data
-      });
-    })
-    .catch(error => {
-      this.setState({
-        loaded: true,
-        error
-      });
+            return reject(error);
+          }
+
+          /*
+          this.setState({
+            loaded: true,
+            data: res.data
+          });
+          */
+
+          resolve(res.data)
+        })
+        .catch(error => {
+          /*
+          this.setState({
+            loaded: true,
+            error
+          });
+          */
+
+          reject(error);
+        });
     });
   }
 
-  updateCardData = (utype, uvalue) => {
-    const card = this.state.data;
+  _calculateCardAugmentData = (original, utype, uvalue) => {
+    const card = original;
 
     const upgradeSequence = [4, 10, 10, 15, 15, 15];
 
@@ -162,42 +207,17 @@ export default class Card extends Component {
       alteredCard.description = "Power locked at this level/upgrade."
     }
 
-    this.setState({
-      altered: alteredCard
-    });
+    return alteredCard;
   }
 
-  handleDropdownChange = change => {
-    const dropdownText = change.target.value;
-    const split = dropdownText.split(" ");
-    
-    let type = null;
-    let value = null;
-
-    if (split[0].toLowerCase() === "upgrade") {
-      type = "u";
-    } else {
-      type = "l";
-    }
-
-    const num = parseInt(split[1]);
-    // yes i realise im handling this error twice now, fuck me
-    if (isNaN(num) === true) {
-      return console.error("u/l value nan");
-    }
-
-    value = num;
-
-    this.updateCardData(type, value);
-  }
-
-  componentDidMount = () => {
+  _redrawCard = card => {
     const canvas = this.canvas.current;
     const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const rarity = this.state.data == null ? 3 : this.state.data.rarity;
-    const theme = this.state.data == null ? "fantasy" : this.state.data.theme;
-    const characterType = this.state.data == null ? "assassin" : this.state.data.characterType;
+    const rarity = card.rarity;
+    const theme = card.theme;
+    const characterType = card.character_type;
 
     /* --- pasted old code --- */
 
@@ -488,7 +508,7 @@ export default class Card extends Component {
       frameOutlines: "http://dragon.feinwaru.com/frame-outline.png",
       frameOverlays: "http://dragon.feinwaru.com/frame-overlay.png",
       frameTops: "http://dragon.feinwaru.com/frame-top.png",
-      bgImage: "http://dragon.feinwaru.com/owo.jpg"
+      bgImage: `http://dragon.feinwaru.com/backgrounds/${this.card.image}.jpg`
     };
 
     checkImages(Object.values(imageList)).then(imgs => {
@@ -520,8 +540,11 @@ export default class Card extends Component {
 
       // current canvas w x h: 526 x 769
 
-      const bgWidth = 455;
-      const bgHeight = 630;
+      // defined at the top of the file!
+      // const bgWidth = 455;
+      // const bgHeight = 630;
+
+      console.log(bgHeight);
 
       ctx.save();
       roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
@@ -531,19 +554,113 @@ export default class Card extends Component {
       ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
       ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
 
+      console.log(canvas.height / 2 - bgHeight / 2);
+
       if (fy != null) {
-        ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, 240, bgWidth + 49, 200);
+        ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
       }
 
-      ctx.drawImage(images.charTypeIcons, ix, iy, iz, iw, 130, 182, iconWidth * 1.5, iconHeight * 1.5);
-      ctx.drawImage(images.cardThemeIcons, tx, ty, tz, tw, canvas.width / 2 - bgWidth / 2 + 32, 843, themeIconWidth * 1.5, themeIconHeight * 1.5);
+      ctx.drawImage(images.charTypeIcons, ix, iy, iz, iw, canvas.width / 2 - bgWidth / 2 - 42, canvas.height / 2 - bgHeight / 2 - 106, iconWidth * 1.5, iconHeight * 1.5);
+      ctx.drawImage(images.cardThemeIcons, tx, ty, tz, tw, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, themeIconWidth * 1.5, themeIconHeight * 1.5);
       
       let xoffset = 0;
       if (rarity === 3) {
         xoffset = 25;
       }
 
-      ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, 745, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
+      ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, canvas.height / 2 - bgHeight / 2 + 460, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
+
+      // text
+      ctx.fillStyle = "#ebe7ca";
+      ctx.strokeStyle = "Black";
+      ctx.textAlign = "center";
+
+      const name = card.name;
+      const mana_cost = card.mana_cost;
+      const health = card.health;
+      const damage = card.damage;
+      const level = `${this.state.utype === "u" ? "u" : "lvl"} ${this.state.uvalue}`;
+      const description = card.description;
+
+      // const name = "Oshino Shinobu";
+      // const mana_cost = 7;
+      // const health = 23;
+      // const damage = 27;
+      // const level = "lvl 7";
+      // const description = "It’s beautiful. I’ve looked at this for 5 hours now.";
+      // const description = "Flying. Gives 1 bonus damage to all allies when he hits an enemy. Heals 4 Health to all allies when he kills an enemy.";
+
+      ctx.font = "25px South Park Ext";
+      ctx.lineWidth = 1;
+      ctx.strokeText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+      ctx.fillText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+
+      ctx.font = "60px South Park Ext";
+      ctx.lineWidth = 2;
+      ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+      ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+
+      if (ox === 0) {
+        ctx.font = "27px South Park Ext";
+        ctx.lineWidth = 1;
+        ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
+        ctx.fillText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
+
+        ctx.font = "27px South Park Ext";
+        ctx.lineWidth = 1;
+        ctx.strokeText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+        ctx.fillText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+      }
+
+      ctx.font = "16px South Park Ext";
+      ctx.lineWidth = 1;
+      ctx.strokeText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+      ctx.fillText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+
+      // description
+      ctx.font = "17px South Park Ext";
+      ctx.lineWidth = 1;
+
+      const lineLengthCap = 325;
+      const words = description.split(" ");
+
+      let currentWords = [];
+      let yoffset = 0;
+
+      let lineCount = 1;
+      for (let word of words) {
+        if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
+          currentWords = [ word ];
+          lineCount++;
+
+          continue;
+        }
+
+        currentWords.push(word);
+      }
+
+      console.log(lineCount);
+
+      currentWords = [];
+
+      for (let word of words) {
+        if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
+          ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+          ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+
+          currentWords = [ word ];
+          yoffset += 22;
+
+          continue;
+        }
+
+        currentWords.push(word);
+      }
+      ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+      ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+
+      // ctx.strokeText(description, 419, 800);
+      // ctx.fillText(description, 419, 800);
 
       /* --- draw to canvas end --- */
     });
@@ -551,22 +668,157 @@ export default class Card extends Component {
     /* --- load images end --- */
   }
 
-  render() {
-    const altered = this.state.altered || {};
+  handleDropdownChange = change => {
+    const dropdownText = change.target.value;
+    const split = dropdownText.split(" ");
+    
+    let type = null;
+    let value = null;
 
-    if (this.state.loaded === false || this.state.error != null) {
-      this.fetchCardData();
-    } else if (this.state.altered == null) {
-      this.updateCardData("u", 1);
+    if (split[0].toLowerCase() === "upgrade") {
+      type = "u";
+    } else {
+      type = "l";
     }
+
+    const num = parseInt(split[1]);
+    // yes i realise im handling this error twice now, fuck me
+    if (isNaN(num) === true) {
+      return console.error("u/l value nan");
+    }
+
+    value = num;
+
+    this.setState({
+      utype: type,
+      uvalue: value
+    });
+  }
+
+  render() {
+    let altered = null;
+    if (this.state.loaded === false || this.state.error != null) {
+      altered = {};
+    } else {
+      altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
+      this._redrawCard(altered);
+    }
+    
+    console.log(altered);
+
+    // sections
+    const sections = [];
+
+    const createSection = (title, stats) => {
+      return (
+        <div key={title}>
+          <h4 className="font-weight-bold mt-5">{title}{ Object.keys(stats).length === 0 ? <span> <i className="fas fa-lg fa-times red-text"></i></span> : "" }</h4>
+          <div className="divider" />
+
+          <ul className="list-unstyled align">
+
+            { Object.entries(stats).map((e, i) =>
+              <li key={i}>
+                <span className="font-weight-bold dark-grey-text">{e[0]}: </span>
+                <span>{e[1]}</span>
+              </li>
+            ) }
+
+          </ul>
+        </div>
+      );
+    }
+
+    const deSnake = string => string && string.split("_").join(" ");
+    const upperCase = string => string && string.split(" ").map(e => `${e[0].toUpperCase()}${e.slice(1)}`).join(" ");
+
+    // utility
+    const card = altered;
+    
+    let general = {
+      "Cast Area": upperCase(deSnake(card.cast_area))
+    };
+    if (card.type === "character" && card.character_type !== "totem") {
+      general = {
+        ...general,
+        "Max Velocity": card.max_velocity,
+        "Time To Reach Max Velocity": `${card.time_to_reach_max_velocity} seconds`,
+        "Agro Range Multiplier": `${card.agro_range_multiplier}x`
+      };
+    }
+
+    sections.push(createSection("General Information", general));
+
+    let power = {};
+    if (card.has_power === true) {
+      power = {
+        ...power,
+        "Power Type": card.power_type,
+        "Power Amount": card.power_amount
+      };
+
+      if (card.power_duration != null) {
+        power = {
+          ...power,
+          "Power Duration": card.power_duration
+        };
+      }
+
+      if (card.is_power_charged) {
+        power = {
+          ...power,
+          "Charged Power Regen": card.charged_power_regen,
+          "Charged Power Radius": card.charged_power_radius
+        };
+      }
+    }
+
+    sections.push(createSection("Power Information", power));
+
+    let attack = {};
+    if (card.can_attack === true) {
+      attack = {
+        ...attack,
+        "Attack Range": card.attack_range,
+        "Pre-Attack Delay": card.pre_attack_delay,
+        "Knockback": card.knockback,
+        "Knockback Angle": `${card.knockback_angle} at 45°`,
+        "Time Between Attacks": card.time_between_attacks,
+      };
+    }
+
+    sections.push(createSection("Can Attack?", attack));
+
+    let aoe = {};
+    if (card.has_aoe === true) {
+      aoe = {
+        ...aoe,
+        // this gets added as a span in the createSection() call
+        // "AOE Type": card.aoe_type,
+        "AOE Damage Percentage": `${card.aoe_damage_percentage}%`,
+        "AOE Knockback Percentage": `${card.aoe_knockback_percentage}%`,
+        "AOE Radius": card.aoe_radius,
+      };
+    }
+
+    sections.push(createSection(Object.keys(aoe).length === 0 ? "AOE Attacks?" : <span>AOE Attacks? <span>{aoe.aoe_type}</span></span>, aoe))
+
+    let requirements = {
+      "Minimum Episode Completed": card.min_episode_completed,
+      "Minimum PVP Rank Required": card.min_pvp_rank,
+      "Minimum Player Level": card.min_player_level,
+    };
+
+    sections.push(createSection("Requirements", requirements));
 
     return (
       <div>
         <Navbar />
+
         <div id="card-page" className="container">
           <div className="row">
             <div className="col-4">
-              <canvas className="img-fluid" ref={this.canvas} width={800} height={1200} />
+              <canvas className="img-fluid" ref={this.canvas} width={canvasWidth} height={canvasHeight} />
             </div>
             <div id="card-info" className="col-8">
               <h1 className="font-weight-bold">{altered.name}</h1>
@@ -672,194 +924,20 @@ export default class Card extends Component {
                 </select>
               </div>
 
-              <h4 className="font-weight-bold mt-5">General Information</h4>
-              <div className="divider" />
-
-              <ul className="list-unstyled align">
-                <li>
-                  <span className="font-weight-bold dark-grey-text">
-                    Cast Area:
-                  </span>
-                  <span>{castArea["temp"]}</span>
-                </li>
-                <li>
-                  <span className="font-weight-bold dark-grey-text">
-                    Max Velocity:
-                  </span>
-                  <span>{"temp"}</span>
-                </li>
-                <li>
-                  <span className="font-weight-bold dark-grey-text">
-                    Time To Reach Max Velocity:
-                  </span>
-                  <span>{"temp"} seconds</span>
-                </li>
-                <li>
-                  <span className="font-weight-bold dark-grey-text">
-                    Agro Range Multiplier:
-                  </span>
-                  <span>{"temp"}x</span>
-                </li>
-              </ul>
-
-              <h4 className="font-weight-bold mt-5">Power Information</h4>
+              <h4 className="font-weight-bold mt-5">AWESOM-O Discord Commands</h4>
               <div className="divider" />
 
               <ul className="list-unstyled">
-                <li className="power-stat kylehack">
-                  <span className="font-weight-bold dark-grey-text">
-                    Attack Boost:
-                  </span>
-                  <span id="PowerAttackBoost" className="power-stat-value">
-                    1
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerAttackBoost-increase-amount"
-                  />
+                <li className="pb-2">
+                  <code>-card gfdgh {this.state.utype}{this.state.uvalue}</code>
                 </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Attack Decrease:
-                  </span>
-                  <span id="PowerAttackDecrease" className="power-stat-value">
-                    N/A
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerAttackDecrease-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Power Damage:
-                  </span>
-                  <span id="PowerDamage" className="power-stat-value">
-                    N/A
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerDamage-increase-amount"
-                  />
-                </li>
-                <li className="power-stat kylehack">
-                  <span className="font-weight-bold dark-grey-text">Duration:</span>
-                  <span id="PowerDuration" className="power-stat-value">
-                    Infinite seconds
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerDuration-increase-amount"
-                  />
-                </li>
-                <li className="power-stat">
-                  <span className="font-weight-bold dark-grey-text">Heal:</span>
-                  <span id="PowerHeal" className="power-stat-value">
-                    40
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerHeal-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Hero Damage:
-                  </span>
-                  <span className="power-stat-value">N/A</span>
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Hero Heal:
-                  </span>
-                  <span className="power-stat-value">N/A</span>
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">Poison:</span>
-                  <span className="power-stat-value">N/A</span>
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Max HP Gain:
-                  </span>
-                  <span id="PowerMaxHPGain" className="power-stat-value">
-                    N/A
-                  </span>
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerMaxHPGain-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Max HP Loss:
-                  </span>
-                  <span id="PowerMaxHPLoss" className="power-stat-value">
-                    N/A
-                  </span>{" "}
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerMaxHPLoss-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Poision Amount:
-                  </span>
-                  <span id="PowerPoisonAmount" className="power-stat-value">
-                    N/A
-                  </span>{" "}
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerPoisonAmount-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Summon Level:
-                  </span>
-                  <span id="PowerSummonLevel" className="power-stat-value">
-                    N/A
-                  </span>{" "}
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerSummonLevel-increase-amount"
-                  />
-                </li>
-                <li className="power-stat" >
-                  <span className="font-weight-bold dark-grey-text">
-                    Target Amount:
-                  </span>
-                  <span id="PowerTarget" className="power-stat-value">
-                    0
-                  </span>{" "}
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerTarget-increase-amount"
-                  />
-                </li>
-                <li className="power-stat kylehack tokenhack">
-                  <span className="font-weight-bold dark-grey-text">
-                    Charged Power Radius:
-                  </span>
-                  <span id="PowerRange" className="power-stat-value">
-                    Global
-                  </span>{" "}
-                  <span
-                    className="badge ThemeColour Sci"
-                    id="PowerRange-increase-amount"
-                  />
-                </li>
-                <li
-                  className="power-stat kylehack tokenhack"
-                  
-                >
-                  <span className="font-weight-bold dark-grey-text">
-                    Charged Power Regen:
-                  </span>
-                  <span className="power-stat-value">0</span>
+                <li className="pb-2">
+                  <code>-card astroboii u61</code>
                 </li>
               </ul>
+
+              { sections }
+
             </div>
           </div>
         </div>

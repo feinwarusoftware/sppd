@@ -26,6 +26,7 @@ app.use(morgan(env === "dev" ? "dev" : "combined"));
 
 //app.use(express.static(path.join(__dirname, "..", "ui", "src", "static")));
 app.use(express.static(path.join(__dirname, "..", "ui", "dist")));
+app.use(express.static(path.join(__dirname, "..", "static")));
 
 app.use(express.json());
 

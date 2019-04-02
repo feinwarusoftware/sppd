@@ -20,12 +20,24 @@ $Mystical: #4b9b38;
 $Sci-Fi: #db571d;
 
 //Imports
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700,900');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
 @import "src/components/footer";
 @import "src/components/navbar";
 @import "src/components/langbar";
 @import "src/components/search";
 @import "src/components/cards";
+
+@font-face {
+    font-family: "South Park Ext";
+    src: url("src/static/font/southpark/SouthParkExt-Regular.eot");
+    src: url("src/static/font/southpark/SouthParkExt-Regular.eot?#iefix") format("embedded-opentype"),
+        url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
+        url("src/static/font/southpark/SouthParkExt-Regular.woff") format("woff"),
+        url("src/static/font/southpark/SouthParkExt-Regular.ttf") format("truetype"),
+        url("src/static/font/southpark/SouthParkExt-Regular.svg#SouthParkExt-Regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     font-family: "Roboto", "sans-serif";
@@ -34,24 +46,33 @@ body {
 
 svg {
     &.banner {
-      margin-top: 60px;
-  
-      image {
-        background-position: center;
-      }
-    }
-    
-  }
 
-  //MDB Shit
-.light-blue-text  {
-    color: #03a9f4!important;
+        image {
+            background-position: center;
+        }
+    }
+
+}
+
+.credits {
+    a {
+        color: $sppd;
+    }
+    a:hover {
+        color: darken($sppd, 10);
+        text-decoration: none;
+    }
+}
+
+//MDB Shit
+.light-blue-text {
+    color: #03a9f4 !important;
 }
 
 .red-text {
-    color: #f44336!important;
+    color: #f44336 !important;
 }
 
 .orange-text {
-    color: #ff9800!important;
+    color: #ff9800 !important;
 }
