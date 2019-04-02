@@ -1,4 +1,10 @@
 {
+    /* ------------------------------
+    
+            SPPD JSON rev v1
+
+    ------------------------------ */
+
     // basic info
     // required for card redering
     // present every time
@@ -93,5 +99,40 @@
                 ]
             }
         ]
-    }
+    },
+
+    /* ------------------------------
+    
+            SPPD JSON rev v2
+
+    ------------------------------ */
+
+    // new - health_loss
+    // only set if chracter_type is totem
+    // classed as general info
+    "health_loss": 0,
+
+    // changed - powers
+    // multiple power support
+    // has_power removed (powers.length is 0 if no powers)
+    "powers": [
+        {
+            // regular power - always set
+            "type": "",
+            "amount": 0,
+
+            // if no duration, set to null
+            // if instant, set to -1
+            "duration": 0,
+
+            // if no radius, set to null
+            // if global effect, set to -1
+            "radius": 0,
+
+            // charged power entra info
+            // if false, all values below set to null
+            "is_charged": false,
+            "charged_regen": 0
+        }
+    ]
 }
