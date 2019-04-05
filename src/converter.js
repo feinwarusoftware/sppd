@@ -97,6 +97,7 @@ const convert = card => {
       break;
     };
   }
+  out.health_loss = card.CharacterType === "Totem" ? card.HealthLoss : null;
 
   out.cast_area = snakeify(card.CastArea);
 
@@ -111,18 +112,52 @@ const convert = card => {
   out.knockback_angle = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.KnockbackAngleDeg) : null;
   out.time_between_attacks = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.TimeInBetweenAttacks) : null;
 
-  // YAYDONE: power stuff
+  // YAYFIXED: power stuff
+  out.powers = [];
+
   for (let [k, v] of Object.entries(card)) {
     if (k.startsWith("Power") && k !== "PowerDuration" && v != null) {
-      if (k === "PowerPoisonAmount") {
-        out.power_type = "power_poison";
+      let duration, radius, is_charged, charged_regen;
+
+      const chargedPowerRegen = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+      if (chargedPowerRegen == null || chargedPowerRegen === 0) {
+        is_charged = false;
+        charged_regen = null;
+        radius = null;
       } else {
-        out.power_type = snakeify(k);
+        is_charged = true;
+        charged_regen = chargedPowerRegen;
+        radius = card.ChargedPowerRadius === "Global" ? -1 : parseFloat(card.ChargedPowerRadius);
       }
-      out.power_amount = parseInt(v);
-      break;
+
+      duration = card.PowerDuration == null ? null : card.PowerDuration === "Infinite" ? -1 : parseFloat(card.PowerDuration);
+
+      if (k === "PowerPoisonAmount") {
+        // out.power_type = "power_poison";
+        out.powers.push({
+          type: "power_poison",
+          amount: parseInt(v),
+          duration,
+          radius,
+          is_charged,
+          charged_regen,
+          locked: false
+        });
+      } else {
+        // out.power_type = snakeify(k);
+        out.powers.push({
+          type: "power_poison",
+          amount: parseInt(v),
+          duration,
+          radius,
+          is_charged,
+          charged_regen,
+          locked: false
+        });
+      }
     }
   }
+  /*
   if (out.power_type == null) {
     out.has_power = false;
     out.power_type = null;
@@ -130,7 +165,9 @@ const convert = card => {
   } else {
     out.has_power = true;
   }
+  */
 
+  /*
   out.charged_power_regen = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
   if (out.charged_power_regen == null) {
     out.is_power_charged = false;
@@ -145,6 +182,8 @@ const convert = card => {
   } else {
     out.power_duration = parseFloat(card.PowerDuration);
   }
+  */
+  //
 
   out.has_aoe = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No";
   out.aoe_type = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? snakeify(card.AOEAttackType) : null;
@@ -175,10 +214,11 @@ const convert = card => {
   }));
 
   // no need to leep through level slots as
+  // * leep is the new loop boiis!
   // currently there are no power unlocks on level up
   for (let slot of out.tech_tree.slots) {
     if (slot.property === "power_unlock") {
-      out.is_power_locked = true;
+      out.powers.map(e => ({ ...e, locked: true }));
       break;
     }
   }

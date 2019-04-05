@@ -130,17 +130,21 @@
             "amount": 0,
 
             // if no duration, set to null
-            // if instant, set to -1
+            // if infinite, set to -1
             "duration": 0,
+
+            // charged power extra info
+            // if false, all values below set to null
+            "is_charged": false,
+            "charged_regen": 0,
 
             // if no radius, set to null
             // if global effect, set to -1
             "radius": 0,
 
-            // charged power entra info
-            // if false, all values below set to null
-            "is_charged": false,
-            "charged_regen": 0
+            // if the power is locked until
+            // a certain augment
+            "locked": false
         }
     ]
 }

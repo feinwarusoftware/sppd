@@ -104,6 +104,20 @@ alteredCard = [alteredStats].reduce((a, c) => {
         return console.error("error applying upgrade stats 1");
       }
     } else if (k.startsWith("power_")) {
+      const powerIndex = a.powers.findIndex(e => e.type === k)
+
+      if (powerIndex != null) {
+        a.powers[powerIndex] += v;
+      } else {
+        // if power duration is specified, assume
+        //  that there is only one power
+        if (k === "power_duration") {
+          a.powers[0].duration += v;
+        } else {
+          return console.error("error applying upgrade stats 2");
+        }
+      }
+      /*
       if (a.power_type === k) {
         a.power_amount += v;
       } else {
@@ -113,6 +127,7 @@ alteredCard = [alteredStats].reduce((a, c) => {
           return console.error("error applying upgrade stats 2");
         }
       }
+      */
     } else {
       return console.error("error applying upgrade stats 3");
     }

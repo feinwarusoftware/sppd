@@ -113,6 +113,21 @@ const techTreeSchema = new mongoose.Schema({
     _id: false
 });
 
+const powerSchema = new mongoose.Schema({
+    type: defValidEnum(powerTypes),
+    amount: defValidNumber,
+
+    duration: defValidNumber,
+
+    is_charged: defValidBool,
+    charged_regen: defValidNumber,
+    
+    radius: defValidNumber,
+    locked: defValidBool
+}, {
+    _id: false
+});
+
 const cardSchema = new mongoose.Schema({
     // _id
 
@@ -130,6 +145,7 @@ const cardSchema = new mongoose.Schema({
     character_type: defValidEnum(characterTypeTypes),
     rarity: defValidNumber,
     theme: defValidEnum(themeTypes),
+    health_loss: defValidNumber,
 
     cast_area: defValidEnum(castAreaTypes),
 
@@ -144,6 +160,7 @@ const cardSchema = new mongoose.Schema({
     knockback_angle: defValidNumber,
     time_between_attacks: defValidNumber,
 
+    /*
     has_power: defValidBool,
     power_type: defValidEnum(powerTypes),
     power_amount: defValidNumber,
@@ -152,6 +169,9 @@ const cardSchema = new mongoose.Schema({
     charged_power_regen: defValidNumber,
     charged_power_radius: defValidNumber,
     is_power_locked: defValidBool,
+    */
+
+    powers: [ powerSchema ],
 
     has_aoe: defValidBool,
     aoe_type: defValidEnum(aoeTypes),
