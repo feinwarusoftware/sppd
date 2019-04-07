@@ -31833,6 +31833,7 @@
     "PowerHeroPoison": null,
     "PowerAttackBoost": null,
     "PowerAttackDecrease": null,
+    "PowerTarget": 1,
     "AgroRangeMultiplier": 1.2,
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,

@@ -107,19 +107,59 @@ class CardGrid extends Component {
 
     alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
       const bracketless = match.slice(1, match.length - 1);
+      //console.log(alteredCard);
+
+      function getPowerAmount(powerType){
+        return alteredCard.powers.find(power => {
+          return power.type === powerType
+        }).amount;
+      }
 
       if (alteredCard[bracketless] == null) {
-        if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
+
+
+        /*if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
+          console.log ('é nulo' + alteredCard);
           return alteredCard.power_damage / 10;
+        }*/
+        if (bracketless === "power_hero_damage"){
+          let powerAmount = getPowerAmount("power_hero_damage");
+          if(powerAmount == null){
+            return getPowerAmount("power_damage") / 10;
+          }
+          else{
+            return powerAmount;
+          }
         } else if (bracketless === "power_duration_min") {
-          return alteredCard.power_duration - 1;
+          return alteredCard.powers[0].duration - 1;
         } else if (bracketless === "power_duration_max") {
-          return alteredCard.power_duration + 1;
+          return alteredCard.powers[0].duration + 1;
         } else if (bracketless === alteredCard.power_type) {
           return alteredCard.power_amount;
-        } else {
+        } else if(bracketless === "power_duration") {
+          return alteredCard.powers[0].duration;
+          //this is fucked up, I know, baby - do an array for these ones, if string - power_ is "poison, damage, attack_boost, heal", just return getPowerAmount - a.k.a. optimze later
+        } else if(bracketless === "power_poison") {
+          return getPowerAmount('power_poison');
+        } else if(bracketless === "power_damage"){
+          return getPowerAmount("power_damage");
+        } else if(bracketless === "power_attack_boost") {
+          return getPowerAmount("power_attack_boost");
+        } else if(bracketless === "power_heal") {
+          return getPowerAmount("power_heal");
+        } else if(bracketless === "power_max_hp_gain") {
+          return getPowerAmount("power_max_hp_gain");
+        } else if(bracketless === "power_target") {
+          return getPowerAmount("power_target");
+        } else if(bracketless === "power_max_hp_loss") {
+          return getPowerAmount("power_max_hp_loss");
+        } else if(bracketless === "power_attack_decrease") {
+          return getPowerAmount("power_attack_decrease");
+        }
+        else {
           return "undefined";
         }
+
       } else {
         return alteredCard[bracketless];
       }

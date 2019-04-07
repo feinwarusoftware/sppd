@@ -27,7 +27,7 @@ try {
     } catch(error) {
       return console.error(`failed to convert card to new format: ${error}`); 
     }
-    
+
     let res;
     try {
       res = await fetch("http://localhost/api/v1/cards", {

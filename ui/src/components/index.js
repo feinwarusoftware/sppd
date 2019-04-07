@@ -4,6 +4,7 @@ import Footer from "./Footer.jsx";
 import Search from "./Search.jsx";
 import CardGrid from "./CardGrid.jsx";
 import CardList from "./CardList.jsx";
+import News from "./News.jsx";
 
 export {
   Navbar,
@@ -11,5 +12,6 @@ export {
   Footer,
   Search,
   CardGrid,
-  CardList
+  CardList,
+  News
 };

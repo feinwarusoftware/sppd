@@ -137,22 +137,57 @@ alteredCard = [alteredStats].reduce((a, c) => {
 }, alteredCard);
 
 alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
-  const bracketless = match.slice(1, match.length - 1);
+  let bracketless = match.slice(1, match.length - 1);
+
+  if (bracketless === "power_hero_damage") {
+    const powerIndex = alteredCard.powers.findIndex(e => e.type === "power_damage");
+
+    if (powerIndex !== -1) {
+      return alteredCard.powers[powerIndex].amount / 10;
+    }
+    // continue to check for power_hero_damage
+  }
 
   if (alteredCard[bracketless] == null) {
+    let mx = 0;
+    if (bracketless.slice(-3) === "min") {
+      mx = -1;
+      bracketless = bracketless.slice(0, bracketless.length - 4);
+    } else if (bracketless.slice(-3) === "max") {
+      mx = 1;
+      bracketless = bracketless.slice(0, bracketless.length - 4);
+    }
+
+    const powerIndex = alteredCard.powers.findIndex(e => e.type === bracketless);
+
+    if (powerIndex !== -1) {
+      return alteredCard.powers[powerIndex].amount + mx;
+    } else {
+      return "undefined"
+    }
+
+    /*
     if (bracketless === alteredCard.power_type) {
       return alteredCard.power_amount;
     } else {
       return "undefined";
     }
+    */
   } else {
     return alteredCard[bracketless];
   }
 });
 
+// if power is locked, assume only one power present
+if ((alteredCard.powers[0] || {}).locked === true) {
+  alteredCard.description = "Power locked at this level/upgrade."
+}
+
+/*
 if (alteredCard.is_power_locked === true) {
   alteredCard.description = "Power locked at this level/upgrade."
 }
+*/
 
 console.log((card => {
   delete card.tech_tree;

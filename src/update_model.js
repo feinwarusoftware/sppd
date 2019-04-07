@@ -13,6 +13,10 @@ const updateSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  link: {
+    type: String,
+    default: null
+  },
   date: {
     type: Date,
     default: Date.now

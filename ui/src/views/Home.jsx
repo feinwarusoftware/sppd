@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Footer, Search } from "../components";
+import { Navbar, Footer, Search, News } from "../components";
 
 class Index extends Component {
   constructor(props) {
@@ -116,6 +116,7 @@ class Index extends Component {
               })()}
             </div>
           </div>
+          <News />
           <Search />
         </div>
         <Footer />

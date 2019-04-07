@@ -62,11 +62,11 @@ router.get("/docs", (req, res) => {
                 "GET /cards/:id",
                 "*PUT /cards/:id",
                 "*DELETE /cards/:id",
-                "GET /updated",
-                "*POST /updated",
-                "GET /updated/:id",
-                "*PUT /updated/:id",
-                "*DELETE /updated/:id",
+                "GET /updates",
+                "*POST /updates",
+                "GET /updates/:id",
+                "*PUT /updates/:id",
+                "*DELETE /updates/:id",
             ]
         },
         error: null

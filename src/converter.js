@@ -146,7 +146,7 @@ const convert = card => {
       } else {
         // out.power_type = snakeify(k);
         out.powers.push({
-          type: "power_poison",
+          type: snakeify(k),
           amount: parseInt(v),
           duration,
           radius,
@@ -156,6 +156,32 @@ const convert = card => {
         });
       }
     }
+  }
+  if (out.powers.length === 0 && card.PowerDuration != null) {
+    let duration, radius, is_charged, charged_regen;
+
+    const chargedPowerRegen = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+    if (chargedPowerRegen == null || chargedPowerRegen === 0) {
+      is_charged = false;
+      charged_regen = null;
+      radius = null;
+    } else {
+      is_charged = true;
+      charged_regen = chargedPowerRegen;
+      radius = card.ChargedPowerRadius === "Global" ? -1 : parseFloat(card.ChargedPowerRadius);
+    }
+
+    duration = card.PowerDuration == null ? null : card.PowerDuration === "Infinite" ? -1 : parseFloat(card.PowerDuration);
+    
+    out.powers.push({
+      type: null,
+      amount: null,
+      duration,
+      radius,
+      is_charged,
+      charged_regen,
+      locked: false
+    });
   }
   /*
   if (out.power_type == null) {
