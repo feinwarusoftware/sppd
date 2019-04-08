@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Footer, Search, News, Cookie } from "../components";
-
 import { withRouter } from "react-router-dom";
+import MetaTags from 'react-meta-tags';
 
 // const Nav = withRouter(Navbar);
 
@@ -90,6 +90,13 @@ class Index extends Component {
   render() {
     return (
       <div>
+        <MetaTags>
+          <title>Card List | Feinwaru SPPD</title>
+          <meta name="description" content="SPPD is a website created to let users see all the statistics for the game 'South Park: Phone Destroyer' in an easy to use and understand way." />
+          <meta property="og:title" content="Card List | Feinwaru SPPD" />
+          <meta property="og:image" content="https://cdn.discordapp.com/attachments/558375135719981056/564821280944029716/cards.png" />
+        </MetaTags>
+
         <Navbar ref={this.nav} />
         <Cookie />
         <svg
@@ -119,7 +126,7 @@ class Index extends Component {
               {(() => {
                 const links = this.randomImage.artists.map((e, i) => <a key={i} href={e.link}>{e.name}</a>);
 
-                return (<span> Banner: {links.map((ay, ya, yaa) => (ya === yaa.length - 1) ? ay : <span>{ay}, </span>)}</span>);
+                return (<span> Banner: {links.map((ay, ya, yaa) => (ya === yaa.length - 1) ? ay : <span key={ya}>{ay}, </span>)}</span>);
               })()}
             </div>
           </div>

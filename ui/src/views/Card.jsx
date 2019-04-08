@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Footer, Search } from "../components";
+import MetaTags from 'react-meta-tags';
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
@@ -958,6 +959,13 @@ export default class Card extends Component {
     return (
       <div>
         <Navbar />
+        
+        <MetaTags>
+          <title>{altered.name} | Feinwaru SPPD</title>
+          <meta name="description" content="SPPD is a website created to let users see all the statistics for the game 'South Park: Phone Destroyer' in an easy to use and understand way." />
+          <meta property="og:title" content={altered.name + " | Feinwaru SPPD"} />
+          <meta property="og:image" content={"/backgrounds/" + altered.image + ".jpg"} />
+        </MetaTags>
 
         <div id="card-page" className="container">
           <div className="row">
