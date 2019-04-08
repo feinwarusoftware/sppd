@@ -3,8 +3,8 @@ import { Navbar, Footer, Search } from "../components";
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
-  own_area:"Own Area",
-  anywhere:"Anywhere"
+  own_area: "Own Area",
+  anywhere: "Anywhere"
 }
 
 const canvasHeightWidthRatio = 1.5
@@ -36,7 +36,7 @@ export default class Card extends Component {
 
     // pre-loading
     this._fetchCardData()
-        
+
       .then(card => {
 
         this.card = card;
@@ -57,11 +57,17 @@ export default class Card extends Component {
   }
 
   _fetchCardData = () => {
-    const url = `http://dragon.feinwaru.com/api/v1/cards/${this.props.location.state.id}`;
+    let url;
+
+    if (this.props.location.state == null) {
+      url = `http://dragon.feinwaru.com/api/v1/cards/image/${this.props.location.pathname.slice(1)}`;
+    } else {
+      url = `http://dragon.feinwaru.com/api/v1/cards/${this.props.location.state.id}`;
+    }
 
     return new Promise((resolve, reject) => {
       fetch(url)
-    
+
         .then(res => res.json())
         .then(res => {
           if (res.error != null) {
@@ -133,7 +139,7 @@ export default class Card extends Component {
 
       for (let i = 0; i < upgradeSequence.length; i++) {
         currentUpgrades += upgradeSequence[i];
-        
+
         if (value < (currentUpgrades + baseUpgrade + 1)) {
           break;
         }
@@ -151,10 +157,11 @@ export default class Card extends Component {
     }
 
     const addReduceSlot = (a, c) => a[c.property] == null ? { ...a, [c.property]: c.value } : { ...a, [c.property]: a[c.property] + c.value };
-    const alteredStats = card.tech_tree.slots.slice(0, requiredUpgrades).reduce(addReduceSlot, card.tech_tree.levels.slice(0, requiredLevels).reduce((a, c) => [ ...a, ...c.slots ], []).reduce(addReduceSlot, {}));
+    const alteredStats = card.tech_tree.slots.slice(0, requiredUpgrades).reduce(addReduceSlot, card.tech_tree.levels.slice(0, requiredLevels).reduce((a, c) => [...a, ...c.slots], []).reduce(addReduceSlot, {}));
 
     // stat merge
-    let alteredCard = { ...card };
+    // deep copy cos gay things
+    let alteredCard = JSON.parse(JSON.stringify(card));
 
     if (alteredStats.power_unlock != null) {
       alteredCard.is_power_locked = false;
@@ -196,23 +203,25 @@ export default class Card extends Component {
         if (k.startsWith("stat_")) {
           if (a[k.slice(5)] != null) {
             a[k.slice(5)] += v;
-          } else if (a[k.slice(9)] != null) { 
+          } else if (a[k.slice(9)] != null) {
             a[k.slice(9)] += v;
           } else {
-            return console.error("error applying upgrade stats 1");
+            return console.error("error applying upgrade stats 1: " + k);
           }
         } else if (k.startsWith("power_")) {
           const powerIndex = a.powers.findIndex(e => e.type === k)
-    
-          if (powerIndex != null) {
-            a.powers[powerIndex] += v;
+
+          if (powerIndex !== -1) {
+            a.powers[powerIndex].amount += v;
           } else {
             // if power duration is specified, assume
             //  that there is only one power
             if (k === "power_duration") {
               a.powers[0].duration += v;
+            } else if (k === "power_range") {
+              a.powers[0].radius += v;
             } else {
-              return console.error("error applying upgrade stats 2");
+              return console.error("error applying upgrade stats 2: " + k);
             }
           }
           /*
@@ -230,7 +239,7 @@ export default class Card extends Component {
           return console.error("error applying upgrade stats 3");
         }
       }
-    
+
       return a;
     }, alteredCard);
 
@@ -255,47 +264,65 @@ export default class Card extends Component {
     */
 
     alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
-      let bracketless = match.slice(1, match.length - 1);
-    
-      if (bracketless === "power_hero_damage") {
-        const powerIndex = alteredCard.powers.findIndex(e => e.type === "power_damage");
-    
-        if (powerIndex !== -1) {
-          return alteredCard.powers[powerIndex].amount / 10;
-        }
-        // continue to check for power_hero_damage
+      const bracketless = match.slice(1, match.length - 1);
+      //console.log(alteredCard);
+
+      function getPowerAmount(powerType) {
+        return alteredCard.powers.find(power => {
+          return power.type === powerType
+        }).amount;
       }
-    
+
       if (alteredCard[bracketless] == null) {
-        let mx = 0;
-        if (bracketless.slice(-3) === "min") {
-          mx = -1;
-          bracketless = bracketless.slice(0, bracketless.length - 4);
-        } else if (bracketless.slice(-3) === "max") {
-          mx = 1;
-          bracketless = bracketless.slice(0, bracketless.length - 4);
-        }
-    
-        const powerIndex = alteredCard.powers.findIndex(e => e.type === bracketless);
-    
-        if (powerIndex !== -1) {
-          return alteredCard.powers[powerIndex].amount + mx;
-        } else {
-          return "undefined"
-        }
-    
-        /*
-        if (bracketless === alteredCard.power_type) {
+
+
+        /*if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
+          console.log ('é nulo' + alteredCard);
+          return alteredCard.power_damage / 10;
+        }*/
+        if (bracketless === "power_hero_damage") {
+          let powerAmount = getPowerAmount("power_hero_damage");
+          if (powerAmount == null) {
+            return getPowerAmount("power_damage") / 10;
+          }
+          else {
+            return powerAmount;
+          }
+        } else if (bracketless === "power_duration_min") {
+          return alteredCard.powers[0].duration - 1;
+        } else if (bracketless === "power_duration_max") {
+          return alteredCard.powers[0].duration + 1;
+        } else if (bracketless === alteredCard.power_type) {
           return alteredCard.power_amount;
-        } else {
+        } else if (bracketless === "power_duration") {
+          return alteredCard.powers[0].duration;
+          //this is fucked up, I know, baby - do an array for these ones, if string - power_ is "poison, damage, attack_boost, heal", just return getPowerAmount - a.k.a. optimze later
+        } else if (bracketless === "power_poison") {
+          return getPowerAmount('power_poison');
+        } else if (bracketless === "power_damage") {
+          return getPowerAmount("power_damage");
+        } else if (bracketless === "power_attack_boost") {
+          return getPowerAmount("power_attack_boost");
+        } else if (bracketless === "power_heal") {
+          return getPowerAmount("power_heal");
+        } else if (bracketless === "power_max_hp_gain") {
+          return getPowerAmount("power_max_hp_gain");
+        } else if (bracketless === "power_target") {
+          return getPowerAmount("power_target");
+        } else if (bracketless === "power_max_hp_loss") {
+          return getPowerAmount("power_max_hp_loss");
+        } else if (bracketless === "power_attack_decrease") {
+          return getPowerAmount("power_attack_decrease");
+        }
+        else {
           return "undefined";
         }
-        */
+
       } else {
         return alteredCard[bracketless];
       }
     });
-    
+
     // if power is locked, assume only one power present
     if ((alteredCard.powers[0] || {}).locked === true) {
       alteredCard.description = "Power locked at this level/upgrade."
@@ -305,467 +332,470 @@ export default class Card extends Component {
   }
 
   _redrawCard = card => {
-    const canvas = this.canvas.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.fonts.load('17px "South Park Ext"').then(() => {
 
-    const rarity = card.rarity;
-    const theme = card.theme;
-    const characterType = card.character_type;
 
-    /* --- pasted old code --- */
+      const canvas = this.canvas.current;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Get the frame outline.
-    const frameWidth = 305;
-    const frameHeight = 418;
+      const rarity = card.rarity;
+      const theme = card.theme;
+      const characterType = card.character_type;
 
-    let x, y, z, w;
+      /* --- pasted old code --- */
 
-    switch (rarity) {
-    case 0: // common
-      y = 0;
+      // Get the frame outline.
+      const frameWidth = 305;
+      const frameHeight = 418;
+
+      let x, y, z, w;
+
+      switch (rarity) {
+        case 0: // common
+          y = 0;
+          switch (theme) {
+            case "adventure":
+              x = frameWidth;
+              break;
+            case "sci-fi":
+              x = frameWidth * 2;
+              break;
+            case "mystical":
+              x = frameWidth * 3;
+              break;
+            case "fantasy":
+              x = frameWidth * 4;
+              break;
+            case "general":
+              x = 0;
+              break;
+            default:
+              //message.reply("theme not found");
+              return;
+          }
+          break;
+        default:
+          y = frameHeight;
+          switch (theme) {
+            case "adventure":
+              x = frameWidth;
+              break;
+            case "sci-fi":
+              x = frameWidth * 2;
+              break;
+            case "mystical":
+              x = frameWidth * 3;
+              break;
+            case "fantasy":
+              x = frameWidth * 4;
+              break;
+            case "general":
+              x = 0;
+              break;
+            default:
+              //message.reply("theme not found");
+              return;
+          }
+          break;
+      }
+
+      z = frameWidth;
+      w = frameHeight;
+
+      // Get the frame top.
+      const topWidth = 338;
+      const topHeight = 107;
+
+      let fx, fy, fz, fw;
+
+      fx = 0;
+
+      switch (rarity) {
+        case 0: // common
+          fy = undefined;
+          break;
+        case 1:
+          fy = 0;
+          break;
+        case 2:
+          fy = topHeight;
+          break;
+        case 3:
+          fy = topHeight * 2;
+          break;
+        default:
+          //message.reply("rarity not found");
+          return;
+      }
+
+      fz = topWidth;
+      fw = topHeight;
+
+      // Get the icon.
+      const iconWidth = 116;
+      const iconHeight = 106;
+
+      let ix, iy, iz, iw;
+
+      switch (characterType) {
+        case "tank":
+          iy = 0;
+          break;
+        case undefined:
+          iy = iconHeight * 2;
+          break;
+        case "assassin":
+          iy = iconHeight * 4;
+          break;
+        case "ranged":
+          iy = iconHeight * 6;
+          break;
+        case "melee":
+          iy = iconHeight * 8;
+          break;
+        case "totem":
+          iy = iconHeight * 10;
+          break;
+      }
+
+      switch (rarity) {
+        case 0: // common
+          switch (theme) {
+            case "general":
+              ix = 0;
+              break;
+            case "adventure":
+              ix = iconWidth;
+              break;
+            case "sci-fi":
+              ix = iconWidth * 2;
+              break;
+            case "mystical":
+              ix = iconWidth * 3;
+              break;
+            case "fantasy":
+              ix = iconWidth * 4;
+              break;
+          }
+          break;
+        case 1:
+          iy += iconHeight;
+          ix = 0;
+          break;
+        case 2:
+          iy += iconHeight;
+          ix = iconWidth;
+          break;
+        case 3:
+          iy += iconHeight;
+          ix = iconWidth * 2;
+          break;
+      }
+
+      iz = iconWidth;
+      iw = iconHeight;
+
+      // Get the overlay.
+      const overlayWidth = 305;
+      const overlayHeight = 418;
+
+      let ox, oy, oz, ow;
+
+      oy = 0;
+
+      switch (characterType) {
+        case undefined:
+          ox = overlayWidth;
+          break;
+        default:
+          ox = 0;
+          break;
+      }
+
+      oz = overlayWidth;
+      ow = overlayHeight;
+
+      // Card theme icons.
+      const themeIconWidth = 36;
+      const themeIconHeight = 24;
+
+      let tx, ty, tz, tw;
+
+      ty = 0;
+
       switch (theme) {
-      case "adventure":
-        x = frameWidth;
-        break;
-      case "sci-fi":
-        x = frameWidth * 2;
-        break;
-      case "mystical":
-        x = frameWidth * 3;
-        break;
-      case "fantasy":
-        x = frameWidth * 4;
-        break;
-      case "general":
-        x = 0;
-        break;
-      default:
-        //message.reply("theme not found");
-        return;
-      }
-      break;
-    default:
-      y = frameHeight;
-      switch (theme) {
-      case "adventure":
-        x = frameWidth;
-        break;
-      case "sci-fi":
-        x = frameWidth * 2;
-        break;
-      case "mystical":
-        x = frameWidth * 3;
-        break;
-      case "fantasy":
-        x = frameWidth * 4;
-        break;
-      case "general":
-        x = 0;
-        break;
-      default:
-        //message.reply("theme not found");
-        return;
-      }
-      break;
-    }
-
-    z = frameWidth;
-    w = frameHeight;
-
-    // Get the frame top.
-    const topWidth = 338;
-    const topHeight = 107;
-
-    let fx, fy, fz, fw;
-
-    fx = 0;
-
-    switch (rarity) {
-    case 0: // common
-      fy = undefined;
-      break;
-    case 1:
-      fy = 0;
-      break;
-    case 2:
-      fy = topHeight;
-      break;
-    case 3:
-      fy = topHeight * 2;
-      break;
-    default:
-      //message.reply("rarity not found");
-      return;
-    }
-
-    fz = topWidth;
-    fw = topHeight;
-
-    // Get the icon.
-    const iconWidth = 116;
-    const iconHeight = 106;
-
-    let ix, iy, iz, iw;
-
-    switch (characterType) {
-    case "tank":
-      iy = 0;
-      break;
-    case undefined:
-      iy = iconHeight * 2;
-      break;
-    case "assassin":
-      iy = iconHeight * 4;
-      break;
-    case "ranged":
-      iy = iconHeight * 6;
-      break;
-    case "melee":
-      iy = iconHeight * 8;
-      break;
-    case "totem":
-      iy = iconHeight * 10;
-      break;
-    }
-
-    switch (rarity) {
-    case 0: // common
-      switch (theme) {
-      case "general":
-        ix = 0;
-        break;
-      case "adventure":
-        ix = iconWidth;
-        break;
-      case "sci-fi":
-        ix = iconWidth * 2;
-        break;
-      case "mystical":
-        ix = iconWidth * 3;
-        break;
-      case "fantasy":
-        ix = iconWidth * 4;
-        break;
-      }
-      break;
-    case 1:
-      iy += iconHeight;
-      ix = 0;
-      break;
-    case 2:
-      iy += iconHeight;
-      ix = iconWidth;
-      break;
-    case 3:
-      iy += iconHeight;
-      ix = iconWidth * 2;
-      break;
-    }
-
-    iz = iconWidth;
-    iw = iconHeight;
-
-    // Get the overlay.
-    const overlayWidth = 305;
-    const overlayHeight = 418;
-
-    let ox, oy, oz, ow;
-
-    oy = 0;
-
-    switch (characterType) {
-    case undefined:
-      ox = overlayWidth;
-      break;
-    default:
-      ox = 0;
-      break;
-    }
-
-    oz = overlayWidth;
-    ow = overlayHeight;
-
-    // Card theme icons.
-    const themeIconWidth = 36;
-    const themeIconHeight = 24;
-
-    let tx, ty, tz, tw;
-
-    ty = 0;
-
-    switch (theme) {
-    case "general":
-      tx = 0;
-      break;
-    case "adventure":
-      tx = themeIconWidth;
-      break;
-    case "sci-fi":
-      tx = themeIconWidth * 2;
-      break;
-    case "mystical":
-      tx = themeIconWidth * 3;
-      break;
-    case "fantasy":
-      tx = themeIconWidth * 4;
-      break;
-    default:
-      //message.reply("theme not found");
-      return;
-    }
-
-    tz = themeIconWidth;
-    tw = themeIconHeight;
-
-    // Crystal things.
-    const crystalSheet = {
-      x: 0,
-      y: 24,
-      width: 180,
-      height: 76 // 36 + 4 + 36
-    };
-
-    const crystalWidth = 36;
-    const crystalHeight = 36;
-
-    let cx, cy, cz, cw;
-
-    cy = crystalSheet.y;
-
-    switch (rarity) {
-    case 0: // common
-      switch (theme) {
-      case "general":
-        cx = 0;
-        break;
-      case "adventure":
-        cx = crystalWidth;
-        break;
-      case "sci-fi":
-        cx = crystalWidth * 2;
-        break;
-      case "mystical":
-        cx = crystalWidth * 3;
-        break;
-      case "fantasy":
-        cx = crystalWidth * 4;
-        break;
-      default:
-        //message.reply("theme not found");
-        return;
-      }
-      break;
-    case 1:
-      cy += crystalHeight + 4;
-      cx = 17;
-      break;
-    case 2:
-      cy += crystalHeight + 4;
-      cx = 34 + crystalWidth;
-      break;
-    case 3:
-      cy += crystalHeight + 4;
-      cx = 34 + crystalWidth * 2;
-      break;
-    default:
-      //message.reply("rarity not found");
-      return;
-    }
-
-    cz = crystalWidth;
-    cw = crystalHeight;
-
-    if (rarity === 3) {
-      cz += 17;
-    }
-
-    /* --- end of old code --- */
-
-    /* --- load images --- */
-    const checkImage = path => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-
-        img.onload = () => resolve(img);
-        img.onerror = () => reject();
-
-        img.src = path;
-      });
-    }
-
-    const checkImages = paths => Promise.all(paths.map(checkImage));
-
-    const imageList = {
-      charTypeIcons: "http://dragon.feinwaru.com/card-character-type-icons.png",
-      cardThemeIcons: "http://dragon.feinwaru.com/card-theme-icons.png",
-      frameOutlines: "http://dragon.feinwaru.com/frame-outline.png",
-      frameOverlays: "http://dragon.feinwaru.com/frame-overlay.png",
-      frameTops: "http://dragon.feinwaru.com/frame-top.png",
-      bgImage: `http://dragon.feinwaru.com/backgrounds/${this.card.image}.jpg`
-    };
-
-    checkImages(Object.values(imageList)).then(imgs => {
-
-      const mapToObj = map => {
-        const obj = {};
-        map.forEach((v, k) => { obj[k] = v; });
-
-        return obj;
+        case "general":
+          tx = 0;
+          break;
+        case "adventure":
+          tx = themeIconWidth;
+          break;
+        case "sci-fi":
+          tx = themeIconWidth * 2;
+          break;
+        case "mystical":
+          tx = themeIconWidth * 3;
+          break;
+        case "fantasy":
+          tx = themeIconWidth * 4;
+          break;
+        default:
+          //message.reply("theme not found");
+          return;
       }
 
-      const roundedImage = (ctx, x, y, width, height, radius) => {
-        ctx.beginPath();
-        ctx.moveTo(x + radius, y);
-        ctx.lineTo(x + width - radius, y);
-        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-        ctx.lineTo(x + width, y + height - radius);
-        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        ctx.lineTo(x + radius, y + height);
-        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x, y, x + radius, y);
-        ctx.closePath();
+      tz = themeIconWidth;
+      tw = themeIconHeight;
+
+      // Crystal things.
+      const crystalSheet = {
+        x: 0,
+        y: 24,
+        width: 180,
+        height: 76 // 36 + 4 + 36
+      };
+
+      const crystalWidth = 36;
+      const crystalHeight = 36;
+
+      let cx, cy, cz, cw;
+
+      cy = crystalSheet.y;
+
+      switch (rarity) {
+        case 0: // common
+          switch (theme) {
+            case "general":
+              cx = 0;
+              break;
+            case "adventure":
+              cx = crystalWidth;
+              break;
+            case "sci-fi":
+              cx = crystalWidth * 2;
+              break;
+            case "mystical":
+              cx = crystalWidth * 3;
+              break;
+            case "fantasy":
+              cx = crystalWidth * 4;
+              break;
+            default:
+              //message.reply("theme not found");
+              return;
+          }
+          break;
+        case 1:
+          cy += crystalHeight + 4;
+          cx = 17;
+          break;
+        case 2:
+          cy += crystalHeight + 4;
+          cx = 34 + crystalWidth;
+          break;
+        case 3:
+          cy += crystalHeight + 4;
+          cx = 34 + crystalWidth * 2;
+          break;
+        default:
+          //message.reply("rarity not found");
+          return;
       }
 
-      const images = mapToObj(new Map(imgs.map(e => [ Object.entries(imageList).find(f => f[1] === e.src)[0], e ] )));
+      cz = crystalWidth;
+      cw = crystalHeight;
 
-      /* --- draw to canvas --- */
-
-      // current canvas w x h: 526 x 769
-
-      // defined at the top of the file!
-      // const bgWidth = 455;
-      // const bgHeight = 630;
-
-      console.log(bgHeight);
-
-      ctx.save();
-      roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
-      ctx.clip();
-      ctx.drawImage(images.bgImage, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-      ctx.restore();
-      ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-      ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-
-      console.log(canvas.height / 2 - bgHeight / 2);
-
-      if (fy != null) {
-        ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
-      }
-
-      ctx.drawImage(images.charTypeIcons, ix, iy, iz, iw, canvas.width / 2 - bgWidth / 2 - 42, canvas.height / 2 - bgHeight / 2 - 106, iconWidth * 1.5, iconHeight * 1.5);
-      ctx.drawImage(images.cardThemeIcons, tx, ty, tz, tw, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, themeIconWidth * 1.5, themeIconHeight * 1.5);
-      
-      let xoffset = 0;
       if (rarity === 3) {
-        xoffset = 25;
+        cz += 17;
       }
 
-      ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, canvas.height / 2 - bgHeight / 2 + 460, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
+      /* --- end of old code --- */
 
-      // text
-      ctx.fillStyle = "#ebe7ca";
-      ctx.strokeStyle = "Black";
-      ctx.textAlign = "center";
+      /* --- load images --- */
+      const checkImage = path => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
 
-      const name = card.name;
-      const mana_cost = card.mana_cost;
-      const health = card.health;
-      const damage = card.damage;
-      const level = `${this.state.utype === "u" ? "u" : "lvl"} ${this.state.uvalue}`;
-      const description = card.description;
+          img.onload = () => resolve(img);
+          img.onerror = () => reject();
 
-      // const name = "Oshino Shinobu";
-      // const mana_cost = 7;
-      // const health = 23;
-      // const damage = 27;
-      // const level = "lvl 7";
-      // const description = "It’s beautiful. I’ve looked at this for 5 hours now.";
-      // const description = "Flying. Gives 1 bonus damage to all allies when he hits an enemy. Heals 4 Health to all allies when he kills an enemy.";
-
-      ctx.font = "25px South Park Ext";
-      ctx.lineWidth = 1;
-      ctx.strokeText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
-      ctx.fillText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
-
-      ctx.font = "60px South Park Ext";
-      ctx.lineWidth = 2;
-      ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
-      ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
-
-      if (ox === 0) {
-        ctx.font = "27px South Park Ext";
-        ctx.lineWidth = 1;
-        ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
-        ctx.fillText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
-
-        ctx.font = "27px South Park Ext";
-        ctx.lineWidth = 1;
-        ctx.strokeText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
-        ctx.fillText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+          img.src = path;
+        });
       }
 
-      ctx.font = "16px South Park Ext";
-      ctx.lineWidth = 1;
-      ctx.strokeText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
-      ctx.fillText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+      const checkImages = paths => Promise.all(paths.map(checkImage));
 
-      // description
-      ctx.font = "17px South Park Ext";
-      ctx.lineWidth = 1;
+      const imageList = {
+        charTypeIcons: "http://dragon.feinwaru.com/card-character-type-icons.png",
+        cardThemeIcons: "http://dragon.feinwaru.com/card-theme-icons.png",
+        frameOutlines: "http://dragon.feinwaru.com/frame-outline.png",
+        frameOverlays: "http://dragon.feinwaru.com/frame-overlay.png",
+        frameTops: "http://dragon.feinwaru.com/frame-top.png",
+        bgImage: `http://dragon.feinwaru.com/backgrounds/${this.card.image}.jpg`
+      };
 
-      const lineLengthCap = 325;
-      const words = description.split(" ");
+      checkImages(Object.values(imageList)).then(imgs => {
 
-      let currentWords = [];
-      let yoffset = 0;
+        const mapToObj = map => {
+          const obj = {};
+          map.forEach((v, k) => { obj[k] = v; });
 
-      let lineCount = 1;
-      for (let word of words) {
-        if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
-          currentWords = [ word ];
-          lineCount++;
-
-          continue;
+          return obj;
         }
 
-        currentWords.push(word);
-      }
-
-      console.log(lineCount);
-
-      currentWords = [];
-
-      for (let word of words) {
-        if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
-          ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
-          ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
-
-          currentWords = [ word ];
-          yoffset += 22;
-
-          continue;
+        const roundedImage = (ctx, x, y, width, height, radius) => {
+          ctx.beginPath();
+          ctx.moveTo(x + radius, y);
+          ctx.lineTo(x + width - radius, y);
+          ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+          ctx.lineTo(x + width, y + height - radius);
+          ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+          ctx.lineTo(x + radius, y + height);
+          ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+          ctx.lineTo(x, y + radius);
+          ctx.quadraticCurveTo(x, y, x + radius, y);
+          ctx.closePath();
         }
 
-        currentWords.push(word);
-      }
-      ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
-      ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+        const images = mapToObj(new Map(imgs.map(e => [Object.entries(imageList).find(f => f[1] === e.src)[0], e])));
 
-      // ctx.strokeText(description, 419, 800);
-      // ctx.fillText(description, 419, 800);
+        /* --- draw to canvas --- */
 
-      /* --- draw to canvas end --- */
+        // current canvas w x h: 526 x 769
+
+        // defined at the top of the file!
+        // const bgWidth = 455;
+        // const bgHeight = 630;
+
+        console.log(bgHeight);
+
+        ctx.save();
+        roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
+        ctx.clip();
+        ctx.drawImage(images.bgImage, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+        ctx.restore();
+        ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+        ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+
+        console.log(canvas.height / 2 - bgHeight / 2);
+
+        if (fy != null) {
+          ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
+        }
+
+        ctx.drawImage(images.charTypeIcons, ix, iy, iz, iw, canvas.width / 2 - bgWidth / 2 - 42, canvas.height / 2 - bgHeight / 2 - 106, iconWidth * 1.5, iconHeight * 1.5);
+        ctx.drawImage(images.cardThemeIcons, tx, ty, tz, tw, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, themeIconWidth * 1.5, themeIconHeight * 1.5);
+
+        let xoffset = 0;
+        if (rarity === 3) {
+          xoffset = 25;
+        }
+
+        ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, canvas.height / 2 - bgHeight / 2 + 460, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
+
+        // text
+        ctx.fillStyle = "#ebe7ca";
+        ctx.strokeStyle = "Black";
+        ctx.textAlign = "center";
+
+        const name = card.name;
+        const mana_cost = card.mana_cost;
+        const health = card.health;
+        const damage = card.damage;
+        const level = `${this.state.utype === "u" ? "u" : "lvl"} ${this.state.uvalue}`;
+        const description = card.description;
+
+        // const name = "Oshino Shinobu";
+        // const mana_cost = 7;
+        // const health = 23;
+        // const damage = 27;
+        // const level = "lvl 7";
+        // const description = "It’s beautiful. I’ve looked at this for 5 hours now.";
+        // const description = "Flying. Gives 1 bonus damage to all allies when he hits an enemy. Heals 4 Health to all allies when he kills an enemy.";
+
+        ctx.font = "25px South Park Ext";
+        ctx.lineWidth = 1;
+        ctx.strokeText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+        ctx.fillText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+
+        ctx.font = "60px South Park Ext";
+        ctx.lineWidth = 2;
+        ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+        ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+
+        if (ox === 0) {
+          ctx.font = "27px South Park Ext";
+          ctx.lineWidth = 1;
+          ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
+          ctx.fillText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
+
+          ctx.font = "27px South Park Ext";
+          ctx.lineWidth = 1;
+          ctx.strokeText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+          ctx.fillText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+        }
+
+        ctx.font = "16px South Park Ext";
+        ctx.lineWidth = 1;
+        ctx.strokeText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+        ctx.fillText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+
+        // description
+        ctx.font = "17px South Park Ext";
+        ctx.lineWidth = 1;
+
+        const lineLengthCap = 325;
+        const words = description.split(" ");
+
+        let currentWords = [];
+        let yoffset = 0;
+
+        let lineCount = 1;
+        for (let word of words) {
+          if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
+            currentWords = [word];
+            lineCount++;
+
+            continue;
+          }
+
+          currentWords.push(word);
+        }
+
+        console.log(lineCount);
+
+        currentWords = [];
+
+        for (let word of words) {
+          if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
+            ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+            ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+
+            currentWords = [word];
+            yoffset += 22;
+
+            continue;
+          }
+
+          currentWords.push(word);
+        }
+        ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+        ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+
+        // ctx.strokeText(description, 419, 800);
+        // ctx.fillText(description, 419, 800);
+
+        /* --- draw to canvas end --- */
+      });
     });
-    
     /* --- load images end --- */
   }
 
   handleDropdownChange = change => {
     const dropdownText = change.target.value;
     const split = dropdownText.split(" ");
-    
+
     let type = null;
     let value = null;
 
@@ -797,28 +827,31 @@ export default class Card extends Component {
       altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
       this._redrawCard(altered);
     }
-    
+
     console.log(altered);
 
     // sections
     const sections = [];
 
     const createSection = (title, stats) => {
-      return (
-        <div key={title}>
-          <h4 className="font-weight-bold mt-5">{title}{ Object.keys(stats).length === 0 ? <span> <i className="fas fa-lg fa-times red-text"></i></span> : "" }</h4>
-          <div className="divider" />
-
+      const createSubSection = stats => {
+        return (
           <ul className="list-unstyled align">
-
-            { Object.entries(stats).map((e, i) =>
+            {Object.entries(stats).map((e, i) => e[1] == null ? "" :
               <li key={i}>
                 <span className="font-weight-bold dark-grey-text">{e[0]}: </span>
                 <span>{e[1]}</span>
               </li>
-            ) }
-
+            )}
           </ul>
+        );
+      };
+
+      return (
+        <div key={title}>
+          <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-lg fa-times red-text"></i></span> : ""}</h4>
+          <div className="divider" />
+          { stats instanceof Array ? stats.length > 0 ? stats.map((e, i, a) => <div>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : "" }
         </div>
       );
     }
@@ -828,7 +861,9 @@ export default class Card extends Component {
 
     // utility
     const card = altered;
-    
+
+    console.log(card);
+
     let general = {
       "Cast Area": upperCase(deSnake(card.cast_area))
     };
@@ -843,31 +878,37 @@ export default class Card extends Component {
 
     sections.push(createSection("General Information", general));
 
-    let power = {};
-    if (card.has_power === true) {
-      power = {
-        ...power,
-        "Power Type": card.power_type,
-        "Power Amount": card.power_amount
-      };
+    let powers = [];
+    if ((card.powers == null ? 0 : card.powers.length) !== 0) {
+      card.powers.forEach(e => {
+        let power = {};
 
-      if (card.power_duration != null) {
         power = {
           ...power,
-          "Power Duration": card.power_duration
+          "Power Type": e.type,
+          "Power Amount": e.amount
         };
-      }
+  
+        if (e.duration != null) {
+          power = {
+            ...power,
+            "Power Duration": e.duration
+          };
+        }
+  
+        if (e.is_charged) {
+          power = {
+            ...power,
+            "Charged Power Regen": e.charged_regen,
+            "Charged Power Radius": e.radius
+          };
+        }
 
-      if (card.is_power_charged) {
-        power = {
-          ...power,
-          "Charged Power Regen": card.charged_power_regen,
-          "Charged Power Radius": card.charged_power_radius
-        };
-      }
+        powers.push(power);
+      });
     }
 
-    sections.push(createSection("Power Information", power));
+    sections.push(createSection("Power Information", powers));
 
     let attack = {};
     if (card.can_attack === true) {
@@ -939,82 +980,96 @@ export default class Card extends Component {
               <div className="divider" />
               <div className="form-group">
                 <select className="form-control" id="exampleFormControlSelect1" onChange={change => this.handleDropdownChange(change)}>
-                  <option>Upgrade 1 / 70</option>
-                  <option>Upgrade 2 / 70</option>
-                  <option>Upgrade 3 / 70</option>
-                  <option>Upgrade 4 / 70</option>
-                  <option>Upgrade 5 / 70</option>
-                  <option>Level 2</option>
-                  <option>Upgrade 6 / 70</option>
-                  <option>Upgrade 7 / 70</option>
-                  <option>Upgrade 8 / 70</option>
-                  <option>Upgrade 9 / 70</option>
-                  <option>Upgrade 10 / 70</option>
-                  <option>Upgrade 11 / 70</option>
-                  <option>Upgrade 12 / 70</option>
-                  <option>Upgrade 13 / 70</option>
-                  <option>Upgrade 14 / 70</option>
-                  <option>Upgrade 15 / 70</option>
-                  <option>Level 3</option>
-                  <option>Upgrade 16 / 70</option>
-                  <option>Upgrade 17 / 70</option>
-                  <option>Upgrade 18 / 70</option>
-                  <option>Upgrade 19 / 70</option>
-                  <option>Upgrade 20 / 70</option>
-                  <option>Upgrade 21 / 70</option>
-                  <option>Upgrade 22 / 70</option>
-                  <option>Upgrade 23 / 70</option>
-                  <option>Upgrade 24 / 70</option>
-                  <option>Upgrade 25 / 70</option>
-                  <option>Level 4</option>
-                  <option>Upgrade 26 / 70</option>
-                  <option>Upgrade 27 / 70</option>
-                  <option>Upgrade 28 / 70</option>
-                  <option>Upgrade 29 / 70</option>
-                  <option>Upgrade 30 / 70</option>
-                  <option>Upgrade 31 / 70</option>
-                  <option>Upgrade 32 / 70</option>
-                  <option>Upgrade 33 / 70</option>
-                  <option>Upgrade 34 / 70</option>
-                  <option>Upgrade 35 / 70</option>
-                  <option>Upgrade 36 / 70</option>
-                  <option>Upgrade 37 / 70</option>
-                  <option>Upgrade 38 / 70</option>
-                  <option>Upgrade 39 / 70</option>
-                  <option>Upgrade 40 / 70</option>
-                  <option>Level 5</option>
-                  <option>Upgrade 41 / 70</option>
-                  <option>Upgrade 42 / 70</option>
-                  <option>Upgrade 43 / 70</option>
-                  <option>Upgrade 44 / 70</option>
-                  <option>Upgrade 45 / 70</option>
-                  <option>Upgrade 46 / 70</option>
-                  <option>Upgrade 47 / 70</option>
-                  <option>Upgrade 48 / 70</option>
-                  <option>Upgrade 49 / 70</option>
-                  <option>Upgrade 50 / 70</option>
-                  <option>Upgrade 51 / 70</option>
-                  <option>Upgrade 52 / 70</option>
-                  <option>Upgrade 53 / 70</option>
-                  <option>Upgrade 54 / 70</option>
-                  <option>Upgrade 55 / 70</option>
-                  <option>Level 6</option>
-                  <option>Upgrade 56 / 70</option>
-                  <option>Upgrade 57 / 70</option>
-                  <option>Upgrade 58 / 70</option>
-                  <option>Upgrade 59 / 70</option>
-                  <option>Upgrade 60 / 70</option>
-                  <option>Upgrade 61 / 70</option>
-                  <option>Upgrade 62 / 70</option>
-                  <option>Upgrade 63 / 70</option>
-                  <option>Upgrade 64 / 70</option>
-                  <option>Upgrade 65 / 70</option>
-                  <option>Upgrade 66 / 70</option>
-                  <option>Upgrade 67 / 70</option>
-                  <option>Upgrade 68 / 70</option>
-                  <option>Upgrade 69 / 70</option>
-                  <option>Upgrade 70 / 70</option>
-                  <option>Level 7</option>
+                  {
+                    altered.type === "spell" || altered.type === "spawn" ?
+                      <>
+                        <option>Level 1</option>
+                        <option>Level 2</option>
+                        <option>Level 3</option>
+                        <option>Level 4</option>
+                        <option>Level 5</option>
+                        <option>Level 6</option>
+                        <option>Level 7</option>
+                      </> :
+                      <>
+                        <option>Upgrade 1 / 70</option>
+                        <option>Upgrade 2 / 70</option>
+                        <option>Upgrade 3 / 70</option>
+                        <option>Upgrade 4 / 70</option>
+                        <option>Upgrade 5 / 70</option>
+                        <option>Level 2</option>
+                        <option>Upgrade 6 / 70</option>
+                        <option>Upgrade 7 / 70</option>
+                        <option>Upgrade 8 / 70</option>
+                        <option>Upgrade 9 / 70</option>
+                        <option>Upgrade 10 / 70</option>
+                        <option>Upgrade 11 / 70</option>
+                        <option>Upgrade 12 / 70</option>
+                        <option>Upgrade 13 / 70</option>
+                        <option>Upgrade 14 / 70</option>
+                        <option>Upgrade 15 / 70</option>
+                        <option>Level 3</option>
+                        <option>Upgrade 16 / 70</option>
+                        <option>Upgrade 17 / 70</option>
+                        <option>Upgrade 18 / 70</option>
+                        <option>Upgrade 19 / 70</option>
+                        <option>Upgrade 20 / 70</option>
+                        <option>Upgrade 21 / 70</option>
+                        <option>Upgrade 22 / 70</option>
+                        <option>Upgrade 23 / 70</option>
+                        <option>Upgrade 24 / 70</option>
+                        <option>Upgrade 25 / 70</option>
+                        <option>Level 4</option>
+                        <option>Upgrade 26 / 70</option>
+                        <option>Upgrade 27 / 70</option>
+                        <option>Upgrade 28 / 70</option>
+                        <option>Upgrade 29 / 70</option>
+                        <option>Upgrade 30 / 70</option>
+                        <option>Upgrade 31 / 70</option>
+                        <option>Upgrade 32 / 70</option>
+                        <option>Upgrade 33 / 70</option>
+                        <option>Upgrade 34 / 70</option>
+                        <option>Upgrade 35 / 70</option>
+                        <option>Upgrade 36 / 70</option>
+                        <option>Upgrade 37 / 70</option>
+                        <option>Upgrade 38 / 70</option>
+                        <option>Upgrade 39 / 70</option>
+                        <option>Upgrade 40 / 70</option>
+                        <option>Level 5</option>
+                        <option>Upgrade 41 / 70</option>
+                        <option>Upgrade 42 / 70</option>
+                        <option>Upgrade 43 / 70</option>
+                        <option>Upgrade 44 / 70</option>
+                        <option>Upgrade 45 / 70</option>
+                        <option>Upgrade 46 / 70</option>
+                        <option>Upgrade 47 / 70</option>
+                        <option>Upgrade 48 / 70</option>
+                        <option>Upgrade 49 / 70</option>
+                        <option>Upgrade 50 / 70</option>
+                        <option>Upgrade 51 / 70</option>
+                        <option>Upgrade 52 / 70</option>
+                        <option>Upgrade 53 / 70</option>
+                        <option>Upgrade 54 / 70</option>
+                        <option>Upgrade 55 / 70</option>
+                        <option>Level 6</option>
+                        <option>Upgrade 56 / 70</option>
+                        <option>Upgrade 57 / 70</option>
+                        <option>Upgrade 58 / 70</option>
+                        <option>Upgrade 59 / 70</option>
+                        <option>Upgrade 60 / 70</option>
+                        <option>Upgrade 61 / 70</option>
+                        <option>Upgrade 62 / 70</option>
+                        <option>Upgrade 63 / 70</option>
+                        <option>Upgrade 64 / 70</option>
+                        <option>Upgrade 65 / 70</option>
+                        <option>Upgrade 66 / 70</option>
+                        <option>Upgrade 67 / 70</option>
+                        <option>Upgrade 68 / 70</option>
+                        <option>Upgrade 69 / 70</option>
+                        <option>Upgrade 70 / 70</option>
+                        <option>Level 7</option>
+                      </>
+                  }
                 </select>
               </div>
 
@@ -1030,7 +1085,7 @@ export default class Card extends Component {
                 </li>
               </ul>
 
-              { sections }
+              {sections}
 
             </div>
           </div>

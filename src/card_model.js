@@ -25,7 +25,8 @@ const defValidBool = {
 
 const typeTypes = [
     "character",
-    "spell"
+    "spell",
+    "spawn"
 ];
 
 const characterTypeTypes = [

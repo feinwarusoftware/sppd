@@ -165,7 +165,7 @@ class CardGrid extends Component {
       }
     });
 
-    if (alteredCard.is_power_locked === true) {
+    if ((alteredCard.powers[0] || {}).locked === true) {
       alteredCard.description = "Power locked at this level/upgrade."
     }
 

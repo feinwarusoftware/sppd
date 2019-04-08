@@ -1,23 +1,39 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 class Navbar extends Component {
-
   constructor(props) {
     super(props);
-  
+    this.state = {
+    };
     this.navbar = React.createRef();
   }
 
   mobileDropdown = () => {
-    if (this.navbar.current.classList.contains('dropped')){
+    if (this.navbar.current.classList.contains('dropped')) {
       this.navbar.current.classList.remove('dropped');
     } else {
       this.navbar.current.classList.add('dropped');
     }
   }
 
+  randomCard = () => {
+    fetch("http://dragon.feinwaru.com/api/v1/cards/list")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          let random = result.data[Math.floor(Math.random() * result.data.length)];
+
+          window.location.href = "/" + random.image
+        },
+        (error) => {
+          console.error("AHHHHHHHHH")
+        }
+      ); 
+  }
+
   render() {
+
     return (
       <React.Fragment>
         <nav ref={this.navbar} >
@@ -29,7 +45,7 @@ class Navbar extends Component {
                 <Link to={{pathname: "/"}}>Home</Link>
               </li>
               <li>
-                <a>Random Card</a>
+                <a onClick={() => this.randomCard()}>Random Card</a>
               </li>
               <li>
                 <a href="https://awesomo.feinwaru.com/">Discord Bot</a>
@@ -46,6 +62,8 @@ class Navbar extends Component {
             
           </div>
         </nav>
+
+
       </React.Fragment>
     );
   }

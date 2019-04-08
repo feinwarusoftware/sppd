@@ -39,18 +39,24 @@
 
 ## What is SPPD
 
-SPPD is an actively developed Discord bot with involvement from our community. Unlike most other bots, we try to push the limits of what can be done with the Discord API and frequently test new and creative ideas. Our flagship feature is a fully community driven script marketplace where users can easily add extensive functionality to the bot and customise it to their own liking.
+SPPD is a website created to let users see all the statistics for the game "South Park: Phone Destroyer" in an easy to use and understand way. 
 
 Here is our full list of features:
 
-- Online dashboard.
-- Scripting engine.
-- Community command marketplace.
-- User profiles and stats.
-- South Park related commands.
-- Phone Destroyer card viewer.
-- Server analytics. _(coming soon)_
-- Server polls. _(coming soon)_
+- List of Cards which can be:
+  - Searched
+  - Filtered
+  - Ordered
+  - Viewed in two different ways
+
+- Individual Card Pages
+  - Full statistics
+  - User selected upgrades
+  - Live card renders
+
+- Random card selector
+
+- Latest news from us and the developers
 
 If you're interested in trying out SPPD, you can visit [our Discord server](https://awesomo.feinwaru.com) or add the bot to your own! Please note that currently, all bot features are exclusive to our [Patreon supporters](https://www.patreon.com/awesomo), although that will probably change in the future.
 

@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { Navbar, Footer, Search, News } from "../components";
+import { Navbar, Footer, Search, News, Cookie } from "../components";
+
+import { withRouter } from "react-router-dom";
+
+// const Nav = withRouter(Navbar);
 
 class Index extends Component {
   constructor(props) {
@@ -72,6 +76,8 @@ class Index extends Component {
 
   updateScrollPosition = () => {
 
+    console.log(this.nav);
+
     if (window.scrollY < 60) {
       this.nav.current.navbar.current.classList.add('trans')
     } else {
@@ -85,6 +91,7 @@ class Index extends Component {
     return (
       <div>
         <Navbar ref={this.nav} />
+        <Cookie />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-100 banner"

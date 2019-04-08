@@ -72,8 +72,16 @@ const convert = card => {
   out.mana_cost = parseInt(card.ManaCost);
   out.damage = parseInt(card.Damage);
   out.health = parseInt(card.Health);
+  
+  //
   out.type = card.Type.toLowerCase();
+  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock") {
+    out.type = "spawn";
+  }
+  //
+
   out.character_type = card.Type !== "Spell" ? card.CharacterType.toLowerCase() : null;
+
   out.rarity = parseInt(card.Rarity);
   switch(card.Theme) {
     case "Fan": {
@@ -248,6 +256,12 @@ const convert = card => {
       break;
     }
   }
+
+  //
+  if (card.Name[0] === "Snake" || card.Name[0] === "A Cock") {
+    out.tech_tree.slots = [];
+  }
+  //
 
   return out;
 }

@@ -187,6 +187,31 @@ router.post("/cards", (req, res) => {
         });
 });
 
+
+router.get("/cards/list", (req, res) => {
+    allowCors(res);
+
+    CardModel
+        .find({}, "_id name image")
+
+        .then(cards => {
+            res.json({
+                code: 200,
+                success: true,
+                data: cards,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+
 router.get("/cards/:id", (req, res) => {
     allowCors(res);
 
@@ -220,6 +245,42 @@ router.get("/cards/:id", (req, res) => {
             });
         });
 });
+
+// temp
+router.get("/cards/image/:image", (req, res) => {
+    allowCors(res);
+
+    CardModel
+        .findOne({ image: req.params.image })
+        .select({ __v: 0 })
+
+        .then(card => {
+            if (card == null) {
+                return res.json({
+                    code: 404,
+                    success: true,
+                    data: null,
+                    error: null
+                });
+            }
+
+            res.json({
+                code: 200,
+                success: true,
+                data: card,
+                error: null
+            });
+        })
+        .catch(error => {
+            res.json({
+                code: 500,
+                success: false,
+                data: null,
+                error
+            });
+        });
+});
+//
 
 router.patch("/cards/:id", (req, res) => {
     allowCors(res);
