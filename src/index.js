@@ -15,7 +15,18 @@ const env = "dev"; // dev | prod
 const app = express();
 
 // connect to mongo
+/*
 mongoose.connect(`mongodb://localhost/sppd`, { useNewUrlParser: true });
+*/
+
+mongoose.connect(`mongodb://${process.env.mongo_user == null && process.env.mongo_pass == null ? "" : `${process.env.mongo_user}:${process.env.mongo_pass}@`}localhost/rawrxd?authSource=admin`, {
+  useNewUrlParser: true,
+  ...process.env.mongo_user == null && process.env.mongo_pass == null ? {} : {
+    auth: {
+      authdb: "admin"
+    }
+  }
+});
 mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
