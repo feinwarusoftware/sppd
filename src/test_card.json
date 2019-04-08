@@ -1,0 +1,117 @@
+{
+  "Id": 1276,
+  "Visible": true,
+  "CanAttack": true,
+  "Name": ["Arrowstorm", "storm"],
+  "Description": "Deal {PowerDamage} damage to all enemies.",
+  "Image": "SpellArrowstormCard",
+  "ManaCost": 4,
+  "Damage": "4",
+  "Health": "30",
+  "Type": "Spell",
+  "Targeting": {
+    "AssetId": "EmptyPowerRet",
+    "Radius": 12.0
+  },
+  "Ingame": "",
+  "AttackRange": 0.4,
+  "TimeToReachMaxVelocity": 0.0,
+  "MaxVelocity": 2.0,
+  "TimeInBetweenAttacks": 0.0,
+  "PowerDuration": null,
+  "PowerHeal": null,
+  "PowerHeroHeal": null,
+  "PowerMaxHPGain": null,
+  "PowerMaxHPLoss": null,
+  "PowerSummonLevel": null,
+  "PowerDamage": 112,
+  "PowerHeroDamage": null,
+  "PowerPoisonAmount": null,
+  "PowerHeroPoison": null,
+  "PowerAttackBoost": null,
+  "PowerAttackDecrease": null,
+  "AgroRangeMultiplier": 1.2,
+  "KnockbackImpulse": "0.0000",
+  "KnockbackAngleDeg": 45.0,
+  "ChargedPowerRegen": 0.0,
+  "ChargedPowerRadius": 0.0,
+  "ChargedPowerReticle": "",
+  "Rarity": 2,
+  "Theme": "Adv",
+  "TechTree2": {
+    "Slots": [],
+    "Evolve": [
+      {
+        "StarLevel": 0,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 34.0
+          }
+        ]
+      },
+      {
+        "StarLevel": 1,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 103.0
+          }
+        ]
+      },
+      {
+        "StarLevel": 2,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 68.0
+          }
+        ]
+      },
+      {
+        "StarLevel": 3,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 34.0
+          }
+        ]
+      },
+      {
+        "StarLevel": 4,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 34.0
+          }
+        ]
+      },
+      {
+        "StarLevel": 5,
+        "Slots": [
+          {
+            "x": 0,
+            "property": "PowerDamageAbs",
+            "value": 34.0
+          }
+        ]
+      }
+    ]
+  },
+  "Requirements": {
+    "MinEpisodeCompleted": 0,
+    "MinPlayerLevel": 0,
+    "MinPVPRank": 10
+  },
+  "AOEDamagePercentage": 0.0,
+  "AOERadius": 0.0,
+  "AOEKnockbackPercentage": 0.0,
+  "PreAttackDelay": 0.0,
+  "CastArea": "Anywhere",
+  "ChildUnitLimit": 0
+}
