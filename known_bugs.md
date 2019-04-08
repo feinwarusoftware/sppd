@@ -25,6 +25,7 @@ tofix later:
 - code cleanup
 - repo cleanup
 - tests
+- use one static folder lol
 
 toadd later:
 

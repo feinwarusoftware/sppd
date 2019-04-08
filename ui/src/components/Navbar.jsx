@@ -26,7 +26,7 @@ class Navbar extends Component {
   }
 
   randomCard = () => {
-    fetch("http://dragon.feinwaru.com/api/v1/cards/list")
+    fetch("api/v1/cards/list")
       .then(res => res.json())
       .then(
         (result) => {

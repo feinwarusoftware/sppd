@@ -61,9 +61,9 @@ export default class Card extends Component {
     let url;
 
     if (this.props.location.state == null) {
-      url = `http://dragon.feinwaru.com/api/v1/cards/image/${this.props.location.pathname.slice(1)}`;
+      url = `api/v1/cards/image/${this.props.location.pathname.slice(1)}`;
     } else {
-      url = `http://dragon.feinwaru.com/api/v1/cards/${this.props.location.state.id}`;
+      url = `api/v1/cards/${this.props.location.state.id}`;
     }
 
     return new Promise((resolve, reject) => {
@@ -628,12 +628,12 @@ export default class Card extends Component {
       const checkImages = paths => Promise.all(paths.map(checkImage));
 
       const imageList = {
-        charTypeIcons: "http://dragon.feinwaru.com/card-character-type-icons.png",
-        cardThemeIcons: "http://dragon.feinwaru.com/card-theme-icons.png",
-        frameOutlines: "http://dragon.feinwaru.com/frame-outline.png",
-        frameOverlays: "http://dragon.feinwaru.com/frame-overlay.png",
-        frameTops: "http://dragon.feinwaru.com/frame-top.png",
-        bgImage: `http://dragon.feinwaru.com/backgrounds/${this.card.image}.jpg`
+        charTypeIcons: "https://sppd.feinwaru.com/card-character-type-icons.png",
+        cardThemeIcons: "https://sppd.feinwaru.com/card-theme-icons.png",
+        frameOutlines: "https://sppd.feinwaru.com/frame-outline.png",
+        frameOverlays: "https://sppd.feinwaru.com/frame-overlay.png",
+        frameTops: "https://sppd.feinwaru.com/frame-top.png",
+        bgImage: `https://sppd.feinwaru.com/backgrounds/${this.card.image}.jpg`
       };
 
       checkImages(Object.values(imageList)).then(imgs => {

@@ -43,7 +43,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(["dist"]),
         new HtmlWebpackPlugin({
-            title: "Feinwaru SPPD // ",
+            title: "Feinwaru SPPD",
             template: "./template.html"
         })
     ]

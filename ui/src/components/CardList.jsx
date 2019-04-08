@@ -271,7 +271,7 @@ class CardGrid extends Component {
                   <span id="damage">{this.props.damage}</span>
                 </span>
               </h6>
-              <p>{this.props.description}</p><b>{altered.description}</b>
+              <p>{altered.description}</p>
             </div>
           </div>
         </div>

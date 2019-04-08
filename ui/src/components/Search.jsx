@@ -66,7 +66,7 @@ class Search extends Component {
   }
 
   _fetchCards(params) {
-    const baseUrl = "http://dragon.feinwaru.com/api/v1/cards";
+    const baseUrl = "api/v1/cards";
 
     // its called mana cost in the json
     if (params.sort === "energy") {

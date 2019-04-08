@@ -24,17 +24,20 @@ db.on("open", () => console.log("db conn"))
 
 app.use(morgan(env === "dev" ? "dev" : "combined"));
 
-//app.use(express.static(path.join(__dirname, "..", "ui", "src", "static")));
 app.use(express.static(path.join(__dirname, "..", "ui", "dist")));
 app.use(express.static(path.join(__dirname, "..", "static")));
 
 app.use(express.json());
 
+app.use("/api/v1", api_routes);
+
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "ui", "template.html"));
+  res.sendFile(path.join(__dirname, "..", "ui", "dist", "index.html"));
 });
 
-app.use("/api/v1", api_routes);
+app.get("/:card", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "ui", "dist", "index.html"));
+});
 
 app.use((req, res, next) => {
 

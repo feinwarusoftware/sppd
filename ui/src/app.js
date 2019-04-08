@@ -16,8 +16,10 @@ const history = createBrowserHistory()
 ReactDOM.render(
   <Router history={history}>
     <ScrollToTop>
+      <Switch>
       <Route exact path="/" component={Home} exact />
       <Route exact path="/:card" component={Card} />
+      </Switch>
     </ScrollToTop>
   </Router>,
   document.getElementById("root")
