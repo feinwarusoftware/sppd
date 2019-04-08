@@ -34,7 +34,7 @@ class Cookie extends Component {
           <div className="container">
             <button onClick={() => {this.acceptCookie()}} className="px-4 btn btn-sm btn-sppd float-right">Got it!</button>         
             <p className="mb-0">This website uses cookies to ensure you get the best experience on our website.</p>
-            <a>Learn More</a>
+            <a href="https://cookiesandyou.com/">Learn More</a>
           </div>
         </div>
       </React.Fragment>
