@@ -1,0 +1,80 @@
+//Colours
+$feinwaru: #ff594f;
+$feinwarudark: #c93d36;
+$feinwarugreen: #14b252;
+$sppd: #1E98A1;
+$lightgrey: #c5c5c5;
+$grey: #707070;
+$darkgrey: #222;
+$dwhite: #eee;
+
+//Card Colours
+$Rare: #BB4600;
+$Epic: #C1C1C1;
+$Legendary: #E9B845;
+
+$Adventure: #4f80ba;
+$Fantasy: #d34f5f;
+$General: #857468;
+$Mystical: #4b9b38;
+$Sci-Fi: #db571d;
+
+//Imports
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
+@import "src/components/footer";
+@import "src/components/navbar";
+@import "src/components/langbar";
+@import "src/components/search";
+@import "src/components/cards";
+@import "src/components/news";
+@import "src/components/cookie";
+
+@font-face {
+    font-family: "South Park Ext";
+    src: url("src/static/font/southpark/SouthParkExt-Regular.eot");
+    src: url("src/static/font/southpark/SouthParkExt-Regular.eot?#iefix") format("embedded-opentype"),
+        url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
+        url("src/static/font/southpark/SouthParkExt-Regular.woff") format("woff"),
+        url("src/static/font/southpark/SouthParkExt-Regular.ttf") format("truetype"),
+        url("src/static/font/southpark/SouthParkExt-Regular.svg#SouthParkExt-Regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "Roboto", "sans-serif";
+    background-color: $dwhite;
+}
+
+svg {
+    &.banner {
+
+        image {
+            background-position: center;
+        }
+    }
+
+}
+
+.credits {
+    a {
+        color: $sppd;
+    }
+    a:hover {
+        color: darken($sppd, 10);
+        text-decoration: none;
+    }
+}
+
+//MDB Shit
+.light-blue-text {
+    color: #03a9f4 !important;
+}
+
+.red-text {
+    color: #f44336 !important;
+}
+
+.orange-text {
+    color: #ff9800 !important;
+}

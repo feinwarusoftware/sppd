@@ -1,0 +1,150 @@
+{
+    /* ------------------------------
+    
+            SPPD JSON rev v1
+
+    ------------------------------ */
+
+    // basic info
+    // required for card redering
+    // present every time
+    "name": "",
+    "description": "",
+    "image": "",
+    "mana_cost": 0,
+    "damage": 0,
+    "health": 0,
+    "type": "",
+    "character_type": "",
+    "rarity": "",
+    "theme": "",
+
+    // TODO: health_loss
+
+    // general stats info section
+    "cast_area": "",
+
+    // the following only applicable
+    // if type is character (i.e. can move)
+    "max_velocity": 0,
+    "time_to_reach_max_velocity": 0,
+    "agro_range_multiplier": 0,
+
+    // can attack heading
+    // if true, fill out, else, leave
+    "can_attack": true,
+
+    "attack_range": 0,
+    "pre_attack_delay": 0,
+    "knockback": 0,
+    "knockback_angle": 0,
+    "time_between_attacks": 0,
+
+    /*
+        // DEPRECATED - see SPPD json rev 2
+    
+        // does it have a power
+        // if true, fill out power header
+        "has_power": true,
+
+        "power_type": "",
+        "power_amount": 0,
+        "power_duration": 0,
+
+        // charged power, following only
+        // applicable if this is true
+        "is_power_charged": true,
+
+        "charged_power_regen": 0,
+        "charged_power_radius": 0,
+
+        // if the power is locked
+        // if this is set to true,
+        // need to watch out for upgrades
+        "is_power_locked": false,
+    */
+
+    // aoe info
+    // preset if has_aoe is true
+    "has_aoe": true,
+
+    "aoe_type": "",
+    "aoe_damage_percentage": 0,
+    "aoe_knockback_percentage": 0,
+    "aoe_radius": 0,
+
+    // requirement info
+    // present everytime
+    "min_episode_completed": 0,
+    "min_pvp_rank": 0,
+    "min_player_level": 0,
+
+    // upgrade sequence is [4, 10, 10, 15, 15, 15]
+    // default stats are upgrade 1
+    // level upgrade every [value] upgrades
+    "tech_tree": {
+        "slots": [
+            {
+                "property": "",
+                "value": 0
+            }
+        ],
+        "levels": [
+            {
+                "slots": [
+                    {
+                        "property": "",
+                        "value": 0
+                    },
+                    {
+                        "property": "",
+                        "value": 0
+                    } 
+                ]
+            }
+        ]
+    },
+
+    /* ------------------------------
+    
+            SPPD JSON rev v2
+
+    ------------------------------ */
+
+    // new - aliases
+    // empty if none
+    "aliases": [ "" ],
+
+    // new - health_loss
+    // only set if chracter_type is totem
+    // classed as general info
+    "health_loss": 0,
+
+    // changed - powers
+    // multiple power support
+    // has_power removed (powers.length is 0 if no powers)
+    "powers": [
+        {
+            // regular power - always set
+            "type": "",
+            "amount": 0,
+
+            // if no duration, set to null
+            // if infinite, set to -1
+            "duration": 0,
+
+            // charged power extra info
+            // if false, all values below set to null
+            "is_charged": false,
+            "charged_regen": 0,
+
+            // if no radius, set to null
+            // if global effect, set to -1
+            "radius": 0,
+
+            // if the power is locked until
+            // a certain augment
+            "locked": false
+        }
+    ]
+}
