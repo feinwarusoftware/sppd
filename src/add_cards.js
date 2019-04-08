@@ -30,12 +30,12 @@ try {
 
     let res;
     try {
-      res = await fetch("http://localhost/api/v1/cards", {
+      res = await fetch("https://feinwaru.com/api/v1/cards", {
         method: "post",
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "rawrxd"
+          "xxx-access-token": "redlynxsucksfatcocks123"
         }
       }).then(res => res.json())
     } catch(error) {

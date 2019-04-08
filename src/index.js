@@ -19,7 +19,7 @@ const app = express();
 mongoose.connect(`mongodb://localhost/sppd`, { useNewUrlParser: true });
 */
 
-mongoose.connect(`mongodb://${process.env.mongo_user == null && process.env.mongo_pass == null ? "" : `${process.env.mongo_user}:${process.env.mongo_pass}@`}localhost/rawrxd?authSource=admin`, {
+mongoose.connect(`mongodb://${process.env.mongo_user == null && process.env.mongo_pass == null ? "" : `${process.env.mongo_user}:${process.env.mongo_pass}@`}localhost/sppd?authSource=admin`, {
   useNewUrlParser: true,
   ...process.env.mongo_user == null && process.env.mongo_pass == null ? {} : {
     auth: {
