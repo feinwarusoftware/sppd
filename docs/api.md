@@ -1,6 +1,8 @@
 # SPPD API v1
 If you plan to use this API for your project, please let us know what you're working on and how to contact you. You can find us on our discord server: https://discord.feinwaru.com. If you have any questions about the API, are interested in what we're doing, or just want to help out, don't be afraid to talk to us!
 
+The in-depth info for individual routes can be seen here: https://github.com/feinwarusoftware/sppd/blob/master/docs/cards.md.
+
 Below are the general concepts that you'll need to keep in mind while using this API.
 ```
 NOTE: All API responses are JSON.

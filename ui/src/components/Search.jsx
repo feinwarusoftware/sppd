@@ -74,7 +74,7 @@ class Search extends Component {
     }
     const encodedUrl = this._encodeUrl(baseUrl, params);
 
-    console.log(encodedUrl);
+    //console.log(encodedUrl);
 
     return new Promise((resolve, reject) => {
       fetch(encodedUrl)

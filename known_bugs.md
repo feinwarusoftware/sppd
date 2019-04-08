@@ -10,8 +10,8 @@ tofix:
 - ~~card font~~
 - ~~link might be broke, if id == null, try look that up~~
 - ~~api docs~~
-- readme
-- image optimisations
+- ~~readme~~
+- ~~image optimisations~~
 - test all cards at u45 and l6
 
 tofix later:
@@ -25,3 +25,7 @@ tofix later:
 - code cleanup
 - repo cleanup
 - tests
+
+toadd later:
+
+- more banners

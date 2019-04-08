@@ -76,7 +76,7 @@ class Index extends Component {
 
   updateScrollPosition = () => {
 
-    console.log(this.nav);
+    //console.log(this.nav);
 
     if (window.scrollY < 60) {
       this.nav.current.navbar.current.classList.add('trans')
@@ -117,7 +117,7 @@ class Index extends Component {
           <div className="credits row" style={{ marginTop: "-80px", marginBottom: "10px", textAlign: "right" }}>
             <div className="col-12">
               {(() => {
-                const links = this.randomImage.artists.map(e => <a href={e.link}>{e.name}</a>);
+                const links = this.randomImage.artists.map((e, i) => <a key={i} href={e.link}>{e.name}</a>);
 
                 return (<span> Banner: {links.map((ay, ya, yaa) => (ya === yaa.length - 1) ? ay : <span>{ay}, </span>)}</span>);
               })()}

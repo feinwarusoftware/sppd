@@ -9,11 +9,19 @@ class Navbar extends Component {
     this.navbar = React.createRef();
   }
 
+  componentDidMount() {
+    /* ~~ Fancy OwO Console Log UwU ycnaF ~~ */
+    console.log(`%cSPPD by Feinwaru`, "font-weight: bold; font-size: 50px; color: #1E98A1");
+    console.log("GitHub: https://github.com/feinwarusoftware/sppd");
+    console.log("Discord: https://discord.feinwaru.com/");
+    console.log("API Docs: https://github.com/feinwarusoftware/sppd/blob/master/docs/api.md");
+  }
+
   mobileDropdown = () => {
-    if (this.navbar.current.classList.contains('dropped')) {
-      this.navbar.current.classList.remove('dropped');
+    if (this.navbar.current.classList.contains("dropped")) {
+      this.navbar.current.classList.remove("dropped");
     } else {
-      this.navbar.current.classList.add('dropped');
+      this.navbar.current.classList.add("dropped");
     }
   }
 
@@ -29,7 +37,7 @@ class Navbar extends Component {
         (error) => {
           console.error("AHHHHHHHHH")
         }
-      ); 
+      );
   }
 
   render() {
@@ -38,11 +46,11 @@ class Navbar extends Component {
       <React.Fragment>
         <nav ref={this.navbar} >
           <div className="container">
-            <img src={require("../static/img/sppd_white.svg")} />
+            <Link to={{ pathname: "/" }}><img src={require("../static/img/sppd_white.svg")} /></Link>
             <i onClick={() => this.mobileDropdown()} id="dropdown" className="fas fa-bars float-right fa-2x"></i>
             <ul>
               <li>
-                <Link to={{pathname: "/"}}>Home</Link>
+                <Link to={{ pathname: "/" }}>Home</Link>
               </li>
               <li>
                 <a onClick={() => this.randomCard()}>Random Card</a>
@@ -59,7 +67,7 @@ class Navbar extends Component {
                 </a>
               </li>
             </ul>
-            
+
           </div>
         </nav>
 

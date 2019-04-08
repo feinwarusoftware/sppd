@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://cdn.discordapp.com/attachments/558375135719981056/563752427082350596/sppd.png">
+<img src="https://cdn.discordapp.com/attachments/558375135719981056/564821280944029716/cards.png">
 <br><br>
   <p>
     A website made to view in-game stats for the mobile game "South Park Phone Destroyer"
@@ -31,7 +31,6 @@
 - [Bugs and feature requests](#bugs-and-feature-requests)
 - [Community](#community)
 - [Documentation](#documentation)
-- [Contributing](#contributing)
 - [Versioning](#versioning)
 - [Creators](#creators)
 - [Thanks](#thanks)
@@ -58,7 +57,7 @@ Here is our full list of features:
 
 - Latest news from us and the developers
 
-If you're interested in trying out SPPD, you can visit [our Discord server](https://awesomo.feinwaru.com) or add the bot to your own! Please note that currently, all bot features are exclusive to our [Patreon supporters](https://www.patreon.com/awesomo), although that will probably change in the future.
+If you're interested in supporting us, you can through our [Patreon!](https://www.patreon.com/awesomo)
 
 ## Bugs and feature requests
 
@@ -82,15 +81,10 @@ As mentioned above, this is a community driven project, and we would really appr
 
 ## Documentation
 
-You can find SPPD's documentation on [our website](https://sppd.feinwaru.com/docs/welcome). The documentation mostly focuses on how to use the website and our Rest API.
+You can find SPPD's Rest API documentation [here](https://github.com/feinwarusoftware/sppd/blob/master/docs/api.md) and information about each route [here](https://github.com/feinwarusoftware/sppd/blob/master/docs/cards.md).
 
 Legacy documentation for major releases will be made available here.
 
-## Contributing
-
-Please read through our [contributing guidelines](https://github.com/feinwarusoftware/sppd/blob/master/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
-
-Moreover, if your pull request contains JavaScript patches or features, you will need to include the relevant unit tests in the future. All HTML and CSS should conform to the [Code Guide](https://github.com/mdo/code-guide), maintained by [Mark Otto](https://github.com/mdo).
 
 ## Versioning
 

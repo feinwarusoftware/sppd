@@ -668,7 +668,7 @@ export default class Card extends Component {
         // const bgWidth = 455;
         // const bgHeight = 630;
 
-        console.log(bgHeight);
+        //console.log(bgHeight);
 
         ctx.save();
         roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
@@ -678,7 +678,7 @@ export default class Card extends Component {
         ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
         ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
 
-        console.log(canvas.height / 2 - bgHeight / 2);
+        //console.log(canvas.height / 2 - bgHeight / 2);
 
         if (fy != null) {
           ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
@@ -763,7 +763,7 @@ export default class Card extends Component {
           currentWords.push(word);
         }
 
-        console.log(lineCount);
+        //console.log(lineCount);
 
         currentWords = [];
 
@@ -822,13 +822,15 @@ export default class Card extends Component {
   render() {
     let altered = null;
     if (this.state.loaded === false || this.state.error != null) {
-      altered = {};
+      // aliases referenced later, set to a default value to prevent null reference
+      // same with name
+      altered = { aliases: [] };
     } else {
       altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
       this._redrawCard(altered);
     }
 
-    console.log(altered);
+    //console.log(altered);
 
     // sections
     const sections = [];
@@ -851,7 +853,7 @@ export default class Card extends Component {
         <div key={title}>
           <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-lg fa-times red-text"></i></span> : ""}</h4>
           <div className="divider" />
-          { stats instanceof Array ? stats.length > 0 ? stats.map((e, i, a) => <div>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : "" }
+          {stats instanceof Array ? stats.length > 0 ? stats.map((e, i) => <div key={i}>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : ""}
         </div>
       );
     }
@@ -862,7 +864,7 @@ export default class Card extends Component {
     // utility
     const card = altered;
 
-    console.log(card);
+    //console.log(card);
 
     let general = {
       "Cast Area": upperCase(deSnake(card.cast_area))
@@ -888,14 +890,14 @@ export default class Card extends Component {
           "Power Type": e.type,
           "Power Amount": e.amount
         };
-  
+
         if (e.duration != null) {
           power = {
             ...power,
             "Power Duration": e.duration
           };
         }
-  
+
         if (e.is_charged) {
           power = {
             ...power,
@@ -945,6 +947,13 @@ export default class Card extends Component {
     };
 
     sections.push(createSection("Requirements", requirements));
+
+    //Matt section
+    const awCommands = <ul className="list-unstyled">{[...altered.aliases, altered.name].map((e, i) => (
+      <li key={i} className="pb-2">
+        <code>-card {e == null ? ["teehee", "rawrxd"][Math.floor(Math.random() * 2)] : e.toLowerCase()} {this.state.utype}{this.state.uvalue}</code>
+      </li>
+    ))}</ul>;
 
     return (
       <div>
@@ -1076,14 +1085,7 @@ export default class Card extends Component {
               <h4 className="font-weight-bold mt-5">AWESOM-O Discord Commands</h4>
               <div className="divider" />
 
-              <ul className="list-unstyled">
-                <li className="pb-2">
-                  <code>-card gfdgh {this.state.utype}{this.state.uvalue}</code>
-                </li>
-                <li className="pb-2">
-                  <code>-card astroboii u61</code>
-                </li>
-              </ul>
+              {awCommands}
 
               {sections}
 
