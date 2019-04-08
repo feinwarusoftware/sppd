@@ -969,10 +969,10 @@ export default class Card extends Component {
 
         <div id="card-page" className="container">
           <div className="row">
-            <div className="col-4">
+            <div className="col-12 col-md-4">
               <canvas className="img-fluid" ref={this.canvas} width={canvasWidth} height={canvasHeight} />
             </div>
-            <div id="card-info" className="col-8">
+            <div id="card-info" className="col-12 col-md-8">
               <h1 className="font-weight-bold">{altered.name}</h1>
               <h5 id="desc" className="my-3 font-italic">
                 {altered.description}
