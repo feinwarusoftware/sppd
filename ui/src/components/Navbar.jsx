@@ -46,7 +46,7 @@ class Navbar extends Component {
       <React.Fragment>
         <nav ref={this.navbar} >
           <div className="container">
-            <Link to={{ pathname: "/" }}><img src={require("../static/img/sppd_white.svg")} /></Link>
+            <Link to={{ pathname: "/" }}><img draggable="false" src={require("../static/img/sppd_white.svg")} /></Link>
             <i onClick={() => this.mobileDropdown()} id="dropdown" className="fas fa-bars float-right fa-2x"></i>
             <ul>
               <li>

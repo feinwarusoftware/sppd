@@ -6,6 +6,7 @@ class Footer extends Component {
       <React.Fragment>
         <footer>
           <img
+            draggable="false"
             className="swoosh"
             src={require("../static/img/footer.svg")}
           />
@@ -14,6 +15,7 @@ class Footer extends Component {
               <div className="row align-items-center">
                 <div className="col-xs-12 col-md-6 col-lg-3">
                   <img
+                    draggable="false"
                     className="img-fluid mx-auto px-4 mb-3"
                     src={require("../static/img/feinwaru_logo.svg")}
                   />

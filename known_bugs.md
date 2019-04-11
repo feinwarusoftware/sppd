@@ -12,10 +12,13 @@ tofix:
 - ~~api docs~~
 - ~~readme~~
 - ~~image optimisations~~
-- test all cards at u45 and l6
+- ~~mobile card page fix~~
+- ~~test all cards at u45 and l6~~
 
 tofix later:
 
+- ~~google analytics~~
+- ~~you can still drag the footer bit~~
 - remove search by image path from the api
 - remove that gay a-link redirect
 - when resizing the window on firefox, the top svg fucks up (has a large white space above it)
@@ -26,7 +29,14 @@ tofix later:
 - repo cleanup
 - tests
 - use one static folder lol
+- spell card overlays should not have attack and stuff
+- announcement api thing author field
+- more mobile fixes in general
+- add aliases to the api search
+- webpack production config
 
 toadd later:
 
 - more banners
+- community cards
+- deck creator

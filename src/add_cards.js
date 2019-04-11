@@ -20,6 +20,18 @@ try {
 }
 
 (async () => {
+  let ids;
+  try {
+    ids = await fetch("http://dragon.feinwaru.com/api/v1/cards/list", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json())
+  } catch(error) {
+    return console.error(`failed to get card id from the api: ${error}`);
+  }
+
   for (let [i, card] of cards.entries()) {
     let converted;
     try {
@@ -28,14 +40,19 @@ try {
       return console.error(`failed to convert card to new format: ${error}`); 
     }
 
+    if (converted.name !== "Sharpshooter Shelly") {
+      continue;
+    }
+
     let res;
     try {
-      res = await fetch("https://feinwaru.com/api/v1/cards", {
+      res = await fetch("http://dragon.feinwaru.com/api/v1/cards", {
+      /*res = await fetch(`http://dragon.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {*/
         method: "post",
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "redlynxsucksfatcocks123"
+          "xxx-access-token": "rawrxd"
         }
       }).then(res => res.json())
     } catch(error) {
