@@ -40,7 +40,7 @@ try {
       return console.error(`failed to convert card to new format: ${error}`); 
     }
 
-    if (converted.name !== "Sharpshooter Shelly") {
+    if (converted.name !== "Scout Ike") {
       continue;
     }
 
