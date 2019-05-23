@@ -184,7 +184,12 @@ const cardSchema = new mongoose.Schema({
     min_pvp_rank: defValidNumber,
     min_player_level: defValidNumber,
 
-    tech_tree: techTreeSchema
+    tech_tree: techTreeSchema,
+
+    updated_at: {
+        type: Date,
+        default: Date.now()
+    }
 });
 
 module.exports = mongoose.model("Card", cardSchema);

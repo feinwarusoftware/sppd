@@ -192,7 +192,7 @@ router.get("/cards/list", (req, res) => {
     allowCors(res);
 
     CardModel
-        .find({}, "_id name image")
+        .find({}, "_id name image updated_at")
 
         .then(cards => {
             res.json({
@@ -290,7 +290,7 @@ router.patch("/cards/:id", (req, res) => {
     }
 
     CardModel
-        .updateOne({ _id: req.params.id }, req.body)
+        .updateOne({ _id: req.params.id }, { ...req.body, updated_at: Date.now() })
 
         .then(() => {
             res.json({

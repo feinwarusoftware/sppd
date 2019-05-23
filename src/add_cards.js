@@ -22,7 +22,7 @@ try {
 (async () => {
   let ids;
   try {
-    ids = await fetch("http://dragon.feinwaru.com/api/v1/cards/list", {
+    ids = await fetch("https://sppd.feinwaru.com/api/v1/cards/list", {
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -46,8 +46,8 @@ try {
 
     let res;
     try {
-      res = await fetch("http://dragon.feinwaru.com/api/v1/cards", {
-      /*res = await fetch(`http://dragon.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {*/
+      res = await fetch("https://sppd.feinwaru.com/api/v1/cards", {
+      /*res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {*/
         method: "post",
         body: JSON.stringify(converted),
         headers: {
