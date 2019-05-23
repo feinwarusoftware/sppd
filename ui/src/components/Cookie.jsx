@@ -23,8 +23,7 @@ class Cookie extends Component {
 
   acceptCookie = () => {
     this.cookie.current.style.display = "none";
-    cookies.set("cookie-status", "accepted");
-    
+    cookies.set("cookie-status", "accepted", { maxAge: 31622400 }); // 1 year
   }
 
   render() {

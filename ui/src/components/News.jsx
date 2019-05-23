@@ -45,7 +45,7 @@ class News extends Component {
   }
 
   closeNews = () => {
-    cookies.set("news", this.state.news._id);
+    cookies.set("news", this.state.news._id, { maxAge: 31622400 });
     this.news.current.style.display = "none";
   }
 
