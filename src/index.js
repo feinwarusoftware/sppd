@@ -81,11 +81,11 @@ server.on("error", err => {
 
   switch(err.code) {
   case "EACCES":
-    console.error(`Port ${config.port} requires elevated privileges`);
+    console.error(`Port ${process.env.port} requires elevated privileges`);
     process.exit(-1);
     break;
   case "EADDRINUSE":
-    console.error(`Port ${config.port} is already in use`);
+    console.error(`Port ${process.env.port} is already in use`);
     process.exit(-1);
     break;
   default:
