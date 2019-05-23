@@ -92,6 +92,7 @@ Returns basic JSON data for up to 12 cards.
           "min_episode_completed": 3,
           "min_pvp_rank": 0,
           "min_player_level": 40,
+          "updated_at": "2019-05-23T12:23:44.496Z",
           "_id": "5cab3bc67af55f15c8f99705",
           "name": "Oshino Shinobu",
           "powers": [
@@ -199,6 +200,7 @@ Note: Ids may change and as so, should not be hard-coded or cached.
       "min_episode_completed": 3,
       "min_pvp_rank": 0,
       "min_player_level": 40,
+      "updated_at": "2019-05-23T12:23:44.496Z",
       "_id": "5cab3bc67af55f15c8f99705",
       "name": "Oshino Shinobu",
       "powers": [
@@ -342,6 +344,7 @@ NOTE: This route is slower than an id lookup due to how MongoDB works. Use the '
       "min_episode_completed": 3,
       "min_pvp_rank": 0,
       "min_player_level": 40,
+      "updated_at": "2019-05-23T12:23:44.496Z",
       "_id": "5cab3bc67af55f15c8f99705",
       "name": "Oshino Shinobu",
       "powers": [
@@ -427,7 +430,7 @@ NOTE: This route is slower than an id lookup due to how MongoDB works. Use the '
   ```
 
 # Card List
-Returns a list of all card ids, names, and images. 
+Returns a list of all card ids, names, images, and update timestamps.
 
 - ### URL:
   ```
@@ -458,16 +461,19 @@ Returns a list of all card ids, names, and images.
     "data": [
       {
         "image": "SharonAdvCard",
+        "updated_at": "2019-05-23T12:23:44.496Z",
         "_id": "5caa0c31239776133c3b9a86",
         "name": "Medicine Woman Sharon"
       },
       {
         "image": "RandyAdvCard",
+        "updated_at": "2019-05-23T12:23:44.496Z",
         "_id": "5caa0c31239776133c3b9a87",
         "name": "Pocahontas Randy"
       },
       {
         "image": "StanAdvCard",
+        "updated_at": "2019-05-23T12:23:44.496Z",
         "_id": "5caa0c31239776133c3b9a88",
         "name": "Stan of Many Moons"
       },
@@ -479,6 +485,8 @@ Returns a list of all card ids, names, and images.
   ```
   NOTE: The data array has been cut short for convenience.
   NOTE: This route returns a lot of data and should be cached as to not abuse our servers.
+
+  UPDATE: An 'updated_at' field has been added to each card. This can be compared against a local version to fetch card updates when needed.
   ```
 - ### Error Response:
   ```json
