@@ -40,3 +40,5 @@ toadd later:
 - more banners
 - community cards
 - deck creator
+
+API limit=0 FETCHES ALL CARDS!!! FIX!!!
