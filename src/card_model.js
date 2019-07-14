@@ -26,7 +26,8 @@ const defValidBool = {
 const typeTypes = [
     "character",
     "spell",
-    "spawn"
+    "spawn",
+    "trap"
 ];
 
 const characterTypeTypes = [
@@ -44,7 +45,8 @@ const themeTypes = [
     "mystical",
     "sci-fi",
     "fantasy",
-    "general"
+    "general",
+    "superhero"
 ];
 
 const castAreaTypes = [

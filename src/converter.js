@@ -80,7 +80,7 @@ const convert = card => {
   }
   //
 
-  out.character_type = card.Type !== "Spell" ? card.CharacterType.toLowerCase() : null;
+  out.character_type = card.Type !== "Spell" && card.Type !== "Trap" ? card.CharacterType.toLowerCase() : null;
 
   out.rarity = parseInt(card.Rarity);
   switch(card.Theme) {
@@ -109,16 +109,16 @@ const convert = card => {
 
   out.cast_area = snakeify(card.CastArea);
 
-  out.max_velocity = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.MaxVelocity) : null;
-  out.time_to_reach_max_velocity = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.TimeToReachMaxVelocity) : null;
-  out.agro_range_multiplier = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.AgroRangeMultiplier) : null;
+  out.max_velocity = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.MaxVelocity) : null;
+  out.time_to_reach_max_velocity = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.TimeToReachMaxVelocity) : null;
+  out.agro_range_multiplier = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.AgroRangeMultiplier) : null;
 
-  out.can_attack = card.Type !== "Spell" && card.CharacterType !== "Totem" ? card.CanAttack : null;
-  out.attack_range = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.AttackRange) : null;
-  out.pre_attack_delay = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.PreAttackDelay) : null;
-  out.knockback = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.KnockbackImpulse) : null;
-  out.knockback_angle = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.KnockbackAngleDeg) : null;
-  out.time_between_attacks = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.TimeInBetweenAttacks) : null;
+  out.can_attack = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? card.CanAttack : null;
+  out.attack_range = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.AttackRange) : null;
+  out.pre_attack_delay = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.PreAttackDelay) : null;
+  out.knockback = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.KnockbackImpulse) : null;
+  out.knockback_angle = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.KnockbackAngleDeg) : null;
+  out.time_between_attacks = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.CanAttack === true ? parseFloat(card.TimeInBetweenAttacks) : null;
 
   // YAYFIXED: power stuff
   out.powers = [];
@@ -127,7 +127,7 @@ const convert = card => {
     if (k.startsWith("Power") && k !== "PowerDuration" && v != null) {
       let duration, radius, is_charged, charged_regen;
 
-      const chargedPowerRegen = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+      const chargedPowerRegen = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
       if (chargedPowerRegen == null || chargedPowerRegen === 0) {
         is_charged = false;
         charged_regen = null;
@@ -168,7 +168,7 @@ const convert = card => {
   if (out.powers.length === 0 && card.PowerDuration != null) {
     let duration, radius, is_charged, charged_regen;
 
-    const chargedPowerRegen = card.Type !== "Spell" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+    const chargedPowerRegen = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
     if (chargedPowerRegen == null || chargedPowerRegen === 0) {
       is_charged = false;
       charged_regen = null;
@@ -219,11 +219,11 @@ const convert = card => {
   */
   //
 
-  out.has_aoe = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No";
-  out.aoe_type = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? snakeify(card.AOEAttackType) : null;
-  out.aoe_damage_percentage = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEDamagePercentage) : null;
-  out.aoe_knockback_percentage = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEKnockbackPercentage) : null;
-  out.aoe_radius = card.Type !== "Spell" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOERadius) : null;
+  out.has_aoe = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No";
+  out.aoe_type = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? snakeify(card.AOEAttackType) : null;
+  out.aoe_damage_percentage = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEDamagePercentage) : null;
+  out.aoe_knockback_percentage = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOEKnockbackPercentage) : null;
+  out.aoe_radius = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" && card.AOEAttackType !== "No" ? parseFloat(card.AOERadius) : null;
 
   out.min_episode_completed = parseInt(card.Requirements.MinEpisodeCompleted);
   out.min_pvp_rank = parseInt(card.Requirements.MinPlayerLevel);
