@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import i18n from "../i18n";
+import { Trans } from "react-i18next";
 
 class Footer extends Component {
   render() {
@@ -20,31 +22,30 @@ class Footer extends Component {
                     src={require("../static/img/feinwaru_logo.svg")}
                   />
                   <p>
-                    &copy; 2017 - {new Date().getFullYear()} Copyright: Feinwaru
-                    Software
+                    &copy; 2017 - {new Date().getFullYear()} <Trans>Copyright</Trans>
                   </p>
                 </div>
                 <div className="col-12 col-sm-6 col-lg-3">
-                  <h2>ABOUT</h2>
-                  <h1>FEINWARU</h1>
+                  <h2>{i18n.t("About Feinwaru").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
+                  <h1>{i18n.t("About Feinwaru").split(" ").pop().toUpperCase()}</h1>
                   <ul>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">Our Team</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>Our Team</Trans></a>
                     </li>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">Branding</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>Branding</Trans></a>
                     </li>
                     <li>
                       <a href="https://discord.feinwaru.com/">Discord</a>
                     </li>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">Careers</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>Careers</Trans></a>
                     </li>
                   </ul>
                 </div>
                 <div className="col-12 col-sm-6 col-lg-3">
-                  <h2>OUR</h2>
-                  <h1>PROJECTS</h1>
+                  <h2>{i18n.t("Our Projects").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
+                  <h1>{i18n.t("Our Projects").split(" ").pop().toUpperCase()}</h1>
                   <ul>
                     <li>
                       <a href="https://awesomo.feinwaru.com/">AWESOM-O</a>
@@ -53,28 +54,28 @@ class Footer extends Component {
                       <a href="https://sppd.feinwaru.com/">SPPD</a>
                     </li>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">SPPD Mobile</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>SPPD Mobile</Trans></a>
                     </li>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">more...</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>more...</Trans></a>
                     </li>
                   </ul>
                 </div>
                 <div className="col-12 col-sm-6 col-lg-3">
-                  <h2>EXTRA</h2>
-                  <h1>RESOURCES</h1>
+                  <h2>{i18n.t("Extra Resources").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
+                  <h1>{i18n.t("Extra Resources").split(" ").pop().toUpperCase()}</h1>
                   <ul>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/docs/welcome">Help & Support</a>
+                      <a href="https://awesomo.feinwaru.com/docs/welcome"><Trans>Help & Support</Trans></a>
                     </li>
                     <li>
-                      <a href="https://github.com/feinwarusoftware/sppd">Developers</a>
+                      <a href="https://github.com/feinwarusoftware/sppd"><Trans>Developers</Trans></a>
                     </li>
                     <li>
-                      <a href="https://github.com/feinwarusoftware/sppd/issues/new">Feedback</a>
+                      <a href="https://github.com/feinwarusoftware/sppd/issues/new"><Trans>Feedback</Trans></a>
                     </li>
                     <li>
-                      <a href="https://awesomo.feinwaru.com/soontm">Terms & Privacy</a>
+                      <a href="https://awesomo.feinwaru.com/soontm"><Trans>Terms & Privacy</Trans></a>
                     </li>
                   </ul>
                 </div>

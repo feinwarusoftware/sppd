@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Navbar, Footer, Search, News, Cookie } from "../components";
 import { withRouter } from "react-router-dom";
 import MetaTags from "react-meta-tags";
-
+import { Trans } from "react-i18next";
+import i18n from "../i18n";
 // const Nav = withRouter(Navbar);
 
 class Index extends Component {
@@ -163,6 +164,10 @@ class Index extends Component {
     //this.setState({ scroll: window.scrollY });
   };
 
+  changeLang = lang => {
+    i18n.changeLanguage(lang, () => this.forceUpdate())
+  }
+
   render() {
     return (
       <div>
@@ -179,7 +184,7 @@ class Index extends Component {
           />
         </MetaTags>
 
-        <Navbar ref={this.nav} />
+        <Navbar ref={this.nav} changeLang={this.changeLang} />
         <Cookie />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +229,7 @@ class Index extends Component {
                 return (
                   <span>
                     {" "}
-                    Banner:{" "}
+                    <Trans>Banner</Trans>{" "}
                     {links.map((ay, ya, yaa) =>
                       ya === yaa.length - 1 ? ay : <span key={ya}>{ay}, </span>
                     )}

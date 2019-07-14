@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Navbar, Footer, Search } from "../components";
 import MetaTags from 'react-meta-tags';
+import i18n from "../i18n";
+import { Trans } from "react-i18next";
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
@@ -55,6 +57,10 @@ export default class Card extends Component {
           error
         });
       });
+  }
+
+  changeLang = lang => {
+    i18n.changeLanguage(lang, () => this.forceUpdate())
   }
 
   _fetchCardData = () => {
@@ -842,7 +848,7 @@ export default class Card extends Component {
           <ul className="list-unstyled align">
             {Object.entries(stats).map((e, i) => e[1] == null ? "" :
               <li key={i}>
-                <span className="font-weight-bold dark-grey-text">{e[0]}: </span>
+                <span className="font-weight-bold dark-grey-text"><Trans>{e[0]}</Trans>: </span>
                 <span>{e[1]}</span>
               </li>
             )}
@@ -879,7 +885,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection("General Information", general));
+    sections.push(createSection(<Trans>General Information</Trans>, general));
 
     let powers = [];
     if ((card.powers == null ? 0 : card.powers.length) !== 0) {
@@ -911,7 +917,7 @@ export default class Card extends Component {
       });
     }
 
-    sections.push(createSection("Power Information", powers));
+    sections.push(createSection(<Trans>Power Information</Trans>, powers));
 
     let attack = {};
     if (card.can_attack === true) {
@@ -920,12 +926,12 @@ export default class Card extends Component {
         "Attack Range": card.attack_range,
         "Pre-Attack Delay": card.pre_attack_delay,
         "Knockback": card.knockback,
-        "Knockback Angle": `${card.knockback_angle} at 45°`,
+        "Knockback Angle": `${card.knockback_angle}°`,
         "Time Between Attacks": card.time_between_attacks,
       };
     }
 
-    sections.push(createSection("Can Attack?", attack));
+    sections.push(createSection(<Trans>Can Attack?</Trans>, attack));
 
     let aoe = {};
     if (card.has_aoe === true) {
@@ -939,7 +945,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(Object.keys(aoe).length === 0 ? "AOE Attacks?" : <span>AOE Attacks? <span>{aoe.aoe_type}</span></span>, aoe))
+    sections.push(createSection(Object.keys(aoe).length === 0 ? <Trans>AOE Attacks?</Trans> : <span><Trans>AOE Attacks?</Trans> <span>{aoe.aoe_type}</span></span>, aoe))
 
     let requirements = {
       "Minimum Episode Completed": card.min_episode_completed,
@@ -947,7 +953,7 @@ export default class Card extends Component {
       "Minimum Player Level": card.min_player_level
     };
 
-    sections.push(createSection("Requirements", requirements));
+    sections.push(createSection(<Trans>Requirements</Trans>, requirements));
 
     //Matt section
     const awCommands = <ul className="list-unstyled">{[...altered.aliases, altered.name].map((e, i) => (
@@ -958,7 +964,7 @@ export default class Card extends Component {
 
     return (
       <div>
-        <Navbar />
+        <Navbar changeLang={this.changeLang} />
         
         <MetaTags>
           <title>{altered.name} | Feinwaru SPPD</title>
@@ -978,7 +984,7 @@ export default class Card extends Component {
                 {altered.description}
               </h5>
               <h4 id="class" className="font-weight-bold">
-                <span className="capitalism">{rarities[altered.rarity]}</span> | <span className="capitalism">{altered.type === "spell" ? "spell" : altered.character_type}</span>
+                <span className="capitalism"><Trans>{rarities[altered.rarity]}</Trans></span> | <span className="capitalism"><Trans>{altered.type === "spell" ? "spell" : altered.character_type}</Trans></span>
               </h4>
               <h4 id="quickstats" className="font-weight-bold">
                 <span className="light-blue-text">
@@ -989,108 +995,108 @@ export default class Card extends Component {
                 </span>{" "}
                 <span className="orange-text pl-2">
                   <i className="fas fa-swords" aria-hidden="true" />
-                  <span id="damage">{altered.damage}</span>
+                  <span id="damage"> {altered.damage}</span>
                 </span>
               </h4>
 
-              <h4 className="font-weight-bold mt-3">Select an upgrade level</h4>
+              <h4 className="font-weight-bold mt-3"><Trans>Select an upgrade level</Trans></h4>
               <div className="divider" />
               <div className="form-group">
                 <select className="form-control" id="exampleFormControlSelect1" onChange={change => this.handleDropdownChange(change)}>
                   {
-                    altered.type === "spell" || altered.type === "spawn" ?
+                    altered.type === "spell" || altered.type === "trap" || altered.type === "spawn" ?
                       <>
-                        <option>Level 1</option>
-                        <option>Level 2</option>
-                        <option>Level 3</option>
-                        <option>Level 4</option>
-                        <option>Level 5</option>
-                        <option>Level 6</option>
-                        <option>Level 7</option>
+                        <option>{i18n.t("level", {num: 1})}</option>
+                        <option>{i18n.t("level", {num: 2})}</option>
+                        <option>{i18n.t("level", {num: 3})}</option>
+                        <option>{i18n.t("level", {num: 3})}</option>
+                        <option>{i18n.t("level", {num: 4})}</option>
+                        <option>{i18n.t("level", {num: 5})}</option>
+                        <option>{i18n.t("level", {num: 6})}</option>
                       </> :
                       <>
-                        <option>Upgrade 1 / 70</option>
-                        <option>Upgrade 2 / 70</option>
-                        <option>Upgrade 3 / 70</option>
-                        <option>Upgrade 4 / 70</option>
-                        <option>Upgrade 5 / 70</option>
-                        <option>Level 2</option>
-                        <option>Upgrade 6 / 70</option>
-                        <option>Upgrade 7 / 70</option>
-                        <option>Upgrade 8 / 70</option>
-                        <option>Upgrade 9 / 70</option>
-                        <option>Upgrade 10 / 70</option>
-                        <option>Upgrade 11 / 70</option>
-                        <option>Upgrade 12 / 70</option>
-                        <option>Upgrade 13 / 70</option>
-                        <option>Upgrade 14 / 70</option>
-                        <option>Upgrade 15 / 70</option>
-                        <option>Level 3</option>
-                        <option>Upgrade 16 / 70</option>
-                        <option>Upgrade 17 / 70</option>
-                        <option>Upgrade 18 / 70</option>
-                        <option>Upgrade 19 / 70</option>
-                        <option>Upgrade 20 / 70</option>
-                        <option>Upgrade 21 / 70</option>
-                        <option>Upgrade 22 / 70</option>
-                        <option>Upgrade 23 / 70</option>
-                        <option>Upgrade 24 / 70</option>
-                        <option>Upgrade 25 / 70</option>
-                        <option>Level 4</option>
-                        <option>Upgrade 26 / 70</option>
-                        <option>Upgrade 27 / 70</option>
-                        <option>Upgrade 28 / 70</option>
-                        <option>Upgrade 29 / 70</option>
-                        <option>Upgrade 30 / 70</option>
-                        <option>Upgrade 31 / 70</option>
-                        <option>Upgrade 32 / 70</option>
-                        <option>Upgrade 33 / 70</option>
-                        <option>Upgrade 34 / 70</option>
-                        <option>Upgrade 35 / 70</option>
-                        <option>Upgrade 36 / 70</option>
-                        <option>Upgrade 37 / 70</option>
-                        <option>Upgrade 38 / 70</option>
-                        <option>Upgrade 39 / 70</option>
-                        <option>Upgrade 40 / 70</option>
-                        <option>Level 5</option>
-                        <option>Upgrade 41 / 70</option>
-                        <option>Upgrade 42 / 70</option>
-                        <option>Upgrade 43 / 70</option>
-                        <option>Upgrade 44 / 70</option>
-                        <option>Upgrade 45 / 70</option>
-                        <option>Upgrade 46 / 70</option>
-                        <option>Upgrade 47 / 70</option>
-                        <option>Upgrade 48 / 70</option>
-                        <option>Upgrade 49 / 70</option>
-                        <option>Upgrade 50 / 70</option>
-                        <option>Upgrade 51 / 70</option>
-                        <option>Upgrade 52 / 70</option>
-                        <option>Upgrade 53 / 70</option>
-                        <option>Upgrade 54 / 70</option>
-                        <option>Upgrade 55 / 70</option>
-                        <option>Level 6</option>
-                        <option>Upgrade 56 / 70</option>
-                        <option>Upgrade 57 / 70</option>
-                        <option>Upgrade 58 / 70</option>
-                        <option>Upgrade 59 / 70</option>
-                        <option>Upgrade 60 / 70</option>
-                        <option>Upgrade 61 / 70</option>
-                        <option>Upgrade 62 / 70</option>
-                        <option>Upgrade 63 / 70</option>
-                        <option>Upgrade 64 / 70</option>
-                        <option>Upgrade 65 / 70</option>
-                        <option>Upgrade 66 / 70</option>
-                        <option>Upgrade 67 / 70</option>
-                        <option>Upgrade 68 / 70</option>
-                        <option>Upgrade 69 / 70</option>
-                        <option>Upgrade 70 / 70</option>
-                        <option>Level 7</option>
+                        <option>{i18n.t("upgrade", {num: 1, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 2, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 3, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 4, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 5, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 2})}</option>
+                        <option>{i18n.t("upgrade", {num: 6, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 7, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 8, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 9, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 10, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 11, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 12, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 13, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 14, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 15, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 3})}</option>
+                        <option>{i18n.t("upgrade", {num: 16, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 17, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 18, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 19, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 20, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 21, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 22, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 23, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 24, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 25, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 4})}</option>
+                        <option>{i18n.t("upgrade", {num: 26, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 27, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 28, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 29, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 30, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 31, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 32, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 33, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 34, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 35, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 36, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 37, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 38, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 39, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 40, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 5})}</option>
+                        <option>{i18n.t("upgrade", {num: 41, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 42, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 43, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 44, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 45, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 46, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 47, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 48, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 49, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 50, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 51, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 52, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 53, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 54, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 55, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 6})}</option>
+                        <option>{i18n.t("upgrade", {num: 56, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 57, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 58, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 59, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 60, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 61, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 62, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 63, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 64, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 65, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 66, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 67, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 68, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 69, total: 70})}</option>
+                        <option>{i18n.t("upgrade", {num: 70, total: 70})}</option>
+                        <option>{i18n.t("level", {num: 7})}</option>
                       </>
                   }
                 </select>
               </div>
 
-              <h4 className="font-weight-bold mt-5">AWESOM-O Discord Commands</h4>
+              <h4 className="font-weight-bold mt-5"><Trans i18nKey="discord-commands"></Trans></h4>
               <div className="divider" />
 
               {awCommands}

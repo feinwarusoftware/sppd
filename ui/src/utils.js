@@ -6,7 +6,8 @@ const colours = {
   fantasy: "#d34f5f",
   general: "#857468",
   mystical: "#4b9b38",
-  "sci-fi": "#db571d"
+  "sci-fi": "#db571d",
+  sup: "#fd6cf8"
 };
 
 export { colours };
