@@ -110,9 +110,9 @@ class CardGrid extends Component {
       //console.log(alteredCard);
 
       function getPowerAmount(powerType){
-        return alteredCard.powers.find(power => {
+        return (alteredCard.powers.find(power => {
           return power.type === powerType
-        }).amount;
+        }) || {}).amount;
       }
 
       if (alteredCard[bracketless] == null) {
