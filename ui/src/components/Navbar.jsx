@@ -70,12 +70,13 @@ class Navbar extends Component {
                     <li>
                       <a onClick={() => {this.props.changeLang("en")}}><img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-round-250.png" />English</a>
                     </li>
+                    {/*
                     <li>
                     <a onClick={() => {this.props.changeLang("es")}}><img src="https://cdn.countryflags.com/thumbs/spain/flag-round-250.png" />Espanol</a>
                     </li>
                     <li>
                     <a onClick={() => {this.props.changeLang("pl")}}><img src="https://cdn.countryflags.com/thumbs/poland/flag-round-250.png" />Polski</a>
-                    </li>
+                    </li>*/}
                   </ul>
                 </div>
               </li>

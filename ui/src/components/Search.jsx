@@ -5,7 +5,7 @@ import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 import i18n from "../i18n";
 
-const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi"];
+const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi", "superhero"];
 const rarities = ["common", "rare", "epic", "legendary"];
 const orderBy = ["name", "theme", "rarity", "energy", "health", "damage"];
 

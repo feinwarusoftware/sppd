@@ -114,7 +114,7 @@ const resources = {
       "Terms & Privacy": "Terms & Privacy",
     }
   },
-  es: {
+  /*es: {
     translation: {
       //Navigation Bar
       "Country Code": "ES",
@@ -331,6 +331,7 @@ const resources = {
       "Terms & Privacy": "Warunki i prywatność",
     }
   }
+  */
 };
 
 const detectionSettings = {
