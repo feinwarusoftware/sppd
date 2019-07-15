@@ -104,6 +104,10 @@ const convert = card => {
       out.theme = "mystical";
       break;
     };
+    case "Sup": {
+      out.theme = "superhero";
+      break;
+    }
   }
   out.health_loss = card.CharacterType === "Totem" ? card.HealthLoss : null;
 
@@ -122,6 +126,19 @@ const convert = card => {
 
   // YAYFIXED: power stuff
   out.powers = [];
+
+  // cock magic
+  if (card.Name[0] === "Cock Magic") {
+    out.powers.push({
+      type: "power_target",
+      amount: 1,
+      duration: null,
+      radius: null,
+      is_charged: false,
+      charged_regen: null,
+      locked: false
+    });
+  }
 
   for (let [k, v] of Object.entries(card)) {
     if (k.startsWith("Power") && k !== "PowerDuration" && v != null) {
