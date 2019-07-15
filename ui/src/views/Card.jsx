@@ -465,6 +465,9 @@ export default class Card extends Component {
               break;
             }
           }
+
+          break;
+          
           //
         case "assassin":
           iy = iconHeight * 4;
