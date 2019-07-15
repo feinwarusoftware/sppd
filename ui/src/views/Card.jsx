@@ -350,6 +350,10 @@ export default class Card extends Component {
       const theme = card.theme;
       const characterType = card.character_type;
 
+      // trap vs spell
+      const typeType = card.type;
+      //
+
       /* --- pasted old code --- */
 
       // Get the frame outline.
@@ -374,6 +378,9 @@ export default class Card extends Component {
             case "fantasy":
               x = frameWidth * 4;
               break;
+            case "superhero":
+              x = frameWidth * 5;
+              break;
             case "general":
               x = 0;
               break;
@@ -396,6 +403,9 @@ export default class Card extends Component {
               break;
             case "fantasy":
               x = frameWidth * 4;
+              break;
+            case "superhero":
+              x = frameWidth * 5;
               break;
             case "general":
               x = 0;
@@ -450,8 +460,18 @@ export default class Card extends Component {
           iy = 0;
           break;
         case undefined:
-          iy = iconHeight * 2;
-          break;
+          // trap vs spell
+          switch (typeType) {
+            case "spell": {
+              iy = iconHeight * 2;
+              break;
+            }
+            case "trap": {
+              iy = iconHeight * 14;
+              break;
+            }
+          }
+          //
         case "assassin":
           iy = iconHeight * 4;
           break;
@@ -483,6 +503,9 @@ export default class Card extends Component {
               break;
             case "fantasy":
               ix = iconWidth * 4;
+              break;
+            case "superhero":
+              ix = iconWidth * 5;
               break;
           }
           break;
@@ -547,6 +570,9 @@ export default class Card extends Component {
         case "fantasy":
           tx = themeIconWidth * 4;
           break;
+        case "superhero":
+          tx = themeIconWidth * 5;
+          break;
         default:
           //message.reply("theme not found");
           return;
@@ -587,6 +613,9 @@ export default class Card extends Component {
               break;
             case "fantasy":
               cx = crystalWidth * 4;
+              break;
+            case "superhero":
+              cx = crystalWidth * 5;
               break;
             default:
               //message.reply("theme not found");
