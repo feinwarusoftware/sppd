@@ -441,7 +441,7 @@ class Search extends Component {
         <div id="result-bar" className="row my-5">
           <div id="results" className="col-8 col-md-10 pl-sm-0">
             <h2 className="font-weight-bold mb-0">
-              <Trans i18nKey="results" count={this.state.cards.matched} />
+              {i18n.t("results", {count: this.state.cards.matched})}
             </h2>
           </div>
           <div id="views" className="col-4 col-md-2 text-right pr-sm-0">

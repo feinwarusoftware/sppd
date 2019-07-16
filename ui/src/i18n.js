@@ -114,6 +114,225 @@ const resources = {
       "Terms & Privacy": "Terms & Privacy",
     }
   },
+  zh: {
+    translation: {
+      //Navigation Bar
+      "Country Code": "ZH",
+      "Home": "主页",
+      "Random Card": "随机卡牌",
+      "Discord Bot": "Discord机器人",
+      "Support Us": "支持我们",
+      "results": "{{count}} 个匹配结果",
+
+      //Search
+      "Banner": "题图：",
+      "search": "在{{total}}张卡牌中搜索……",
+      "grid": "网格视图",
+      "list": "列表视图",
+      "auto-load": "切换滑动自动读取",
+
+      //Filters
+      //Order By
+      "Order By": "排列方式",
+      "name": "名称",
+      "theme": "主题",
+      "rarity": "稀有度",
+      "energy": "费用",
+      "health": "生命",
+      "damage": "伤害",
+
+      //Theme
+      "Theme": "主题",
+      "adventure": "冒险",
+      "fantasy": "奇幻",
+      "general": "中立",
+      "mystical": "神话",
+      "sci-fi": "科幻",
+      "superhero": "超级英雄",
+
+      //Rarities
+      "Rarity": "稀有度",
+      "common": "普通",
+      "rare": "稀有",
+      "epic": "史诗",
+      "legendary": "传奇",
+
+      //Character Types
+      "assassin": "刺客",
+      "melee": "战士",
+      "tank": "坦克",
+      "ranged": "射手",
+      "totem": "建筑",
+      "spell": "法术",
+      "trap": "陷阱",
+
+      //Upgrades
+      "level": "Level {{num}}",
+      "upgrade": "升级{{num}} / {{total}}",
+
+
+      //Sections
+      "discord-commands": "AWESOM-O Discord指令",
+
+      "General Information": "基本信息",
+      "Cast Area": "施放范围",
+      "Max Velocity": "最大速度",
+      "Time To Reach Max Velocity": "达到最大速度所需时间",
+      "Agro Range Multiplier": "嘲讽范围系数",
+
+      "Power Information": "技能信息",
+      "Power Type": "技能类型",
+      "Power Amount": "技能数值",
+      "Power Duration": "技能持续时间",
+      "Charged Power Regen": "集气技能冷却",
+      "Charged Power Radius": "集气技能半径",
+
+      "Can Attack?": "能否攻击？",
+      "Attack Range": "攻击范围",
+      "Pre-Attack Delay": "攻击前摇",
+      "Knockback": "击退",
+      "Knockback Angle": "击退角度",
+      "Time Between Attacks": "攻击间隔",
+
+      "AOE Attacks?": "是否范围攻击？",
+      "AOE Damage Percentage": "范围攻击伤害比例",
+      "AOE Knockback Percentage": "范围攻击击退比例",
+      "AOE Radius": "范围攻击半径",
+
+      "Requirements": "解锁要求",
+      "Minimum Episode Completed": "最低关卡要求",
+      "Minimum PVP Rank Required": "最低段位要求",
+      "Minimum Player Level": "最低等级要求",
+
+      //Footer
+      "Copyright": "版权所有：Feinwaru Software",
+
+      "About Feinwaru": "关于Feinwaru",
+      "Our Team": "团队介绍",
+      "Branding": "品牌合作",
+      "Careers": "求职信息",
+
+      "Our Projects": "其他项目",
+      "SPPD Mobile": "SPPD Mobile",
+      "more...": "更多……",
+
+      "Extra Resources": "其他资源",
+      "Help & Support": "帮助与支持",
+      "Developers": "开发者",
+      "Feedback": "反馈",
+      "Terms & Privacy": "条款与隐私",
+    }
+  },
+  ru: {
+    translation: {
+      //Navigation Bar
+      "Country Code": "RU",
+      "Home": "Главная",
+      "Random Card": "Случайная Карта",
+      "Discord Bot": "Дискорд Бот",
+      "Support Us": "Поддержать Нас",
+      "results": "{{count}} Результат Матча",
+
+      //Search
+      "Banner": "Баннер:",
+      "search": "Поиск {{total}} кард",
+      "grid": "Сетка",
+      "list": "Список",
+      "auto-load": "Переключить прокрутку автозагрузки ",
+
+      //Filters
+      //Order By
+      "Order By": "Список",
+      "name": "Имя",
+      "theme": "Темы",
+      "rarity": "Редкость",
+      "energy": "Энергия",
+      "health": "Здоровье",
+      "damage": "Урон",
+
+      //Theme
+      "Theme": "Темы",
+      "adventure": "Приключение",
+      "fantasy": "Фэнтэзи",
+      "general": "Нейтральная",
+      "mystical": "Мистика",
+      "sci-fi": "Научно-Фантастическая",
+      "superhero": "Супергерои",
+
+      //Rarities
+      "Rarity": "Редкость",
+      "common": "Обычная",
+      "rare": "Редкая",
+      "epic": "Эпическая",
+      "legendary": "Легендарная",
+
+      //Character Types
+      "assassin": "Киллер",
+      "melee": "Боец",
+      "tank": "Танк",
+      "ranged": "Стрелок",
+      "totem": "Шаман",
+      "spell": "Заклинание",
+      "trap": "Ловушка",
+
+      //Upgrades
+      "level": "Уровень {{num}}",
+      "upgrade": "Улучшения {{num}} / {{total}}",
+
+
+      //Sections
+      "discord-commands": "AWESOM-O Дискорд Команды",
+
+      "General Information": "Основная Информация",
+      "Cast Area": "Зона Призыва",
+      "Max Velocity": "Максимальная Скорость",
+      "Time To Reach Max Velocity": "Время До Максимальной Скорости",
+      "Agro Range Multiplier": "Агро Диапазон",
+
+      "Power Information": "Информация Мощности",
+      "Power Type": "Тип Мощности",
+      "Power Amount": "Количество Мощности",
+      "Power Duration": "Длительность Мощности",
+      "Charged Power Regen": "Зарядка Мощности",
+      "Charged Power Radius": "Радиус Мощности",
+
+      "Can Attack?": "Может Атаковать?",
+      "Attack Range": "Дальность Атаки",
+      "Pre-Attack Delay": "Задержка Перед Атакой",
+      "Knockback": "Отбрасывание",
+      "Knockback Angle": "Угол Отбрасывания",
+      "Time Between Attacks": "Время Между Атаками",
+
+      "AOE Attacks?": "Массовая Атака?",
+      "AOE Damage Percentage": "Процент Повреждений Массовой Атаки",
+      "AOE Knockback Percentage": "Процент Отбрасывания Массовой Атаки",
+      "AOE Radius": "Радиус Массой Атаки",
+
+      "Requirements": "Доступность",
+      "Minimum Episode Completed": "Минимальный Эпизод Завершён",
+      "Minimum PVP Rank Required": "Минимальный PVP Ранг Требуется",
+      "Minimum Player Level": "Минимальный Уровень Игрока",
+
+      //Footer
+      "Copyright": "Авторские права: Feinwaru Software",
+
+      "About Feinwaru": "Больше о Feinwaru",
+      "Our Team": "Наша Команда",
+      "Branding": "Брендирование",
+      "Careers": "Карьера",
+
+      "Our Projects": "Наши Проекты",
+      "SPPD Mobile": "SPPD Mobile",
+      "more...": "больше...",
+
+      "Extra Resources": "Дополнительные Ресурсы",
+      "Help & Support": "Справка & Поддержка",
+      "Developers": "Разработчики",
+      "Feedback": "Обратная связь",
+      "Terms & Privacy": "Условия & Конфиденциальность",
+    }
+  },
+
   /*es: {
     translation: {
       //Navigation Bar
