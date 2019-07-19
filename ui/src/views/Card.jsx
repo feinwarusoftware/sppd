@@ -1016,7 +1016,7 @@ export default class Card extends Component {
                 {altered.description}
               </h5>
               <h4 id="class" className="font-weight-bold">
-                <span className="capitalism"><Trans>{rarities[altered.rarity]}</Trans></span> | <span className="capitalism"><Trans>{altered.type === "spell" ? "spell" : altered.character_type}</Trans></span>
+                <span className="capitalism"><Trans>{rarities[altered.rarity]}</Trans></span> | <span className="capitalism"><Trans>{altered.type === "spell" ? "spell" : altered.type === "trap" ? "trap" : altered.character_type}</Trans></span>
               </h4>
               <h4 id="quickstats" className="font-weight-bold">
                 <span className="light-blue-text">
