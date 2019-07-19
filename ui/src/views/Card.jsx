@@ -1030,7 +1030,7 @@ export default class Card extends Component {
               <div className="form-group">
                 <select className="form-control" id="exampleFormControlSelect1" onChange={change => this.handleDropdownChange(change)}>
                   {
-                    altered.type === "spell" || altered.type === "spawn" ?
+                    altered.type === "spell" || altered.type === "spawn" || altered.type === "trap" ?
                       <>
                         <option>Level 1</option>
                         <option>Level 2</option>
