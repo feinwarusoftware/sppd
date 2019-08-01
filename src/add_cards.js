@@ -24,7 +24,7 @@ try {
 (async () => {
   let ids;
   try {
-    ids = await fetch(`${host}/api/v1/cards/list`, {
+    ids = await fetch(`https://sppd.feinwaru.com/api/v1/cards/list`, {
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -42,6 +42,7 @@ try {
       return console.error(`failed to convert card to new format: ${error}`); 
     }
 
+    /*
     try {
       const search = await fetch(`${host}/api/v1/cards?name=${converted.name}`).then(res => res.json());
       if (search.data.cards.reduce((p, c) => p || c.name.toLowerCase() === converted.name, false)) {
@@ -70,7 +71,7 @@ try {
         let res;
         try {
           res = await fetch(`${host}/api/v1/cards`, {
-          /*res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {*/
+          //res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
             method: "post",
             body: JSON.stringify(converted),
             headers: {
@@ -92,17 +93,17 @@ try {
       console.error("error searching for converted card");
       process.exit(-1);
     }
-
-    /*
+    */
+    
     let res;
     try {
-      res = await fetch("https://sppd.feinwaru.com/api/v1/cards", {
-      //res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
-        method: "post",
+      //res = await fetch("https://sppd.feinwaru.com/api/v1/cards", {
+      res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
+        method: "patch",
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "rawrxd"
+          "xxx-access-token": "1fuck2red3lynx"
         }
       }).then(res => res.json())
     } catch(error) {
@@ -114,6 +115,6 @@ try {
     }
     
     console.log(`${i}. ${converted.name}`);
-    */
+    
   }
 })();
