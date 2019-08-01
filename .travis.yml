@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "lts/*"
+cache: yarn
+cache:
+yarn: true
+before_install:
+  # empty
+
+install:
+  - cd ui
+  - yarn
+  - yarn lint
+  - yarn test
+
+script:
+  - npx webpack --config webpack.dev.js
+
+after_success:
+  #
+
+after_failure:
+  #

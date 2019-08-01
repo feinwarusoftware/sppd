@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { CardGrid, CardList } from "./index";
 import Cookies from "universal-cookie";
-
+import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
+import i18n from "../i18n";
 
-const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi"];
+const themes = ["adventure", "fantasy", "general", "mystical", "sci-fi", "superhero"];
 const rarities = ["common", "rare", "epic", "legendary"];
 const orderBy = ["name", "theme", "rarity", "energy", "health", "damage"];
 
@@ -409,7 +410,7 @@ class Search extends Component {
             <input
               className="form-control form-control-lg"
               type="text"
-              placeholder={"Search " + this.state.cards.total + " cards for..."}
+              placeholder={i18n.t("search", {total: this.state.cards.total})}
               onKeyPress={e => {
                 if (e.key === "Enter") {
                   this.filterName(e.target.value);
@@ -440,24 +441,24 @@ class Search extends Component {
         <div id="result-bar" className="row my-5">
           <div id="results" className="col-8 col-md-10 pl-sm-0">
             <h2 className="font-weight-bold mb-0">
-              {this.state.cards.matched} Matching Results
+              {i18n.t("results", {count: this.state.cards.matched})}
             </h2>
           </div>
           <div id="views" className="col-4 col-md-2 text-right pr-sm-0">
             <i
-              title="Grid View"
+              title={i18n.t("grid")} 
               onClick={() => this.gridView()}
               active={(this.state.options.view === "grid").toString()}
               className="fas fa-th"
             />
             <i
-              title="List View"
+              title={i18n.t("list")} 
               onClick={() => this.listView()}
               active={(this.state.options.view === "list").toString()}
               className="fas fa-th-list"
             />
             <i
-              title="Toggle Scrolling Auto-loader"                                                        
+              title={i18n.t("auto-load")}                                                        
               onClick={() => this.toggleAutoload()}
               active={(this.state.options.autoload === true).toString()}
               className="fas fa-spinner"
@@ -468,7 +469,7 @@ class Search extends Component {
           <div id="filters" className="col-12 col-md-3 pl-md-0 mb-5">
           <div className="row">
             <div id="order" className="col-6 col-sm-4 col-md-12 mb-5">
-              <h4 className="font-weight-bold">Order By</h4>
+              <h4 className="font-weight-bold"><Trans>Order By</Trans></h4>
               <div className="divider" />
               {/*
                 <p active="true">
@@ -500,13 +501,13 @@ class Search extends Component {
                           : ""
                       }`}
                     />{" "}
-                    {e}
+                    <Trans>{e}</Trans>
                   </p>
                 ))
               ]}
             </div>
             <div className="col-6 col-sm-4 col-md-12 mb-4">
-              <h4 className="font-weight-bold">Theme</h4>
+              <h4 className="font-weight-bold"><Trans>Theme</Trans></h4>
               <div className="divider" />
               {[
                 themes.map((e, i) => (
@@ -516,13 +517,13 @@ class Search extends Component {
                     active={(this.state.filters.theme === e).toString()}
                     className="capitalism"
                   >
-                    <span /> {e}
+                    <span /> <Trans>{e}</Trans>
                   </p>
                 ))
               ]}
             </div>
             <div className="col-6 col-sm-4 col-md-12 ">
-              <h4 className="font-weight-bold">Rarity</h4>
+              <h4 className="font-weight-bold"><Trans>Rarity</Trans></h4>
               <div className="divider" />
               {[
                 rarities.map((e, i) => (
@@ -532,7 +533,7 @@ class Search extends Component {
                     active={(this.state.filters.rarity === this._rarityAsInt(e)).toString()}
                     className="capitalism"
                   >
-                    <span /> {e}
+                    <span /> <Trans>{e}</Trans>
                   </p>
                 ))
               ]}
@@ -549,7 +550,7 @@ class Search extends Component {
                   onClick={() => this.loadMoreCards()}
                   className="mt-5 px-4 btn btn-sppd"
                 >
-                  Load More...
+                  <Trans>Load More...</Trans>
                 </button>
               ) : (
                 ""

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { colours } from "../utils";
-
+import { Trans } from "react-i18next";
 import { Redirect } from "react-router";
 
 class CardGrid extends Component {
@@ -55,6 +55,8 @@ class CardGrid extends Component {
     let charTypeString;
     if (this.props.type === "spell") {
       charTypeString = "spell";
+    } else if (this.props.type === "trap"){
+      charTypeString = "trap"
     } else {
       charTypeString = this.props.characterType;
     }
@@ -91,7 +93,7 @@ class CardGrid extends Component {
           />
           <h4 className="mt-2 mb-0 font-weight-bold">{this.props.name}</h4>
           <h5 className="mt-0 font-weight-bold capitalism">
-            {rarityString} | {charTypeString}
+            {<Trans>{rarityString}</Trans>} | <Trans>{charTypeString}</Trans>
           </h5>
           <h6 className="font-weight-bold">
             <span className="light-blue-text">
