@@ -4,4 +4,4 @@ import Error from "./Error.jsx";
 export {
   Home,
   Error
-}
+};

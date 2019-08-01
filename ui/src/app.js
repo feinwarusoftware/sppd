@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import 'bootstrap/scss/bootstrap.scss';
+import "bootstrap/scss/bootstrap.scss";
 import "../src/static/css/fa_all.scss";
 import "../style.scss";
 import { Router, Route, Switch } from "react-router-dom";
@@ -17,9 +17,9 @@ ReactDOM.render(
   <Router history={history}>
     <ScrollToTop>
       <Switch>
-      <Route exact path="/" component={Home} exact />
-      <Route exact path="/error" component={Error} />
-      <Route exact path="/:card" component={Card} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/error" component={Error} />
+        <Route exact path="/:card" component={Card} />
       </Switch>
     </ScrollToTop>
   </Router>,
