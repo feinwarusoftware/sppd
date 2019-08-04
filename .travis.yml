@@ -6,6 +6,8 @@ cache:
 yarn: true
 before_install:
   # empty
+notifications:
+  slack: feinwaru:6x5Uv4tO4l1GEKsNh8F02Y9R
 
 install:
   - cd ui
