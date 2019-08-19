@@ -13,7 +13,16 @@ install:
 - yarn
 - yarn lint
 - yarn test
-script:
-- npx webpack --config webpack.dev.js
-after_success: 
-after_failure: 
+jobs:
+  include:
+    - stage: "Tests"                # naming the Tests stage
+      name: "ESLint"            # names the first Tests stage job
+      script:
+        - yarn lint
+    - script: 
+        - yarn test
+      name: "Jest"     # names the second Tests stage job
+    - stage: deploy
+      name: "Deploy"
+      if: branch = develop # qa environment
+      script: ./deploy.sh
