@@ -24,6 +24,8 @@ jobs:
     install: echo $KEY >> $HOME/.ssh/known_hosts
     provider: script
     skip_cleanup: true
+    before_script:
+    - echo -e "Host $IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     script:
     - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd/ui
     on:
