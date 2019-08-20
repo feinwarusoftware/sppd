@@ -2,8 +2,6 @@ language: node_js
 node_js:
 - lts/*
 cache: yarn
-addons:
-  ssh_known_hosts: git@$IP
 notifications:
   slack: feinwaru:6x5Uv4tO4l1GEKsNh8F02Y9R
 jobs:
@@ -23,6 +21,7 @@ jobs:
     name: Jest
   - stage: deploy
     name: Deploy
+    install: echo $KEY >> $HOME/.ssh/known_hosts
     provider: script
     skip_cleanup: true
     script:
