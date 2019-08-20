@@ -3,7 +3,7 @@ node_js:
 - lts/*
 cache: yarn
 addons:
-  ssh_known_hosts: $IP
+  ssh_known_hosts: git@$IP
 notifications:
   slack: feinwaru:6x5Uv4tO4l1GEKsNh8F02Y9R
 jobs:
@@ -26,7 +26,6 @@ jobs:
     provider: script
     skip_cleanup: true
     script:
-    - if [ -z "`ssh-keygen -F $IP`" ]; then ssh-keyscan -H $IP >> ~/.ssh/known_hosts fi
     - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
     on:
       branch: develop
