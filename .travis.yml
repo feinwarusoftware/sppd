@@ -26,7 +26,7 @@ jobs:
     provider: script
     skip_cleanup: true
     script:
-    - echo $IP
+    - if [ -z "`ssh-keygen -F $IP`" ]; then ssh-keyscan -H $IP >> ~/.ssh/known_hosts fi
     - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
     on:
       branch: develop
