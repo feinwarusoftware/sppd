@@ -25,13 +25,15 @@ jobs:
     provider: script
     skip_cleanup: true
     script:
-    - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
+    - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd/ui
     on:
       branch: develop
 before_install:
-- openssl aes-256-cbc -K $encrypted_96af6502cf30_key -iv $encrypted_96af6502cf30_iv -in travis_rsa.enc -out travis_rsa -d
+- openssl aes-256-cbc -K $encrypted_271ed4c32e6c_key -iv $encrypted_271ed4c32e6c_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_96af6502cf30_key -iv $encrypted_96af6502cf30_iv -in travis_rsa.enc -out /tmp/travis_rsa -d
+- openssl aes-256-cbc -K $encrypted_271ed4c32e6c_key -iv $encrypted_271ed4c32e6c_iv
+  -in travis_rsa.enc -out /tmp/travis_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/travis_rsa
 - ssh-add /tmp/travis_rsa
