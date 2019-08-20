@@ -11,6 +11,6 @@ git push deploy develop
 ssh git@$IP -p $PORT <<EOF
   cd $DEPLOY_DIR
   # Any command go here:
-  sh prod.sh
+  forever start -c /bin/bash dev.sh
 EOF
 

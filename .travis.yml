@@ -22,4 +22,4 @@ jobs:
     - stage: deploy
       name: "Deploy"
       if: branch = develop # qa environment
-      script: ./deploy.sh
+      script: sh deploy.sh
