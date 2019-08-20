@@ -25,7 +25,9 @@ jobs:
     name: Deploy
     provider: script
     skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
+    script:
+    - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
+    - echo $IP
     on:
       branch: develop
 before_install:
