@@ -1,8 +1,8 @@
 #!/bin/bash
 
 eval "$(ssh-agent -s)"
-chmod 600 .travis/travis
-ssh-add .travis/travis
+chmod 600 .travis/travis.enc
+ssh-add .travis/travis.enc
 
 git config --global push.default matching
 git remote add deploy ssh://git@$IP:$PORT$DEPLOY_DIR
