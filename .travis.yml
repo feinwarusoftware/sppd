@@ -3,29 +3,38 @@ node_js:
 - lts/*
 cache: yarn
 addons:
-  ssh_known_hosts:
-  - $IP
-before_install:
-- openssl aes-256-cbc -K $encrypted_83deb73f5baa_key -iv $encrypted_83deb73f5baa_iv
-  -in ./.travis/travis.enc -out ../travis -d
+  ssh_known_hosts: $IP
 notifications:
   slack: feinwaru:6x5Uv4tO4l1GEKsNh8F02Y9R
 jobs:
   include:
-    - stage: "Tests"
-      install:
-        - cd ui
-        - yarn               # naming the Tests stage
-      name: "ESLint"            # names the first Tests stage job
-      script:
-        - yarn lint
-    - install:
-        - cd ui
-        - yarn 
-      script: 
-        - yarn test
-      name: "Jest"     # names the second Tests stage job
-    - stage: deploy
-      name: "Deploy"
-      if: branch = develop # qa environment
-      script: bash deploy.sh
+  - stage: Tests
+    install:
+    - cd ui
+    - yarn
+    name: ESLint
+    script:
+    - yarn lint
+  - install:
+    - cd ui
+    - yarn
+    script:
+    - yarn test
+    name: Jest
+  - stage: deploy
+    name: Deploy
+    if: branch = develop
+    script: bash deploy.sh
+before_install:
+- openssl aes-256-cbc -K $encrypted_96af6502cf30_key -iv $encrypted_96af6502cf30_iv -in travis_rsa.enc -out travis_rsa -d
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_96af6502cf30_key -iv $encrypted_96af6502cf30_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/deploy_rsa
+- ssh-add /tmp/deploy_rsa
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui git@$IP:sppd/ui
+  on:
+    branch: develop
