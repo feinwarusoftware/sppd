@@ -7,7 +7,6 @@ notifications:
 before_install:
 - sudo apt-get install -y sshpass
 install:
-- echo $KEY >> $HOME/.ssh/known_hosts
 - cd ui
 - yarn
 before_script:
@@ -25,6 +24,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd/ui
+  script: sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd
   on:
     branch: develop
