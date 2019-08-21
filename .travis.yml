@@ -25,6 +25,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd
+  script: sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui $TRAVIS_BUILD_DIR/static pi@$IP:sppd
   on:
     branch: develop
