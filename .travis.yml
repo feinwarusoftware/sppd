@@ -10,6 +10,7 @@ install:
 - echo $KEY >> $HOME/.ssh/known_hosts
 - cd ui
 - yarn
+- cd ..
 script:
 - yarn lint
 - yarn test
