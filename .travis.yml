@@ -24,8 +24,9 @@ jobs:
     install: echo $KEY >> $HOME/.ssh/known_hosts
     provider: script
     skip_cleanup: true
+    before_install:
+    - sudo apt-get install -y sshpass
     before_script:
-    - sudo apt install sshpass -y
     - echo -e "Host $IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     script:
     - sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd/ui
