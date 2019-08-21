@@ -10,10 +10,10 @@ install:
 - echo $KEY >> $HOME/.ssh/known_hosts
 - cd ui
 - yarn
-- cd ..
 script:
 - yarn lint
 - yarn test
+- cd ..
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_271ed4c32e6c_key -iv $encrypted_271ed4c32e6c_iv -in travis_rsa.enc -out /tmp/deploy_rsa -d
 - eval "$(ssh-agent -s)"
