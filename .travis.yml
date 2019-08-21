@@ -6,16 +6,21 @@ notifications:
   slack: feinwaru:6x5Uv4tO4l1GEKsNh8F02Y9R
 jobs:
   include:
-  - stage: test
-    name: Tests
+  - stage: Tests
     install:
     - cd ui
     - yarn
+    name: ESLint
     script:
     - yarn lint
+  - install:
+    - cd ui
+    - yarn
+    script:
     - yarn test
+    name: Jest
   - stage: deploy
-    name: Deploy
+    name: "Deploy to QA"
     before_install:
     - sudo apt-get install -y sshpass
     install: echo $KEY >> $HOME/.ssh/known_hosts
