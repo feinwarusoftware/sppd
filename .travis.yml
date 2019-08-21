@@ -7,8 +7,11 @@ notifications:
 before_install:
 - sudo apt-get install -y sshpass
 install:
+- echo $KEY >> $HOME/.ssh/known_hosts
 - cd ui
 - yarn
+before_script:
+- echo -e "Host $IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
 - yarn lint
 - yarn test
@@ -22,10 +25,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  install:
-  - echo $KEY >> $HOME/.ssh/known_hosts
-  before_script:
-  - echo -e "Host $IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   script: sshpass -p $PASS rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ui pi@$IP:sppd/ui
   on:
     branch: develop
