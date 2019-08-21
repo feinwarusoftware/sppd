@@ -14,6 +14,7 @@ before_script:
 script:
 - yarn lint
 - yarn test
+- npx webpack --config webpack.dev.js
 - cd ..
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_271ed4c32e6c_key -iv $encrypted_271ed4c32e6c_iv
