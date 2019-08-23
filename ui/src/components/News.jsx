@@ -16,7 +16,7 @@ class News extends Component {
   }
 
   componentDidMount() {
-    fetch("https://sppd.feinwaru.com/api/v1/updates?sort=date&order=-1&limit=1")
+    fetch("api/v1/updates?sort=date&order=-1&limit=1")
       .then(res => res.json())
       .then(
         (result) => {
