@@ -205,7 +205,7 @@ const cardSchema = new mongoose.Schema({
     tech_tree: techTreeSchema,
 
     // new
-    character_tags: defValidEnum(characterTagTypes),
+    character_tags: [ defValidEnum(characterTagTypes) ],
 
     updated_at: {
         type: Date,
