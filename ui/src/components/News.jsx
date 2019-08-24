@@ -60,8 +60,8 @@ class News extends Component {
 
   render() {
     return (
-      <div id="news" ref={this.news} className="row mb-5 pb-3 mx-1">
-        <div className="col-12 pt-3 pb-2 mx-3">
+      <div id="news" ref={this.news} className="row mb-5">
+        <div className="col-12 py-4 px-4">
           <h2 className="font-weight-bold">Latest News</h2>
           <div className="divider"></div>
           <h3 className="mb-0">{this.state.news.title}</h3>

@@ -75,6 +75,9 @@ class Navbar extends Component {
                         <a onClick={() => {this.props.changeLang("pt-BR")}}><img src="https://cdn.countryflags.com/thumbs/brazil/flag-round-250.png" />Português (Brasil)</a>
                       </li>
                       <li>
+                        <a onClick={() => {this.props.changeLang("pt-PT")}}><img src="https://cdn.countryflags.com/thumbs/portugal/flag-round-250.png" />Português (Portugal)</a>
+                      </li>
+                      <li>
                         <a onClick={() => {this.props.changeLang("ru")}}><img src="https://cdn.countryflags.com/thumbs/russia/flag-round-250.png" />Pусский</a>
                       </li>
                       <li>

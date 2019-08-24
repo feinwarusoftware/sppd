@@ -549,6 +549,115 @@ const resources = {
       Feedback: "Feedback",
       "Terms & Privacy": "Termos & Privacidade"
     }
+  },
+  "pt-PT": {
+    translation: {
+      //Navigation Bar
+      "Country Code": "PT",
+      Home: "Página Inicial",
+      "Random Card": "Carta Aleatória",
+      "Discord Bot": "Bot do Discord",
+      "Support Us": "Suporta-nos",
+      results: "{{count}} Resultados Correspondentes",
+
+      //Search
+      Banner: "Banner:",
+      search: "A procurar {{total}} cartas para...",
+      grid: "Vista de Grelha",
+      list: "Vista de Lista",
+      "auto-load": "Ligar o Auto-Loader de scroll",
+
+      //Filters
+      //Order By
+      "Order By": "Ordenar Por",
+      name: "nome",
+      theme: "tema",
+      rarity: "raridade",
+      energy: "energia",
+      health: "vida",
+      damage: "dano",
+
+      //Theme
+      Theme: "Tema",
+      adventure: "aventura",
+      fantasy: "fantasia",
+      general: "geral",
+      mystical: "místico",
+      "sci-fi": "sci-fi",
+      superhero: "super herói",
+
+      //Rarities
+      Rarity: "Raridade",
+      common: "comum",
+      rare: "raro",
+      epic: "épico",
+      legendary: "lendário",
+
+      //Character Types
+      assassin: "assassino",
+      melee: "corpo-a-corpo",
+      tank: "tanque",
+      ranged: "ranged",
+      totem: "totem",
+      spell: "feitiço",
+      trap: "armadilha",
+
+      //Upgrades
+      level: "Nível {{num}}",
+      upgrade: "Atualização {{num}} / {{total}}",
+
+
+      //Sections
+      "discord-commands": "Comandos do AWESOM-O Discord",
+
+      "General Information": "Informação Geral",
+      "Cast Area": "Área da Abilidade",
+      "Max Velocity": "Velocidade Máxima",
+      "Time To Reach Max Velocity": "Tempo para Chegar À Velocidade Máxima",
+      "Agro Range Multiplier": "Multiplicador de Alcance de Foco",
+
+      "Power Information": "Informação do Poder",
+      "Power Type": "Tipo de Poder",
+      "Power Amount": "Quantidade de Poder",
+      "Power Duration": "Duração do Poder",
+      "Charged Power Regen": "Regeneração do Poder Carregado",
+      "Charged Power Radius": "Raio do Poder Carregado",
+
+      "Can Attack?": "Pode Atacar?",
+      "Attack Range": "Alcance do Ataque",
+      "Pre-Attack Delay": "Tempo de Resposta Pré-Ataque",
+      Knockback: "Knockback",
+      "Knockback Angle": "Ângulo de Knockback",
+      "Time Between Attacks": "Tempo Entre Ataques",
+
+      "AOE Attacks?": "Ataques AOE?",
+      "AOE Damage Percentage": "Percentagem de Dano AOE",
+      "AOE Knockback Percentage": "Percentagem de knockback AOE",
+      "AOE Radius": "Raio AOE",
+
+      Requirements: "Requesitos",
+      "Minimum Episode Completed": "Episódio Mínimo Completo",
+      "Minimum PVP Rank Required": "Nível Mínimo de PVP requerido",
+      "Minimum Player Level": "Nível de Jogador Mínimo",
+
+      //Footer
+      Copyright: "Direitos de autor: Feinwaru Software",
+
+      "About Feinwaru": "Acerca de Feinwaru",
+      "Our Team": "A Nossa Equia",
+      Branding: "Marcas",
+      Careers: "Carreiras",
+
+      "Our Projects": "Os Nossos Projetos",
+      "SPPD Mobile": "SPPD Mobile",
+      "more...": "mais...",
+
+      "Extra Resources": "Extra Resources",
+      "Help & Support": "Ajuda e Suporte",
+      Developers: "Desenvolvedores",
+      Feedback: "Feedback",
+      "Terms & Privacy": "Termos e Privacidade"
+    }
   }
 
   /*es: {
