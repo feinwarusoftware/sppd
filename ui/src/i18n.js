@@ -597,7 +597,7 @@ const resources = {
       assassin: "assassino",
       melee: "corpo-a-corpo",
       tank: "tanque",
-      ranged: "ranged",
+      ranged: "longa distãncia",
       totem: "totem",
       spell: "feitiço",
       trap: "armadilha",
