@@ -96,6 +96,22 @@ const upgradeTypes = [
     "stat_charged_power_regen"
 ];
 
+const characterTagTypes = [
+    "male",
+    "female",
+    "adult",
+    "human",
+    "animal",
+    "holy",
+    "unholy",
+    "flying",
+    "indian",
+    "cowboy",
+    "pirate",
+    "canadian",
+    "special_needs"
+];
+
 const slotSchema = new mongoose.Schema({
     property: defValidEnum(upgradeTypes),
     value: defValidNumber
@@ -187,6 +203,9 @@ const cardSchema = new mongoose.Schema({
     min_player_level: defValidNumber,
 
     tech_tree: techTreeSchema,
+
+    // new
+    character_tags: defValidEnum(characterTagTypes),
 
     updated_at: {
         type: Date,

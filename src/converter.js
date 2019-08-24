@@ -280,6 +280,9 @@ const convert = card => {
   }
   //
 
+  // new
+  out.character_tags = card.CharacterTags.map(e => e.replace(/\ /g, "_").map(f => f.toLowerCase()))
+
   return out;
 }
 
