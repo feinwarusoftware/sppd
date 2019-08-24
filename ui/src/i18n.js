@@ -597,7 +597,7 @@ const resources = {
       assassin: "assassino",
       melee: "corpo-a-corpo",
       tank: "tanque",
-      ranged: "ranged",
+      ranged: "longa distãncia",
       totem: "totem",
       spell: "feitiço",
       trap: "armadilha",
@@ -649,7 +649,7 @@ const resources = {
       Careers: "Carreiras",
 
       "Our Projects": "Os Nossos Projetos",
-      "SPPD Mobile": "SPPD Mobile",
+      "SPPD Mobile": "SPPD Para Telemóvel",
       "more...": "mais...",
 
       "Extra Resources": "Extra Resources",
