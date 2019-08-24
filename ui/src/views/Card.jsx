@@ -3,7 +3,7 @@ import { Navbar, Footer, Search } from "../components";
 import MetaTags from 'react-meta-tags';
 import i18n from "../i18n";
 import { Trans } from "react-i18next";
-import removeUnderscores from "../utils";
+import { removeUnderscores } from "../utils";
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
