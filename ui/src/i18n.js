@@ -649,7 +649,7 @@ const resources = {
       Careers: "Carreiras",
 
       "Our Projects": "Os Nossos Projetos",
-      "SPPD Mobile": "SPPD Mobile",
+      "SPPD Mobile": "SPPD Para Telemóvel",
       "more...": "mais...",
 
       "Extra Resources": "Extra Resources",
