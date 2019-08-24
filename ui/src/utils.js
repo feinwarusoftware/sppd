@@ -11,4 +11,11 @@ const colours = {
   superhero: "#fd6cf8"
 };
 
-export { colours };
+function removeUnderscores(string) {
+  string = string.replace(/_/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  return string;
+  
+
+}
+
+export { colours, removeUnderscores };
