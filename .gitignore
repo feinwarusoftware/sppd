@@ -4,3 +4,6 @@ ui/dist
 
 # node
 src/node_modules
+
+# temp
+temp.sh

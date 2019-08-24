@@ -86,6 +86,10 @@ router.get("/cards", (req, res) => {
     const name = req.query.name;
     const theme = req.query.theme;
     const rarity = req.query.rarity;
+    const type = req.query.type;
+    const character_type = req.query.character_type;
+
+    //
 
     const sort = req.query.sort;
     const order = req.query.order || 1;
@@ -98,7 +102,9 @@ router.get("/cards", (req, res) => {
     const search = {
         ...( name == null ? {} : { name: { $regex: name, $options: "i" } } ),
         ...( theme == null ? {} : { theme } ),
-        ...( rarity == null ? {} : { rarity } )
+        ...( rarity == null ? {} : { rarity } ),
+        ...( type == null ? {} : { type } ),
+        ...( character_type == null ? {} : { character_type } )
     };
 
     CardModel
