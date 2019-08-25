@@ -204,7 +204,7 @@ const cardSchema = new mongoose.Schema({
 
     tech_tree: techTreeSchema,
 
-    // validation done api level cos mongoose array validation is :b:roke
+    // new
     character_tags: [ defValidEnum(characterTagTypes) ],
 
     updated_at: {
