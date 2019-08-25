@@ -290,7 +290,7 @@ router.patch("/cards/:id", (req, res) => {
     }
 
     CardModel
-        .updateOne({ _id: req.params.id }, { ...req.body, updated_at: Date.now() })
+        .updateOne({ _id: req.params.id }, { ...req.body, updated_at: Date.now() }, { runValidators: true })
 
         .then(() => {
             res.json({
@@ -499,7 +499,7 @@ router.patch("/updates/:id", (req, res) => {
     }
 
     UpdateModel
-        .updateOne({ _id: req.params.id }, req.body)
+        .updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         .then(() => {
             res.json({
