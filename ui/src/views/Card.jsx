@@ -460,7 +460,7 @@ export default class Card extends Component {
         case "tank":
           iy = 0;
           break;
-        case undefined:
+        case null:
           // trap vs spell
           switch (typeType) {
             case "spell": {
