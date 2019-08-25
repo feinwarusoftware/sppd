@@ -3,7 +3,7 @@
 import { checkImages } from "./image_load";
 
 // All the card assets
-export const images = [
+const images = [
   // Frame outlines
   {
     asset: "frame-outline",
@@ -638,14 +638,6 @@ export const getRequiredImages = card => {
   
     return keep;
   });
-}
-
-// Converts a map to an object
-export const mapToObject = map => {
-  const obj = {};
-  map.forEach((v, k) => { obj[k] = v; });
-
-  return obj;
 }
 
 // Loads all the required images for a given card

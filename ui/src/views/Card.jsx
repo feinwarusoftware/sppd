@@ -4,7 +4,8 @@ import MetaTags from 'react-meta-tags';
 import i18n from "../i18n";
 import { Trans } from "react-i18next";
 
-import "../card_images";
+import { loadRequiredImages } from "../card_images";
+import { objectFromEntries, cardRarityFromDb, cardThemeFromDb } from "../utils";
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
@@ -340,366 +341,31 @@ export default class Card extends Component {
     return alteredCard;
   }
 
-  _redrawCard = card => {
-    document.fonts.load('17px "South Park Ext"').then(() => {
+  _redrawCard = async card => {
 
+    // Load font and images required for card render
+    const cardData = {
+      rarity: cardRarityFromDb(card.rarity),
+      theme: cardThemeFromDb(card.theme),
+      type: card.type,
+      character_type: card.character_type,
+      image: card.image
+    };
 
-      const canvas = this.canvas.current;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let assets;
 
-      const rarity = card.rarity;
-      const theme = card.theme;
-      const characterType = card.character_type;
+    try {
+      assets = (await Promise.all([document.fonts.load('17px "South Park Ext"'), loadRequiredImages(cardData)])).slice(1);      
+      assets = objectFromEntries(assets[0].map(e => [e.asset.split("-").map((f, i) => i === 0 ? f : f[0].toUpperCase() + f.slice(1)).join(""), e.image]));
 
-      // trap vs spell
-      const typeType = card.type;
-      //
+    } catch(error) {
+      console.error(error);
+    }
 
-      /* --- pasted old code --- */
-
-      // Get the frame outline.
-      const frameWidth = 305;
-      const frameHeight = 418;
-
-      let x, y, z, w;
-
-      switch (rarity) {
-        case 0: // common
-          y = 0;
-          switch (theme) {
-            case "adventure":
-              x = frameWidth;
-              break;
-            case "sci-fi":
-              x = frameWidth * 2;
-              break;
-            case "mystical":
-              x = frameWidth * 3;
-              break;
-            case "fantasy":
-              x = frameWidth * 4;
-              break;
-            case "superhero":
-              x = frameWidth * 5;
-              break;
-            case "general":
-              x = 0;
-              break;
-            default:
-              //message.reply("theme not found");
-              return;
-          }
-          break;
-        default:
-          y = frameHeight;
-          switch (theme) {
-            case "adventure":
-              x = frameWidth;
-              break;
-            case "sci-fi":
-              x = frameWidth * 2;
-              break;
-            case "mystical":
-              x = frameWidth * 3;
-              break;
-            case "fantasy":
-              x = frameWidth * 4;
-              break;
-            case "superhero":
-              x = frameWidth * 5;
-              break;
-            case "general":
-              x = 0;
-              break;
-            default:
-              //message.reply("theme not found");
-              return;
-          }
-          break;
-      }
-
-      z = frameWidth;
-      w = frameHeight;
-
-      // Get the frame top.
-      const topWidth = 338;
-      const topHeight = 107;
-
-      let fx, fy, fz, fw;
-
-      fx = 0;
-
-      switch (rarity) {
-        case 0: // common
-          fy = undefined;
-          break;
-        case 1:
-          fy = 0;
-          break;
-        case 2:
-          fy = topHeight;
-          break;
-        case 3:
-          fy = topHeight * 2;
-          break;
-        default:
-          //message.reply("rarity not found");
-          return;
-      }
-
-      fz = topWidth;
-      fw = topHeight;
-
-      // Get the icon.
-      const iconWidth = 116;
-      const iconHeight = 106;
-
-      let ix, iy, iz, iw;
-
-      switch (characterType) {
-        case "tank":
-          iy = 0;
-          break;
-        case undefined:
-          // trap vs spell
-          switch (typeType) {
-            case "spell": {
-              iy = iconHeight * 2;
-              break;
-            }
-            case "trap": {
-              iy = iconHeight * 14;
-              break;
-            }
-          }
-
-          break;
-          
-          //
-        case "assassin":
-          iy = iconHeight * 4;
-          break;
-        case "ranged":
-          iy = iconHeight * 6;
-          break;
-        case "melee":
-          iy = iconHeight * 8;
-          break;
-        case "totem":
-          iy = iconHeight * 10;
-          break;
-      }
-
-      switch (rarity) {
-        case 0: // common
-          switch (theme) {
-            case "general":
-              ix = 0;
-              break;
-            case "adventure":
-              ix = iconWidth;
-              break;
-            case "sci-fi":
-              ix = iconWidth * 2;
-              break;
-            case "mystical":
-              ix = iconWidth * 3;
-              break;
-            case "fantasy":
-              ix = iconWidth * 4;
-              break;
-            case "superhero":
-              ix = iconWidth * 5;
-              break;
-          }
-          break;
-        case 1:
-          iy += iconHeight;
-          ix = 0;
-          break;
-        case 2:
-          iy += iconHeight;
-          ix = iconWidth;
-          break;
-        case 3:
-          iy += iconHeight;
-          ix = iconWidth * 2;
-          break;
-      }
-
-      iz = iconWidth;
-      iw = iconHeight;
-
-      // Get the overlay.
-      const overlayWidth = 305;
-      const overlayHeight = 418;
-
-      let ox, oy, oz, ow;
-
-      oy = 0;
-
-      switch (characterType) {
-        case undefined:
-          ox = overlayWidth;
-          break;
-        default:
-          ox = 0;
-          break;
-      }
-
-      oz = overlayWidth;
-      ow = overlayHeight;
-
-      // Card theme icons.
-      const themeIconWidth = 36;
-      const themeIconHeight = 24;
-
-      let tx, ty, tz, tw;
-
-      ty = 0;
-
-      switch (theme) {
-        case "general":
-          tx = 0;
-          break;
-        case "adventure":
-          tx = themeIconWidth;
-          break;
-        case "sci-fi":
-          tx = themeIconWidth * 2;
-          break;
-        case "mystical":
-          tx = themeIconWidth * 3;
-          break;
-        case "fantasy":
-          tx = themeIconWidth * 4;
-          break;
-        case "superhero":
-          tx = themeIconWidth * 5;
-          break;
-        default:
-          //message.reply("theme not found");
-          return;
-      }
-
-      tz = themeIconWidth;
-      tw = themeIconHeight;
-
-      // Crystal things.
-      const crystalSheet = {
-        x: 0,
-        y: 24,
-        width: 180,
-        height: 76 // 36 + 4 + 36
-      };
-
-      const crystalWidth = 36;
-      const crystalHeight = 36;
-
-      let cx, cy, cz, cw;
-
-      cy = crystalSheet.y;
-
-      switch (rarity) {
-        case 0: // common
-          switch (theme) {
-            case "general":
-              cx = 0;
-              break;
-            case "adventure":
-              cx = crystalWidth;
-              break;
-            case "sci-fi":
-              cx = crystalWidth * 2;
-              break;
-            case "mystical":
-              cx = crystalWidth * 3;
-              break;
-            case "fantasy":
-              cx = crystalWidth * 4;
-              break;
-            case "superhero":
-              cx = crystalWidth * 5;
-              break;
-            default:
-              //message.reply("theme not found");
-              return;
-          }
-          break;
-        case 1:
-          cy += crystalHeight + 4;
-          cx = 17;
-          break;
-        case 2:
-          cy += crystalHeight + 4;
-          cx = 34 + crystalWidth;
-          break;
-        case 3:
-          cy += crystalHeight + 4;
-          cx = 34 + crystalWidth * 2;
-          break;
-        default:
-          //message.reply("rarity not found");
-          return;
-      }
-
-      cz = crystalWidth;
-      cw = crystalHeight;
-
-      if (rarity === 3) {
-        cz += 17;
-      }
-
-      /* --- end of old code --- */
-
-      /* --- load images --- */
-      const checkImage = path => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-
-          img.onload = () => resolve(img);
-          img.onerror = () => reject();
-
-          img.src = path;
-        });
-      }
-
-      const checkImages = paths => Promise.all(paths.map(checkImage));
-
-      const imageList = {
-        charTypeIcons: "https://sppd.feinwaru.com/card-character-type-icons.png",
-        cardThemeIcons: "https://sppd.feinwaru.com/card-theme-icons.png",
-        frameOutlines: "https://sppd.feinwaru.com/frame-outline.png",
-        frameOverlays: "https://sppd.feinwaru.com/frame-overlay.png",
-        frameTops: "https://sppd.feinwaru.com/frame-top.png",
-        bgImage: `https://sppd.feinwaru.com/backgrounds/${this.card.image}.jpg`
-      };
-
-      checkImages(Object.values(imageList)).then(imgs => {
-
-        const mapToObj = map => {
-          const obj = {};
-          map.forEach((v, k) => { obj[k] = v; });
-
-          return obj;
-        }
-
-        const roundedImage = (ctx, x, y, width, height, radius) => {
-          ctx.beginPath();
-          ctx.moveTo(x + radius, y);
-          ctx.lineTo(x + width - radius, y);
-          ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-          ctx.lineTo(x + width, y + height - radius);
-          ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-          ctx.lineTo(x + radius, y + height);
-          ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-          ctx.lineTo(x, y + radius);
-          ctx.quadraticCurveTo(x, y, x + radius, y);
-          ctx.closePath();
-        }
-
-        const images = mapToObj(new Map(imgs.map(e => [Object.entries(imageList).find(f => f[1] === e.src)[0], e])));
+    // Create canvas and get context for drawing
+    const canvas = this.canvas.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         /* --- draw to canvas --- */
 
@@ -828,9 +494,7 @@ export default class Card extends Component {
         // ctx.fillText(description, 419, 800);
 
         /* --- draw to canvas end --- */
-      });
-    });
-    /* --- load images end --- */
+
   }
 
   handleDropdownChange = change => {
