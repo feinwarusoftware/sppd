@@ -46,7 +46,7 @@ class Navbar extends Component {
       <React.Fragment>
         <nav ref={this.navbar} >
           <div className="container">
-            <Link to={{ pathname: "/" }}><img draggable="false" src={require("../static/img/sppd_white.svg")} /></Link>
+            <Link to={{ pathname: "/" }}><img draggable="false" alt="" src={require("../static/img/sppd_white.svg")} /></Link>
             <i onClick={() => this.mobileDropdown()} id="dropdown" className="fas fa-bars float-right fa-2x"></i>
             <ul>
               <li>
@@ -69,7 +69,7 @@ class Navbar extends Component {
                   <div id="language-dropdown">
                     <ul>
                       <li>
-                        <a onClick={() => {this.props.changeLang("en")}}><img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-round-250.png" />English</a>
+                        <a onClick={() => {this.props.changeLang("en-GB")}}><img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-round-250.png" />English</a>
                       </li>
                       <li>
                         <a onClick={() => {this.props.changeLang("pt-BR")}}><img src="https://cdn.countryflags.com/thumbs/brazil/flag-round-250.png" />Português (Brasil)</a>
