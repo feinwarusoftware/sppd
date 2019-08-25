@@ -4,6 +4,8 @@ import MetaTags from 'react-meta-tags';
 import i18n from "../i18n";
 import { Trans } from "react-i18next";
 
+import "../card_images";
+
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
   own_area: "Own Area",
