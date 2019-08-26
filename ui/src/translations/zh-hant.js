@@ -80,7 +80,7 @@ export default {
 
   "Got It!": "知道了!",
   "Cookie Message": "Feinwaru使用Cookie來確保您在我們的網站上獲得最佳體驗.",
-  "Learn More": "了解更多",
+  "Learn More...": "了解更多",
   "Select an upgrade level": "選擇升級級別",
   "Load More": "更多..",
   "Latest News": "最新消息",
