@@ -11,7 +11,7 @@ export const checkImage = path => {
 
     img.src = path;
   });
-}
+};
 
 // TODO: test
 // Checks if multiple images are loaded

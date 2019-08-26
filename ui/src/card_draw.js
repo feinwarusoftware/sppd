@@ -13,7 +13,7 @@ export const roundedClipPath = (ctx, x, y, width, height, radius) => {
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
-}
+};
 
 // Drawn an image on the canvas and rounds the corners
 export const ctxDrawImageRounded = (ctx, x, y, width, height, radius, ...args) => {
@@ -22,4 +22,4 @@ export const ctxDrawImageRounded = (ctx, x, y, width, height, radius, ...args) =
   ctx.clip();
   ctx.drawImage(...args);
   ctx.restore();
-}
+};

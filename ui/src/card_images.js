@@ -628,28 +628,28 @@ export const getRequiredImages = card => {
 
   return imagesCopy.filter(e => {
     const { asset, source } = e;
-  
+
     delete e.asset;
     delete e.source;
-  
+
     const keep = Object.entries(e).reduce((p, c) => p && (c[1] instanceof Array ? c[1].includes(card[c[0]]) : c[1] === card[c[0]]), true);
-  
+
     if (keep) {
       e.asset = asset;
       e.source = source;
     }
-  
+
     return keep;
   });
-}
+};
 
 // Loads all the required images for a given card
 export const loadRequiredImages = card => {
   const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `/backgrounds/${card.image}.jpg` } ];
-  
+
   return new Promise((resolve, reject) => {
     checkImages(requiredImages.map(e => e.source))
       .then(images => resolve(requiredImages.map(e => ({ ...e, image: images.find(f => f.src.slice(-e.source.length) === e.source) }))))
       .catch(reject);
   });
-}
+};
