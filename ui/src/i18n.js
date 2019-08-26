@@ -33,7 +33,7 @@ const resources = {
   "zh-Hant": {
     translation: zhHant
   },
-  "ru": {
+  ru: {
     translation: ru
   },
   "pt-BR": {
@@ -42,7 +42,7 @@ const resources = {
   "pt-PT": {
     translation: ptPT
   },
-  "no": {
+  no: {
     translation: no
   }
 };

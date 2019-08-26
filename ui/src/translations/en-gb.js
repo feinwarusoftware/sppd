@@ -1,7 +1,7 @@
 export default {
   //Navigation Bar
   "Country Code": "EN",
-  "Home": "Home",
+  Home: "Home",
   "Random Card": "Random Card",
   "Discord Bot": "Discord Bot",
   "Support Us": "Support Us",
@@ -9,14 +9,14 @@ export default {
   //News
   "Latest News": "Latest News",
   "View More": "View More",
-  "Close": "Close",
+  Close: "Close",
 
   //Search
-  "results": "{{count}} Matching Results",
-  "Banner": "Banner:",
-  "search": "Search {{total}} cards for...",
-  "grid": "Grid View",
-  "list": "List View",
+  results: "{{count}} Matching Results",
+  Banner: "Banner:",
+  search: "Search {{total}} cards for...",
+  grid: "Grid View",
+  list: "List View",
   "auto-load": "Toggle Scrolling Auto-loader",
   "hover-effect": "Toggle Hover Effect",
   "Load More...": "Load More...",
@@ -24,42 +24,42 @@ export default {
   //Filters
   //Order By
   "Order By": "Order By",
-  "name": "name",
-  "theme": "theme",
-  "rarity": "rarity",
-  "energy": "energy",
-  "health": "health",
-  "damage": "damage",
+  name: "name",
+  theme: "theme",
+  rarity: "rarity",
+  energy: "energy",
+  health: "health",
+  damage: "damage",
 
   //Theme
-  "Theme": "Theme",
-  "adventure": "adventure",
-  "fantasy": "fantasy",
-  "general": "general",
-  "mystical": "mystical",
+  Theme: "Theme",
+  adventure: "adventure",
+  fantasy: "fantasy",
+  general: "general",
+  mystical: "mystical",
   "sci-fi": "sci-fi",
-  "superhero": "superhero",
-  
+  superhero: "superhero",
+
   //Rarities
-  "Rarity": "Rarity",
-  "common": "common",
-  "rare": "rare",
-  "epic": "epic",
-  "legendary": "legendary",
+  Rarity: "Rarity",
+  common: "common",
+  rare: "rare",
+  epic: "epic",
+  legendary: "legendary",
 
   //Character Types
-  "assassin": "assassin",
-  "melee": "melee",
-  "tank": "tank",
-  "ranged": "ranged",
-  "totem": "totem",
-  "spell": "spell",
-  "trap": "trap",
+  assassin: "assassin",
+  melee: "melee",
+  tank: "tank",
+  ranged: "ranged",
+  totem: "totem",
+  spell: "spell",
+  trap: "trap",
 
   //Upgrades
   "Select an upgrade level": "Select an upgrade level",
-  "level": "Level {{num}}",
-  "upgrade": "Upgrade {{num}} / {{total}}",
+  level: "Level {{num}}",
+  upgrade: "Upgrade {{num}} / {{total}}",
 
   //Sections
   "discord-commands": "AWESOM-O Discord Commands",
@@ -80,7 +80,7 @@ export default {
   "Can Attack?": "Can Attack?",
   "Attack Range": "Attack Range",
   "Pre-Attack Delay": "Pre-Attack Delay",
-  "Knockback": "Knockback",
+  Knockback: "Knockback",
   "Knockback Angle": "Knockback Angle",
   "Time Between Attacks": "Time Between Attacks",
 
@@ -89,18 +89,18 @@ export default {
   "AOE Knockback Percentage": "AOE Knockback Percentage",
   "AOE Radius": "AOE Radius",
 
-  "Requirements": "Requirements",
+  Requirements: "Requirements",
   "Minimum Episode Completed": "Minimum Episode Completed",
   "Minimum PVP Rank Required": "Minimum PVP Rank Required",
   "Minimum Player Level": "Minimum Player Level",
 
   //Footer
-  "Copyright": "Copyright: Feinwaru Software",
+  Copyright: "Copyright: Feinwaru Software",
 
   "About Feinwaru": "About Feinwaru",
   "Our Team": "Our Team",
-  "Branding": "Branding",
-  "Careers": "Careers",
+  Branding: "Branding",
+  Careers: "Careers",
 
   "Our Projects": "Our Projects",
   "SPPD Mobile": "SPPD Mobile",
@@ -108,12 +108,12 @@ export default {
 
   "Extra Resources": "Extra Resources",
   "Help & Support": "Help & Support",
-  "Developers": "Developers",
-  "Feedback": "Feedback",
+  Developers: "Developers",
+  Feedback: "Feedback",
   "Terms & Privacy": "Terms & Privacy",
 
   //Cookie Banner
   "Got It!": "Got It!",
   "Cookie Message": "Feinwaru uses cookies to ensure you get the best experience on our website.",
-  "Learn More": "Learn More",
-}
+  "Learn More": "Learn More"
+};
