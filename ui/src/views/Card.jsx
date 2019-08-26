@@ -368,8 +368,6 @@ export default class Card extends Component {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    console.log(assets);
-
     ctxDrawImageRounded(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60, assets.background, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
     ctx.drawImage(assets.frameOverlay, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
     ctx.drawImage(assets.frameOutline, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
@@ -549,6 +547,7 @@ export default class Card extends Component {
       altered = { aliases: [] };
     } else {
       altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
+      console.log("aaa");
       this._redrawCard(altered);
     }
 

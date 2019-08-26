@@ -116,7 +116,7 @@ const images = [
   {
     asset: "theme-icon",
     theme: "fantasy",
-    source: " /card-sprites/theme-icons/fantasy.png"
+    source: "/card-sprites/theme-icons/fantasy.png"
   },
   {
     asset: "theme-icon",
@@ -623,7 +623,10 @@ const images = [
 
 // Goes through the card assets and returns the required ones based on the card
 export const getRequiredImages = card => {
-  return images.filter(e => {
+  // Deep copy cos issues otherwise.
+  const imagesCopy = JSON.parse(JSON.stringify(images));
+
+  return imagesCopy.filter(e => {
     const { asset, source } = e;
   
     delete e.asset;
@@ -643,7 +646,7 @@ export const getRequiredImages = card => {
 // Loads all the required images for a given card
 export const loadRequiredImages = card => {
   const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `/backgrounds/${card.image}.jpg` } ];
-
+  
   return new Promise((resolve, reject) => {
     checkImages(requiredImages.map(e => e.source))
       .then(images => resolve(requiredImages.map(e => ({ ...e, image: images.find(f => f.src.slice(-e.source.length) === e.source) }))))
