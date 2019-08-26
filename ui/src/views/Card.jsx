@@ -381,136 +381,84 @@ export default class Card extends Component {
     ctx.drawImage(assets.themeIcon, 0, 0, assets.themeIcon.width, assets.themeIcon.height, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, assets.themeIcon.width * 1.5, assets.themeIcon.height * 1.5);
     ctx.drawImage(assets.themeStone, 0, 0, assets.themeStone.width, assets.themeStone.height, canvas.width / 2 - bgWidth / 2 + 32 - 25, canvas.height / 2 - bgHeight / 2 + 460, assets.themeStone.width * 1.5, assets.themeStone.height * 1.5);
 
-        /* --- draw to canvas --- */
+    // text
+    ctx.fillStyle = "#ebe7ca";
+    ctx.strokeStyle = "Black";
+    ctx.textAlign = "center";
 
-        // current canvas w x h: 526 x 769
+    const name = card.name;
+    const mana_cost = card.mana_cost;
+    const health = card.health;
+    const damage = card.damage;
+    const level = `${this.state.utype === "u" ? "u" : "lvl"} ${this.state.uvalue}`;
+    const description = card.description;
 
-        // defined at the top of the file!
-        // const bgWidth = 455;
-        // const bgHeight = 630;
+    ctx.font = "25px South Park Ext";
+    ctx.lineWidth = 1;
+    ctx.strokeText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+    ctx.fillText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
 
-        //console.log(bgHeight);
+    ctx.font = "60px South Park Ext";
+    ctx.lineWidth = 2;
+    ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+    ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
 
-        /*
-        ctx.save();
-        roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
-        ctx.clip();
-        ctx.drawImage(images.bgImage, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-        ctx.restore();
-        ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-        ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-    
+    if (assets.frameOverlay.src.includes("character")) {
+      ctx.font = "27px South Park Ext";
+      ctx.lineWidth = 1;
+      ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
+      ctx.fillText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
 
-        //console.log(canvas.height / 2 - bgHeight / 2);
+      ctx.font = "27px South Park Ext";
+      ctx.lineWidth = 1;
+      ctx.strokeText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+      ctx.fillText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
+    }
 
-        if (fy != null) {
-          ctx.drawImage(images.frameTops, fx, fy, fz, fw, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
-        }
+    ctx.font = "16px South Park Ext";
+    ctx.lineWidth = 1;
+    ctx.strokeText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
+    ctx.fillText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
 
-        ctx.drawImage(images.charTypeIcons, ix, iy, iz, iw, canvas.width / 2 - bgWidth / 2 - 42, canvas.height / 2 - bgHeight / 2 - 106, iconWidth * 1.5, iconHeight * 1.5);
-        ctx.drawImage(images.cardThemeIcons, tx, ty, tz, tw, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, themeIconWidth * 1.5, themeIconHeight * 1.5);
+    // description
+    ctx.font = "17px South Park Ext";
+    ctx.lineWidth = 1;
 
-        let xoffset = 0;
-        if (rarity === 3) {
-          xoffset = 25;
-        }
+    const lineLengthCap = 325;
+    const words = description.split(" ");
 
-        ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, canvas.height / 2 - bgHeight / 2 + 460, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
-*/
-        // text
-        ctx.fillStyle = "#ebe7ca";
-        ctx.strokeStyle = "Black";
-        ctx.textAlign = "center";
+    let currentWords = [];
+    let yoffset = 0;
 
-        const name = card.name;
-        const mana_cost = card.mana_cost;
-        const health = card.health;
-        const damage = card.damage;
-        const level = `${this.state.utype === "u" ? "u" : "lvl"} ${this.state.uvalue}`;
-        const description = card.description;
+    let lineCount = 1;
+    for (let word of words) {
+      if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
+        currentWords = [word];
+        lineCount++;
 
-        // const name = "Oshino Shinobu";
-        // const mana_cost = 7;
-        // const health = 23;
-        // const damage = 27;
-        // const level = "lvl 7";
-        // const description = "It’s beautiful. I’ve looked at this for 5 hours now.";
-        // const description = "Flying. Gives 1 bonus damage to all allies when he hits an enemy. Heals 4 Health to all allies when he kills an enemy.";
+        continue;
+      }
 
-        ctx.font = "25px South Park Ext";
-        ctx.lineWidth = 1;
-        ctx.strokeText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
-        ctx.fillText(name, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 60);
+      currentWords.push(word);
+    }
 
-        ctx.font = "60px South Park Ext";
-        ctx.lineWidth = 2;
-        ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
-        ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
+    currentWords = [];
 
-        if (assets.frameOverlay.src.includes("character")) {
-          ctx.font = "27px South Park Ext";
-          ctx.lineWidth = 1;
-          ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
-          ctx.fillText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);
-
-          ctx.font = "27px South Park Ext";
-          ctx.lineWidth = 1;
-          ctx.strokeText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
-          ctx.fillText(damage, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 388);
-        }
-
-        ctx.font = "16px South Park Ext";
-        ctx.lineWidth = 1;
-        ctx.strokeText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
-        ctx.fillText(level, canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 94);
-
-        // description
-        ctx.font = "17px South Park Ext";
-        ctx.lineWidth = 1;
-
-        const lineLengthCap = 325;
-        const words = description.split(" ");
-
-        let currentWords = [];
-        let yoffset = 0;
-
-        let lineCount = 1;
-        for (let word of words) {
-          if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
-            currentWords = [word];
-            lineCount++;
-
-            continue;
-          }
-
-          currentWords.push(word);
-        }
-
-        //console.log(lineCount);
-
-        currentWords = [];
-
-        for (let word of words) {
-          if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
-            ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
-            ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
-
-            currentWords = [word];
-            yoffset += 22;
-
-            continue;
-          }
-
-          currentWords.push(word);
-        }
+    for (let word of words) {
+      if (ctx.measureText([...currentWords, word].join(" ")).width > lineLengthCap) {
         ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
         ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
 
-        // ctx.strokeText(description, 419, 800);
-        // ctx.fillText(description, 419, 800);
+        currentWords = [word];
+        yoffset += 22;
 
-        /* --- draw to canvas end --- */
+        continue;
+      }
 
+      currentWords.push(word);
+    }
+    ctx.strokeText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
+    ctx.fillText(currentWords.join(" "), canvas.width / 2 - bgWidth / 2 + 245, canvas.height / 2 - bgHeight / 2 + 515 + yoffset + (Math.abs(4 - lineCount) * 22 / 2));
   }
 
   handleDropdownChange = change => {
