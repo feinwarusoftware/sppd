@@ -3,6 +3,7 @@ import { Navbar, Footer, Search } from "../components";
 import MetaTags from 'react-meta-tags';
 import i18n from "../i18n";
 import { Trans } from "react-i18next";
+import { removeUnderscores } from "../utils";
 
 import { loadRequiredImages } from "../card_images";
 import { objectFromEntries, cardRarityFromDb, cardThemeFromDb } from "../utils";
@@ -572,8 +573,8 @@ export default class Card extends Component {
 
       return (
         <div key={title}>
-          <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-lg fa-times red-text"></i></span> : ""}</h4>
-          <div className="divider" />
+          <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-sm fa-times red-text "></i></span> :  <span> <i className="fas fa-sm fa-check green-text "></i></span> }</h4>
+8          <div className="divider" />
           {stats instanceof Array ? stats.length > 0 ? stats.map((e, i) => <div key={i}>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : ""}
         </div>
       );
@@ -608,7 +609,7 @@ export default class Card extends Component {
 
         power = {
           ...power,
-          "Power Type": e.type,
+          "Power Type": removeUnderscores(e.type), 
           "Power Amount": e.amount
         };
 
