@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CardGrid, CardList } from "./index";
+import { CardGrid, CardList, LoadingIndicator } from "./index";
 import Cookies from "universal-cookie";
 import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -42,7 +42,9 @@ class Search extends Component {
       view: cookies.get("view") || defaultView,
 
       error: null,
-      isLoaded: false
+      isLoaded: false,
+
+      loadingMoreCards: false
     };
 
     this.scrollRef = React.createRef();
@@ -177,6 +179,7 @@ class Search extends Component {
       return;
     }
     this.loadingMoreCards = true;
+    this.setState({ loadingMoreCards: true });
 
     if (this.state.cards.list.length === this.state.cards.matched) {
       return;
@@ -194,6 +197,7 @@ class Search extends Component {
 
       .then(data => {
         this.loadingMoreCards = false;
+        this.setState({ loadingMoreCards: false });
 
         this.setState({
           cards: {
@@ -207,6 +211,7 @@ class Search extends Component {
       })
       .catch(error => {
         this.loadingMoreCards = false;
+        this.setState({ loadingMoreCards: false });
 
         this.setState({
           cards: {
@@ -542,17 +547,19 @@ class Search extends Component {
           </div>
 
           <div id="cards" className="col-12 col-md-9">
-            <div className="row">{[cardsYay]}</div>
+            <div className="row">
+              {this.state.cards.loaded == false ? <LoadingIndicator color="grey" /> : [cardsYay]}
+            </div>
             <div className="row justify-content-center">
               {this.state.cards.list.length !== this.state.cards.matched &&
-              this.state.options.autoload === false ? (
+              this.state.options.autoload === false && this.loadingMoreCards === false ? (
                 <button
                   onClick={() => this.loadMoreCards()}
                   className="mt-5 px-4 btn btn-sppd"
                 >
                   <Trans>Load More...</Trans>
                 </button>
-              ) : (
+              ) : this.state.loadingMoreCards === true ? <LoadingIndicator color="sppd" /> : (
                 ""
               )}
 

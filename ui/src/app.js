@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "bootstrap/scss/bootstrap.scss";
 import "../src/static/css/fa_all.scss";
 import "../style.scss";
 import { Router, Route, Switch } from "react-router-dom";

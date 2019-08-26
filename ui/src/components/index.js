@@ -5,6 +5,7 @@ import CardGrid from "./CardGrid.jsx";
 import CardList from "./CardList.jsx";
 import News from "./News.jsx";
 import Cookie from "./Cookie.jsx";
+import LoadingIndicator from "./LoadingIndicator.jsx";
 
 export {
   Navbar,
@@ -13,5 +14,6 @@ export {
   CardGrid,
   CardList,
   News,
-  Cookie
+  Cookie,
+  LoadingIndicator
 };
