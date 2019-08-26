@@ -6,6 +6,7 @@ import { Trans } from "react-i18next";
 
 import { loadRequiredImages } from "../card_images";
 import { objectFromEntries, cardRarityFromDb, cardThemeFromDb } from "../utils";
+import { ctxDrawImageRounded } from "../card_draw";
 
 const rarities = ["common", "rare", "epic", "legendary"];
 const castArea = {
@@ -367,6 +368,20 @@ export default class Card extends Component {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    console.log(assets);
+
+    ctxDrawImageRounded(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60, assets.background, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+    ctx.drawImage(assets.frameOverlay, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+    ctx.drawImage(assets.frameOutline, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+    
+    if (assets.frameTop != null) {
+      ctx.drawImage(assets.frameTop, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
+    }
+    
+    ctx.drawImage(assets.typeIcon, 0, 0, assets.typeIcon.width, assets.typeIcon.height, canvas.width / 2 - bgWidth / 2 - 42, canvas.height / 2 - bgHeight / 2 - 106, assets.typeIcon.width * 1.5, assets.typeIcon.height * 1.5);
+    ctx.drawImage(assets.themeIcon, 0, 0, assets.themeIcon.width, assets.themeIcon.height, canvas.width / 2 - bgWidth / 2 + 32, canvas.height / 2 - bgHeight / 2 + 556, assets.themeIcon.width * 1.5, assets.themeIcon.height * 1.5);
+    ctx.drawImage(assets.themeStone, 0, 0, assets.themeStone.width, assets.themeStone.height, canvas.width / 2 - bgWidth / 2 + 32 - 25, canvas.height / 2 - bgHeight / 2 + 460, assets.themeStone.width * 1.5, assets.themeStone.height * 1.5);
+
         /* --- draw to canvas --- */
 
         // current canvas w x h: 526 x 769
@@ -377,6 +392,7 @@ export default class Card extends Component {
 
         //console.log(bgHeight);
 
+        /*
         ctx.save();
         roundedImage(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60);
         ctx.clip();
@@ -384,6 +400,7 @@ export default class Card extends Component {
         ctx.restore();
         ctx.drawImage(images.frameOverlays, ox, oy, oz, ow, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
         ctx.drawImage(images.frameOutlines, x, y, z, w, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
+    
 
         //console.log(canvas.height / 2 - bgHeight / 2);
 
@@ -400,7 +417,7 @@ export default class Card extends Component {
         }
 
         ctx.drawImage(images.cardThemeIcons, cx, cy, cz, cw, canvas.width / 2 - bgWidth / 2 + 32 - xoffset, canvas.height / 2 - bgHeight / 2 + 460, crystalWidth * 1.5 + xoffset, crystalHeight * 1.5);
-
+*/
         // text
         ctx.fillStyle = "#ebe7ca";
         ctx.strokeStyle = "Black";
@@ -431,7 +448,7 @@ export default class Card extends Component {
         ctx.strokeText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
         ctx.fillText(mana_cost, canvas.width / 2 - bgWidth / 2 + 60, canvas.height / 2 - bgHeight / 2 + 130);
 
-        if (ox === 0) {
+        if (assets.frameOverlay.src.includes("character")) {
           ctx.font = "27px South Park Ext";
           ctx.lineWidth = 1;
           ctx.strokeText(health, canvas.width / 2 - bgWidth / 2 + 58, canvas.height / 2 - bgHeight / 2 + 262);

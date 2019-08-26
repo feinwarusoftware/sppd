@@ -81,7 +81,7 @@ const images = [
   // Frame overlays
   {
     asset: "frame-overlay",
-    type: "character",
+    type: ["character", "spawn"],
     source: "/card-sprites/frame-overlays/character.png"
   },
   {
@@ -195,63 +195,63 @@ const images = [
   // Type icons
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "adventure",
-    source: "/card-sprites/type-icons/assasin/common/adventure.png"
+    source: "/card-sprites/type-icons/assassin/common/adventure.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "fantasy",
-    source: "/card-sprites/type-icons/assasin/common/fantasy.png"
+    source: "/card-sprites/type-icons/assassin/common/fantasy.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "general",
-    source: "/card-sprites/type-icons/assasin/common/general.png"
+    source: "/card-sprites/type-icons/assassin/common/general.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "mystical",
-    source: "/card-sprites/type-icons/assasin/common/mystical.png"
+    source: "/card-sprites/type-icons/assassin/common/mystical.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "scifi",
-    source: "/card-sprites/type-icons/assasin/common/scifi.png"
+    source: "/card-sprites/type-icons/assassin/common/scifi.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "common",
     theme: "superhero",
-    source: "/card-sprites/type-icons/assasin/common/superhero.png"
+    source: "/card-sprites/type-icons/assassin/common/superhero.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "rare",
-    source: "/card-sprites/type-icons/assasin/special/rare.png"
+    source: "/card-sprites/type-icons/assassin/special/rare.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "epic",
-    source: "/card-sprites/type-icons/assasin/special/epic.png"
+    source: "/card-sprites/type-icons/assassin/special/epic.png"
   },
   {
     asset: "type-icon",
-    character_type: "assasin",
+    character_type: "assassin",
     rarity: "legendary",
-    source: "/card-sprites/type-icons/assasin/special/legendary.png"
+    source: "/card-sprites/type-icons/assassin/special/legendary.png"
   },
   //
   {
