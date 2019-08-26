@@ -4,7 +4,7 @@
 
   margin-bottom: 3.5rem;
 
-  &.grid {
+  &.hover-true {
     @include media-breakpoint-up(lg) {
       transition: all 200ms ease-out;
       &:hover {

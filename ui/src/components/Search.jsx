@@ -13,6 +13,7 @@ const cookies = new Cookies();
 
 const defaultView = "grid";
 const defaultAutoload = false;
+const defaultHover = true;
 
 class Search extends Component {
   constructor(props) {
@@ -35,7 +36,8 @@ class Search extends Component {
       },
       options: {
         view: cookies.get("view") || defaultView,
-        autoload: cookies.get("autoload") === "true" || defaultAutoload
+        autoload: cookies.get("autoload") === "true" || defaultAutoload,
+        hover: cookies.get("hover") === "true" || defaultHover
       },
 
       // old
@@ -364,6 +366,28 @@ class Search extends Component {
     }
   };
 
+  toggleHover = () => {
+    if (this.state.options.hover === false) {
+      cookies.set("hover", true, { path: "/" });
+
+      this.setState({
+        options: {
+          ...this.state.options,
+          hover: true
+        }
+      });
+    } else {
+      cookies.set("hover", false, { path: "/" });
+
+      this.setState({
+        options: {
+          ...this.state.options,
+          hover: false
+        }
+      });
+    }
+  };
+
   render() {
     let cardsYay = [];
 
@@ -383,6 +407,7 @@ class Search extends Component {
               damage={e.damage}
               type={e.type}
               characterType={e.character_type}
+              hover={this.state.options.hover}
             />
           );
         } else if (this.state.options.view === "list") {
@@ -467,6 +492,12 @@ class Search extends Component {
               onClick={() => this.toggleAutoload()}
               active={(this.state.options.autoload === true).toString()}
               className="fas fa-spinner"
+            />
+            <i
+              title={i18n.t("hover-effect")}                                                        
+              onClick={() => this.toggleHover()}
+              active={(this.state.options.hover === true).toString()}
+              className="fas fa-arrows-alt-v"
             />
           </div>
         </div>
