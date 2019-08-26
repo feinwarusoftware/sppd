@@ -13,6 +13,7 @@ export default {
   "grid": "Visão em grade",
   "list": "Exibição da lista",
   "auto-load": "Alternar Auto-carregador de Rolagem",
+  "Load More...": "Carregue mais...",
   "Order By": "Pedido por",
   "name": "nome",
   "theme": "tema",

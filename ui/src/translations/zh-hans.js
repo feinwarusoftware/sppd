@@ -82,7 +82,7 @@ export default {
   "Cookie Message": "Feinwaru使用Cookies来确保您在我们的网站上获得最佳体验.",
   "Learn More": "了解更多",
   "Select an upgrade level": "选择升级级别",
-  "Load More": "更多..",
+  "Load More...": "更多..",
   "Latest News": "最新消息",
   "View More": "查看更多",
   "Close": "关闭"
