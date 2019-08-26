@@ -10,6 +10,7 @@ class Footer extends Component {
           <img
             draggable="false"
             className="swoosh"
+            alt=""
             src={require("../static/img/footer.svg")}
           />
           <div className="footer-contents">
@@ -19,6 +20,7 @@ class Footer extends Component {
                   <img
                     draggable="false"
                     className="img-fluid mx-auto px-4 mb-3"
+                    alt=""
                     src={require("../static/img/feinwaru_logo.svg")}
                   />
                   <p>

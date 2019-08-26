@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from "universal-cookie";
+import { Trans } from 'react-i18next';
 
 const cookies = new Cookies();
 
@@ -60,15 +61,15 @@ class News extends Component {
 
   render() {
     return (
-      <div id="news" ref={this.news} className="row mb-5 pb-3 mx-1">
-        <div className="col-12 pt-3 pb-2 mx-3">
-          <h2 className="font-weight-bold">Latest News</h2>
+      <div id="news" ref={this.news} className="row mb-5">
+        <div className="col-12 py-4 px-4">
+          <h2 className="font-weight-bold"><Trans>Latest News</Trans></h2>
           <div className="divider"></div>
           <h3 className="mb-0">{this.state.news.title}</h3>
           <p className="font-italic">{new Date(this.state.news.date).toLocaleDateString("en-GB", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
           <p>{this.state.news.message}</p>
-          {this.state.news.link === null ? "" : <button onClick={() => { this.newsLink() }} className="mr-2 px-4 btn btn-sm btn-sppd">View More</button>}
-          <button onClick={() => { this.closeNews() }} className="px-4 btn btn-sm btn-sppd">Close</button>
+          {this.state.news.link === null ? "" : <button onClick={() => { this.newsLink() }} className="mr-2 px-4 btn btn-sm btn-sppd"><Trans>View More</Trans></button>}
+          <button onClick={() => { this.closeNews() }} className="px-4 btn btn-sm btn-sppd"><Trans>Close</Trans></button>
         </div>
       </div>
     );

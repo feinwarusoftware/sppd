@@ -19,6 +19,11 @@ footer {
     padding-bottom: 40px
   }
 
+  img {
+    user-select: none;
+    -moz-user-select: none;
+  }
+
   p {
     text-align: center;
     width: 100%;

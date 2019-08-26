@@ -2149,7 +2149,7 @@
     "MaxVelocity": 1.35,
     "TimeInBetweenAttacks": 0.5,
     "PowerDuration": null,
-    "PowerHeal": 250,
+    "PowerHeal": 506,
     "PowerHeroHeal": 25,
     "PowerMaxHPGain": null,
     "PowerMaxHPLoss": null,

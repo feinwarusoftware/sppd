@@ -46,7 +46,7 @@ class Navbar extends Component {
       <React.Fragment>
         <nav ref={this.navbar} >
           <div className="container">
-            <Link to={{ pathname: "/" }}><img draggable="false" src={require("../static/img/sppd_white.svg")} /></Link>
+            <Link to={{ pathname: "/" }}><img draggable="false" alt="" src={require("../static/img/sppd_white.svg")} /></Link>
             <i onClick={() => this.mobileDropdown()} id="dropdown" className="fas fa-bars float-right fa-2x"></i>
             <ul>
               <li>
@@ -65,31 +65,36 @@ class Navbar extends Component {
                 <a>
                   <i className="fas fa-globe-africa" /> <Trans>Country Code</Trans>
                 </a>
-                <div id="language-dropdown">
-                  <ul>
-                    <li>
-                      <a onClick={() => {this.props.changeLang("en")}}><img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-round-250.png" />English</a>
-                    </li>
-                    <li>
-                      <a onClick={() => {this.props.changeLang("pt-BR")}}><img src="https://cdn.countryflags.com/thumbs/brazil/flag-round-250.png" />Português (Brasil)</a>
-                    </li>
-                    <li>
-                      <a onClick={() => {this.props.changeLang("ru")}}><img src="https://cdn.countryflags.com/thumbs/russia/flag-round-250.png" />Pусский</a>
-                    </li>
-                    <li>
-                      <a onClick={() => {this.props.changeLang("zh-Hans")}}><img src="https://cdn.countryflags.com/thumbs/china/flag-round-250.png" />中文 (简体)</a>
-                    </li>
-                    <li>
-                      <a onClick={() => {this.props.changeLang("zh-Hant")}}><img src="https://cdn.countryflags.com/thumbs/taiwan/flag-round-250.png" />中文 (繁体)</a>
-                    </li>
-                    {/*
-                    <li>
-                    <a onClick={() => {this.props.changeLang("es")}}><img src="https://cdn.countryflags.com/thumbs/spain/flag-round-250.png" />Espanol</a>
-                    </li>
-                    <li>
-                    <a onClick={() => {this.props.changeLang("pl")}}><img src="https://cdn.countryflags.com/thumbs/poland/flag-round-250.png" />Polski</a>
-                    </li>*/}
-                  </ul>
+                <div id="language-dropdown-container">
+                  <div id="language-dropdown">
+                    <ul>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("en-GB")}}><img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-round-250.png" />English</a>
+                      </li>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("pt-BR")}}><img src="https://cdn.countryflags.com/thumbs/brazil/flag-round-250.png" />Português (Brasil)</a>
+                      </li>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("pt-PT")}}><img src="https://cdn.countryflags.com/thumbs/portugal/flag-round-250.png" />Português (Portugal)</a>
+                      </li>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("ru")}}><img src="https://cdn.countryflags.com/thumbs/russia/flag-round-250.png" />Pусский</a>
+                      </li>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("zh-Hans")}}><img src="https://cdn.countryflags.com/thumbs/china/flag-round-250.png" />中文 (简体)</a>
+                      </li>
+                      <li>
+                        <a onClick={() => {this.props.changeLang("zh-Hant")}}><img src="https://cdn.countryflags.com/thumbs/taiwan/flag-round-250.png" />中文 (繁体)</a>
+                      </li>
+                      {/*
+                      <li>
+                      <a onClick={() => {this.props.changeLang("es")}}><img src="https://cdn.countryflags.com/thumbs/spain/flag-round-250.png" />Espanol</a>
+                      </li>
+                      <li>
+                      <a onClick={() => {this.props.changeLang("pl")}}><img src="https://cdn.countryflags.com/thumbs/poland/flag-round-250.png" />Polski</a>
+                      </li>*/}
+                    </ul>
+                  </div>
                 </div>
               </li>
             </ul>

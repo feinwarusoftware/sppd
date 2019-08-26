@@ -24,7 +24,6 @@ $Superhero: #fd6cf8;
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
 @import "src/components/footer";
 @import "src/components/navbar";
-@import "src/components/langbar";
 @import "src/components/search";
 @import "src/components/cards";
 @import "src/components/news";
@@ -78,4 +77,8 @@ svg {
 
 .orange-text {
     color: #ff9800 !important;
+}
+
+.green-text {
+    color: #2eab18 !important;
 }
