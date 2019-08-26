@@ -891,7 +891,7 @@ export default class Card extends Component {
 
       return (
         <div key={title}>
-          <h4 className="font-weight-bold mt-3">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-sm fa-times red-text "></i></span> : ""}</h4>
+          <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-sm fa-times red-text "></i></span> : ""}</h4>
           <div className="divider" />
           {stats instanceof Array ? stats.length > 0 ? stats.map((e, i) => <div key={i}>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : ""}
         </div>
