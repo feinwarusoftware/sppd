@@ -85,5 +85,6 @@ export default {
   "Load More...": "更多..",
   "Latest News": "最新消息",
   "View More": "查看更多",
-  Close: "關閉"
-};
+  "Close": "關閉",
+  "hover-effect": "切換懸停效果"
+}

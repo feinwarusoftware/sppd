@@ -226,7 +226,7 @@ class CardGrid extends Component {
 
     return (
       <React.Fragment>
-        <div className="grid-card col-12 col-sm-6 mb-3">
+        <div className="grid-card list col-12 col-sm-6 mb-3">
           <div
             onClick={() => this.handleCardClick()}
 

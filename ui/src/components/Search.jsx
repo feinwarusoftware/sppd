@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CardGrid, CardList } from "./index";
+import { CardGrid, CardList, LoadingIndicator } from "./index";
 import Cookies from "universal-cookie";
 import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -13,6 +13,7 @@ const cookies = new Cookies();
 
 const defaultView = "grid";
 const defaultAutoload = false;
+const defaultHover = true;
 
 class Search extends Component {
   constructor(props) {
@@ -35,14 +36,17 @@ class Search extends Component {
       },
       options: {
         view: cookies.get("view") || defaultView,
-        autoload: cookies.get("autoload") === "true" || defaultAutoload
+        autoload: cookies.get("autoload") === "true" || defaultAutoload,
+        hover: cookies.get("hover") === "true" || defaultHover
       },
 
       // old
       view: cookies.get("view") || defaultView,
 
       error: null,
-      isLoaded: false
+      isLoaded: false,
+
+      loadingMoreCards: false
     };
 
     this.scrollRef = React.createRef();
@@ -177,6 +181,7 @@ class Search extends Component {
       return;
     }
     this.loadingMoreCards = true;
+    this.setState({ loadingMoreCards: true });
 
     if (this.state.cards.list.length === this.state.cards.matched) {
       return;
@@ -194,6 +199,7 @@ class Search extends Component {
 
       .then(data => {
         this.loadingMoreCards = false;
+        this.setState({ loadingMoreCards: false });
 
         this.setState({
           cards: {
@@ -207,6 +213,7 @@ class Search extends Component {
       })
       .catch(error => {
         this.loadingMoreCards = false;
+        this.setState({ loadingMoreCards: false });
 
         this.setState({
           cards: {
@@ -359,6 +366,28 @@ class Search extends Component {
     }
   };
 
+  toggleHover = () => {
+    if (this.state.options.hover === false) {
+      cookies.set("hover", true, { path: "/" });
+
+      this.setState({
+        options: {
+          ...this.state.options,
+          hover: true
+        }
+      });
+    } else {
+      cookies.set("hover", false, { path: "/" });
+
+      this.setState({
+        options: {
+          ...this.state.options,
+          hover: false
+        }
+      });
+    }
+  };
+
   render() {
     let cardsYay = [];
 
@@ -378,6 +407,7 @@ class Search extends Component {
               damage={e.damage}
               type={e.type}
               characterType={e.character_type}
+              hover={this.state.options.hover}
             />
           );
         } else if (this.state.options.view === "list") {
@@ -463,6 +493,12 @@ class Search extends Component {
               active={(this.state.options.autoload === true).toString()}
               className="fas fa-spinner"
             />
+            <i
+              title={i18n.t("hover-effect")}                                                        
+              onClick={() => this.toggleHover()}
+              active={(this.state.options.hover === true).toString()}
+              className="fas fa-arrows-alt-v"
+            />
           </div>
         </div>
         <div className="row mt-5">
@@ -542,17 +578,19 @@ class Search extends Component {
           </div>
 
           <div id="cards" className="col-12 col-md-9">
-            <div className="row">{[cardsYay]}</div>
+            <div className="row">
+              {this.state.cards.loaded == false ? <LoadingIndicator color="grey" /> : [cardsYay]}
+            </div>
             <div className="row justify-content-center">
               {this.state.cards.list.length !== this.state.cards.matched &&
-              this.state.options.autoload === false ? (
+              this.state.options.autoload === false && this.loadingMoreCards === false ? (
                 <button
                   onClick={() => this.loadMoreCards()}
                   className="mt-5 px-4 btn btn-sppd"
                 >
                   <Trans>Load More...</Trans>
                 </button>
-              ) : (
+              ) : this.state.loadingMoreCards === true ? <LoadingIndicator color="sppd" /> : (
                 ""
               )}
 

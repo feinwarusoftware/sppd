@@ -1,7 +1,29 @@
 .grid-card {
-
   cursor: pointer;
   width: 100%;
+
+  margin-bottom: 3.5rem;
+
+  &.hover-true {
+    @include media-breakpoint-up(lg) {
+      transition: all 200ms ease-out;
+      &:hover {
+        margin-bottom: 0 !important;
+        transform: translateY(-7.75%);
+        .grid-img {
+          &:after {
+            padding-bottom: 133%;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-only(lg) {
+      &:hover {
+        margin-bottom: -9px !important;
+      }
+    }
+  }
 
   .grid-img {
     background-repeat: no-repeat;
@@ -15,6 +37,7 @@
     content: "";
     display: block;
     padding-bottom: 100%;
+    transition: padding-bottom 200ms ease-out;
   }
 
   .inner {
@@ -28,14 +51,15 @@
   }
 
   .inner-content {
-    height:100%;
+    height: 100%;
     width: 100%;
-    padding-top:7px;
-    background-color: rgba(255,255,255,0.85);
+    padding-top: 7px;
+    background-color: rgba(255, 255, 255, 0.85);
     padding-bottom: 1px;
   }
 
-  h5, p {
+  h5,
+  p {
     color: $grey;
   }
 }
@@ -44,7 +68,7 @@
   background-color: white;
 }
 
-.card-list-img{
+.card-list-img {
   padding: 0;
 }
 
@@ -52,17 +76,17 @@
   text-transform: capitalize;
 }
 
-#card-page{
+#card-page {
   margin-top: 6rem;
-  
+
   h1 {
     border-bottom: 5px solid $sppd;
   }
-  
 }
 
 #card-info {
-  #class, #desc {
+  #class,
+  #desc {
     color: $grey;
   }
 
@@ -80,8 +104,8 @@
     border-bottom: 2px solid $sppd;
     border-radius: 0;
     width: auto;
-    
-    &:focus{
+
+    &:focus {
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
       box-shadow: none;

@@ -18,6 +18,7 @@ export default {
   grid: "Grid View",
   list: "List View",
   "auto-load": "Toggle Scrolling Auto-loader",
+  "hover-effect": "Toggle Hover Effect",
   "Load More...": "Load More...",
 
   //Filters

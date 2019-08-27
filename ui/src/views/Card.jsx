@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Footer, Search } from "../components";
+import { Navbar, Footer, LoadingIndicator } from "../components";
 import MetaTags from 'react-meta-tags';
 import i18n from "../i18n";
 import { Trans } from "react-i18next";
@@ -557,7 +557,7 @@ export default class Card extends Component {
 
         power = {
           ...power,
-          "Power Type": removeUnderscores(e.type), 
+          "Power Type": e.type == null ? null : removeUnderscores(e.type), 
           "Power Amount": e.amount
         };
 
@@ -639,8 +639,10 @@ export default class Card extends Component {
         <div id="card-page" className="container">
           <div className="row">
             <div className="col-12 col-md-4">
+              <LoadingIndicator color="grey" page="card" />
               <canvas className="img-fluid" ref={this.canvas} width={canvasWidth} height={canvasHeight} />
             </div>
+            {this.state.loaded === false ? <LoadingIndicator color="sppd" /> : (
             <div id="card-info" className="col-12 col-md-8">
               <h1 className="font-weight-bold">{altered.name}</h1>
               <h5 id="desc" className="my-3 font-italic">
@@ -767,6 +769,7 @@ export default class Card extends Component {
               {sections}
 
             </div>
+            )}
           </div>
         </div>
         <Footer />

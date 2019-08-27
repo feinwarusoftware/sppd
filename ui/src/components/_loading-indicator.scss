@@ -1,0 +1,81 @@
+.spinner {
+  margin: 30px auto;
+  height: 50px;
+  text-align: center;
+  font-size: 10px;
+
+  &-card {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 200px;
+    z-index: -1;
+  }
+
+  &.sppd {
+    > div {
+      background-color: $sppd;
+    }
+  }
+  &.grey {
+    > div {
+      background-color: $grey;
+    }
+  }
+  &.white {
+    > div {
+      background-color: #fff;
+    }
+  }
+  > div {
+    background-color: $grey;
+    height: 100%;
+    width: 8px;
+    margin-left: 3px;
+    display: inline-block;
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  }
+  .rect1 {
+    margin-left: 0;
+  }
+  .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+  }
+  .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+  .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
+  .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+  }
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+  }
+
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
