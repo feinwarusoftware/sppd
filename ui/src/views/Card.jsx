@@ -613,7 +613,8 @@ export default class Card extends Component {
     let requirements = {
       "Minimum Episode Completed": card.min_episode_completed,
       "Minimum PVP Rank Required": card.min_pvp_rank,
-      "Minimum Player Level": card.min_player_level
+      "Minimum Player Level": card.min_player_level,
+      "Minimum PVP Arena": card.min_pvp_arena
     };
 
     sections.push(createSection(<Trans>Requirements</Trans>, requirements));
