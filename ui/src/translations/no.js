@@ -92,6 +92,7 @@ export default {
   "Minimum Episode Completed": "Minimumsavsnitt fullført",
   "Minimum PVP Rank Required": "Minimum PVP-rangering påkrevd",
   "Minimum Player Level": "Minimum spillernivå",
+  "Minimum PVP Arena": "Minimum PVP Arena",
 
   //Footer
   "Copyright": "Copyright: Feinwaru Software",

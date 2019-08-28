@@ -92,6 +92,7 @@ export default {
   "Minimum Episode Completed": "Minimum Episode Completed",
   "Minimum PVP Rank Required": "Minimum PVP Rank Required",
   "Minimum Player Level": "Minimum Player Level",
+  "Minimum PVP Arena": "Minimum PVP Arena",
 
   //Footer
   "Copyright": "Copyright: Feinwaru Software",

@@ -69,6 +69,7 @@ export default {
   "Minimum Episode Completed": "Минимальный Эпизод Завершён",
   "Minimum PVP Rank Required": "Минимальный PVP Ранг Требуется",
   "Minimum Player Level": "Минимальный Уровень Игрока",
+  "Minimum PVP Arena": "Minimum PVP Arena",
   "Copyright": "Авторские права: Feinwaru Software",
   "About Feinwaru": "Больше о Feinwaru",
   "Our Team": "Наша Команда",

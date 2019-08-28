@@ -64,6 +64,7 @@ export default {
   "Minimum Episode Completed": "最低关卡要求",
   "Minimum PVP Rank Required": "最低段位要求",
   "Minimum Player Level": "最低等级要求",
+  "Minimum PVP Arena": "Minimum PVP Arena",
   "Copyright": "版权所有：Feinwaru Software",
   "About Feinwaru": "关于Feinwaru",
   "Our Team": "团队介绍",
