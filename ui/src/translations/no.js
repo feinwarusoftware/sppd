@@ -1,7 +1,7 @@
 export default {
   //Navigation Bar
   "Country Code": "NO",
-  "Home": "Hjem",
+  Home: "Hjem",
   "Random Card": "Tilfeldig kort",
   "Discord Bot": "Uenighet Bot",
   "Support Us": "Støtt oss",
@@ -9,56 +9,56 @@ export default {
   //News
   "Latest News": "Siste nytt",
   "View More": "Se mer",
-  "Close": "Lukk",
+  Close: "Lukk",
 
   //Search
-  "results": "{{count}} Matchende resultater",
-  "Banner": "banner:",
-  "search": "Søk på {{total}} kort for ...",
-  "grid": "Rutenett visning",
-  "list": "Listevisning",
+  results: "{{count}} Matchende resultater",
+  Banner: "banner:",
+  search: "Søk på {{total}} kort for ...",
+  grid: "Rutenett visning",
+  list: "Listevisning",
   "auto-load": "Bytt blarulleringsautomat",
   "Load More...": "Last mer...",
 
   //Filters
   //Order By
   "Order By": "Rekkefølge etter",
-  "name": "Navn",
-  "theme": "tema",
-  "rarity": "sjeldenhet",
-  "energy": "energi",
-  "health": "Helse",
-  "damage": "skader",
+  name: "Navn",
+  theme: "tema",
+  rarity: "sjeldenhet",
+  energy: "energi",
+  health: "Helse",
+  damage: "skader",
 
   //Theme
-  "Theme": "Tema",
-  "adventure": "eventyr",
-  "fantasy": "fantasi",
-  "general": "generell",
-  "mystical": "mystiske",
+  Theme: "Tema",
+  adventure: "eventyr",
+  fantasy: "fantasi",
+  general: "generell",
+  mystical: "mystiske",
   "sci-fi": "Sci-fi",
-  "superhero": "superhelt",
-  
+  superhero: "superhelt",
+
   //Rarities
-  "Rarity": "Sjeldenhet",
-  "common": "felles",
-  "rare": "sjelden",
-  "epic": "episk",
-  "legendary": "legendarisk",
+  Rarity: "Sjeldenhet",
+  common: "felles",
+  rare: "sjelden",
+  epic: "episk",
+  legendary: "legendarisk",
 
   //Character Types
-  "assassin": "snikmorder",
-  "melee": "melee",
-  "tank": "tank",
-  "ranged": "varierte",
-  "totem": "totem",
-  "spell": "stave",
-  "trap": "felle",
+  assassin: "snikmorder",
+  melee: "melee",
+  tank: "tank",
+  ranged: "varierte",
+  totem: "totem",
+  spell: "stave",
+  trap: "felle",
 
   //Upgrades
   "Select an upgrade level": "Velg et oppgraderingsnivå",
-  "level": "Nivå {{num}}",
-  "upgrade": "Oppgrader {{num}} / {{total}}",
+  level: "Nivå {{num}}",
+  upgrade: "Oppgrader {{num}} / {{total}}",
 
   //Sections
   "discord-commands": "AWESOM-O Discord-kommandoer",
@@ -79,7 +79,7 @@ export default {
   "Can Attack?": "Kan angripe?",
   "Attack Range": "Attack Range",
   "Pre-Attack Delay": "Forsinkelse før angrep",
-  "Knockback": "Slå tilbake",
+  Knockback: "Slå tilbake",
   "Knockback Angle": "Knockback Angle",
   "Time Between Attacks": "Tid mellom angrep",
 
@@ -88,19 +88,19 @@ export default {
   "AOE Knockback Percentage": "AOE Knockback-prosent",
   "AOE Radius": "AOE Radius",
 
-  "Requirements": "Krav",
+  Requirements: "Krav",
   "Minimum Episode Completed": "Minimumsavsnitt fullført",
   "Minimum PVP Rank Required": "Minimum PVP-rangering påkrevd",
   "Minimum Player Level": "Minimum spillernivå",
   "Minimum PVP Arena": "Minimum PVP Arena",
 
   //Footer
-  "Copyright": "Copyright: Feinwaru Software",
+  Copyright: "Copyright: Feinwaru Software",
 
   "About Feinwaru": "Om Feinwaru",
   "Our Team": "Vårt team",
-  "Branding": "branding",
-  "Careers": "Karriere",
+  Branding: "branding",
+  Careers: "Karriere",
 
   "Our Projects": "Prosjektene våre",
   "SPPD Mobile": "SPPD Mobile",
@@ -108,12 +108,12 @@ export default {
 
   "Extra Resources": "Ekstra ressurser",
   "Help & Support": "Hjelp og støtte",
-  "Developers": "Utviklere",
-  "Feedback": "Tilbakemelding",
+  Developers: "Utviklere",
+  Feedback: "Tilbakemelding",
   "Terms & Privacy": "Vilkår og personvern",
 
   //Cookie Banner
   "Got It!": "Har det!",
   "Cookie Message": "Feinwaru bruker informasjonskapsler for å sikre at du får den beste opplevelsen på nettstedet vårt.",
-  "Learn More": "Lære mer",
-}
+  "Learn More": "Lære mer"
+};

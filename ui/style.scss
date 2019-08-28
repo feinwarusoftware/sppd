@@ -22,12 +22,14 @@ $Superhero: #fd6cf8;
 
 //Imports
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
+@import "node_modules/bootstrap/scss/bootstrap";
 @import "src/components/footer";
 @import "src/components/navbar";
 @import "src/components/search";
 @import "src/components/cards";
 @import "src/components/news";
 @import "src/components/cookie";
+@import "src/components/loading-indicator";
 
 @font-face {
     font-family: "South Park Ext";
