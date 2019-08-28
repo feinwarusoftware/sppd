@@ -36,7 +36,7 @@ export default {
   totem: "建筑",
   spell: "法術",
   trap: "陷阱",
-  level: "Level{{num}}",
+  level: "Level {{num}}",
   upgrade: "升級{{num}} / {{total}}",
   "discord-commands": "AWESOM-O Discord指令",
   "General Information": "基本信息",
