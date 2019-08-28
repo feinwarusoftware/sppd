@@ -105,8 +105,8 @@ class CardGrid extends Component {
               {this.props.health}
             </span>{" "}
             <span className="orange-text pl-2">
-              <i className="fas fa-swords" aria-hidden="true" />{" "}
-              <span id="damage">{this.props.damage}</span>
+              <i className="fa fa-swords" aria-hidden="true" />{" "}
+              {this.props.damage}
             </span>
           </h6>
         </div>

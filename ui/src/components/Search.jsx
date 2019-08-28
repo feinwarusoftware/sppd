@@ -36,8 +36,8 @@ class Search extends Component {
       },
       options: {
         view: cookies.get("view") || defaultView,
-        autoload: cookies.get("autoload") === "true" || defaultAutoload,
-        hover: cookies.get("hover") === "true" || defaultHover
+        autoload: cookies.get("autoload") === "true" ? true : defaultAutoload,
+        hover: cookies.get("hover") === "false" ? false : defaultHover
       },
 
       // old
@@ -46,7 +46,8 @@ class Search extends Component {
       error: null,
       isLoaded: false,
 
-      loadingMoreCards: false
+      loadingMoreCards: false,
+      updatingCards: false
     };
 
     this.scrollRef = React.createRef();
@@ -107,8 +108,8 @@ class Search extends Component {
       }
     }
 
+    this.setState({updatingCards: true});
     this._fetchCards(params)
-
       .then(data => {
         this.setState({
           cards: {
@@ -117,7 +118,8 @@ class Search extends Component {
             total: data.total,
             matched: data.matched,
             list: data.cards
-          }
+          },
+          updatingCards: false
         });
       })
       .catch(error => {
@@ -579,18 +581,18 @@ class Search extends Component {
 
           <div id="cards" className="col-12 col-md-9">
             <div className="row">
-              {this.state.cards.loaded == false ? <LoadingIndicator color="grey" /> : [cardsYay]}
+              {this.state.cards.loaded == false || this.state.updatingCards ? <LoadingIndicator color="sppd" /> : [cardsYay]}
             </div>
             <div className="row justify-content-center">
               {this.state.cards.list.length !== this.state.cards.matched &&
-              this.state.options.autoload === false && this.loadingMoreCards === false ? (
+              this.state.options.autoload === false && this.loadingMoreCards === false && this.state.updatingCards === false ? (
                 <button
                   onClick={() => this.loadMoreCards()}
                   className="mt-5 px-4 btn btn-sppd"
                 >
                   <Trans>Load More...</Trans>
                 </button>
-              ) : this.state.loadingMoreCards === true ? <LoadingIndicator color="sppd" /> : (
+              ) : this.state.loadingMoreCards === true ? <LoadingIndicator position="load-more" color="sppd" /> : (
                 ""
               )}
 
