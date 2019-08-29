@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import { Trans } from "react-i18next";
+import i18n from "../i18n";
 
 class Navbar extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class Navbar extends Component {
       <React.Fragment>
         <nav ref={this.navbar} >
           <div className="container">
-            <Link to={{ pathname: "/" }}><img draggable="false" alt="" src={require("../static/img/sppd_white.svg")} /></Link>
+            <Link to={{ pathname: "/" }} aria-label={i18n.t("Go to Home")}><img draggable="false" alt="" src={require("../static/img/sppd_white.svg")} /></Link>
             <i onClick={() => this.mobileDropdown()} id="dropdown" className="fas fa-bars float-right fa-2x"></i>
             <ul>
               <li>

@@ -439,7 +439,10 @@ class Search extends Component {
       <React.Fragment>
         <div className="row">
           <div id="search" className="col-12 px-sm-0">
+          <label htmlFor="search" style={{display:"none"}}><Trans>Search Cards</Trans></label>
             <input
+              aria-label={i18n.t("Search Cards")}
+              id="search"
               className="form-control form-control-lg"
               type="text"
               placeholder={i18n.t("search", {total: this.state.cards.total})}
