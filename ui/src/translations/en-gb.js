@@ -6,6 +6,10 @@ export default {
   "Discord Bot": "Discord Bot",
   "Support Us": "Support Us",
 
+  //Metadata
+  "Card List": "Card List",
+  "Description": "SPPD is a website created to let users see all the statistics for the game 'South Park: Phone Destroyer' in an easy to use and understand way.",
+
   //News
   "Latest News": "Latest News",
   "View More": "View More",

@@ -6,6 +6,10 @@ export default {
   "Discord Bot": "Uenighet Bot",
   "Support Us": "Støtt oss",
 
+  //Metadata
+  "Card List": "Kortliste",
+  "Description": "SPPD er et nettsted som er laget for å la brukere se all statistikken for spillet 'South Park: Phone Destroyer' på en enkel å bruke og forstå måte.",
+
   //News
   "Latest News": "Siste nytt",
   "View More": "Se mer",

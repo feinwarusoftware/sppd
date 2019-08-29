@@ -172,16 +172,26 @@ class Index extends Component {
     return (
       <div>
         <MetaTags>
-          <title>Card List | Feinwaru SPPD</title>
+          <title>{i18n.t("Card List")} | Feinwaru SPPD</title>
           <meta
             name="description"
-            content="SPPD is a website created to let users see all the statistics for the game 'South Park: Phone Destroyer' in an easy to use and understand way."
+            content={i18n.t("Description")}
           />
           <meta property="og:title" content="Card List | Feinwaru SPPD" />
           <meta
             property="og:image"
             content="https://cdn.discordapp.com/attachments/558375135719981056/564821280944029716/cards.png"
           />
+          {Object.keys(i18n.store.data).map((e, i) => {
+            return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
+          })}
+          {Object.keys(i18n.options.fallbackLng).map((e, i) => {
+            if (e === "default") {
+              return
+            } else {
+              return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
+            }
+          })}
         </MetaTags>
 
         <Navbar ref={this.nav} changeLang={this.changeLang} />
