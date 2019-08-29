@@ -59,7 +59,12 @@ i18n
   .init({
     detection: detectionSettings,
     resources,
-    fallbackLng: "en-GB",
+    fallbackLng: { 
+      "pt": ["pt-pt", "pt-br"],
+      "en": ["en-gb"],
+      "no-nb": ["no"],
+      "default": ["en-gb"]
+  },
     keySeparator: false,
     interpolation: {
       escapeValue: false
@@ -68,5 +73,7 @@ i18n
       wait: true
     }
   });
+
+document.documentElement.lang = i18n.language.toLowerCase();
 
 export default i18n;

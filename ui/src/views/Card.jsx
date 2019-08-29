@@ -632,9 +632,15 @@ export default class Card extends Component {
         
         <MetaTags>
           <title>{altered.name} | Feinwaru SPPD</title>
-          <meta name="description" content="SPPD is a website created to let users see all the statistics for the game 'South Park: Phone Destroyer' in an easy to use and understand way." />
+          <meta
+            name="description"
+            content={i18n.t("Description")}
+          />
           <meta property="og:title" content={altered.name + " | Feinwaru SPPD"} />
           <meta property="og:image" content={"/backgrounds/" + altered.image + ".jpg"} />
+          {Object.keys(i18n.store.data).map((e, i) => {
+            return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/" + altered.image + "?hl=" + e.toLowerCase()} />
+          })}
         </MetaTags>
 
         <div id="card-page" className="container">
