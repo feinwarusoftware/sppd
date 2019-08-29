@@ -629,7 +629,7 @@ export default class Card extends Component {
     return (
       <div>
         <Navbar changeLang={this.changeLang} />
-        
+
         <MetaTags>
           <title>{altered.name} | Feinwaru SPPD</title>
           <meta
@@ -640,6 +640,13 @@ export default class Card extends Component {
           <meta property="og:image" content={"/backgrounds/" + altered.image + ".jpg"} />
           {Object.keys(i18n.store.data).map((e, i) => {
             return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/" + altered.image + "?hl=" + e.toLowerCase()} />
+          })}
+          {Object.keys(i18n.options.fallbackLng).map((e, i) => {
+            if (e === "default") {
+              return
+            } else {
+              return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
+            }
           })}
         </MetaTags>
 
