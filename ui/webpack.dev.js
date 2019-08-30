@@ -1,31 +1,28 @@
 "use strict";
 
 const merge = require("webpack-merge");
+// const spawn = require("child_process").spawn;
 
-const common = require("./webpack.common");
+const baseConfig = require("./webpack.common");
 
-module.exports = merge(common, {
-  mode: "development",
-  devtool: "inline-source-map",
+module.exports = merge.smart(baseConfig, {
+  resolve: {
+    alias: {
+      "react-dom": "@hot-loader/react-dom"
+    }
+  },
   devServer: {
     port: 80,
-    host: "0.0.0.0",
-    allowedHosts: [
-      "localhost"
-    ],
     compress: true,
-    contentBase: "./dist"
-  },
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
-        ]
-      }
-    ]
+    noInfo: true,
+    stats: "errors-only",
+    inline: true,
+    hot: true,
+    headers: { "Access-Control-Allow_Origin": "*" },
+    historyApiFallback: {
+      verbose: true,
+      disableDotRule: false
+    }
+    // temp
   }
 });

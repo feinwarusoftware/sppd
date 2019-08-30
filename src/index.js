@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 
 const api_routes = require("./api_routes");
 
-const port = process.env.port || (() => { throw("port not specified"); })();;
+const port = process.env.WEBSERVER_PORT || (() => { throw("port not specified"); })();;
 const env = "dev"; // dev | prod
 const app = express();
 
@@ -19,9 +19,9 @@ const app = express();
 mongoose.connect(`mongodb://localhost/sppd`, { useNewUrlParser: true });
 */
 
-mongoose.connect(`mongodb://${process.env.mongo_user == null && process.env.mongo_pass == null ? "" : `${process.env.mongo_user}:${process.env.mongo_pass}@`}${process.env.mongo_source || "localhost"}/sppd?authSource=admin`, {
+mongoose.connect(`mongodb://${process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? "" : `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`}${process.env.MONGO_HOST || "localhost"}/sppd?authSource=${process.env.MONGO_AUTHDB || "admin"}`, {
   useNewUrlParser: true,
-  ...process.env.mongo_user == null && process.env.mongo_pass == null ? {} : {
+  ...process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? {} : {
     auth: {
       authdb: "admin"
     }
@@ -81,11 +81,11 @@ server.on("error", err => {
 
   switch(err.code) {
   case "EACCES":
-    console.error(`Port ${process.env.port} requires elevated privileges`);
+    console.error(`Port ${process.env.WEBSERVER_PORT} requires elevated privileges`);
     process.exit(-1);
     break;
   case "EADDRINUSE":
-    console.error(`Port ${process.env.port} is already in use`);
+    console.error(`Port ${process.env.WEBSERVER_PORT} is already in use`);
     process.exit(-1);
     break;
   default:
