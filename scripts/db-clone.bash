@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# Load environment variables
+source temp/env.bash
+
 # Remove old db files
-rm -r temp/db
-rm -r temp/dump
+rm -rf temp/dump
 
 # Clone mongo data from specified host
 mongodump --username $CLONE_MONGO_USER --password $CLONE_MONGO_PASS --host $CLONE_MONGO_HOST --authenticationDatabase $CLONE_MONGO_AUTHDB --db sppd --out temp/dump

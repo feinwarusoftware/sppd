@@ -13,7 +13,7 @@ module.exports = {
   optimization: {
     moduleIds: "hashed",
     runtimeChunk: "single",
-    splitChunk: {
+    splitChunks: {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
@@ -27,10 +27,12 @@ module.exports = {
     __filename: false,
     __dirname: false
   },
-  resolve: [
-    ".jsx",
-    ".js",
-    ".json"
-  ],
+  resolve: {
+    extensions: [
+      ".jsx",
+      ".js",
+      ".json"
+    ]
+  },
   devtool: "source-map"
 };

@@ -1,5 +1,4 @@
 #!/bin/bash
 
-# Remove all folders and files untracked by git
-git clean -fd
-git clean -fx
+# Remove all gitignored files 
+rm -rf $(cat .gitignore | egrep -v "^\s*(#|$)")

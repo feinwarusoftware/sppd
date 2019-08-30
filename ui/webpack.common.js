@@ -2,13 +2,15 @@
 
 require("@babel/polyfill");
 
+const path = require("path");
+
 const merge = require("webpack-merge");
 
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -18,8 +20,9 @@ const baseConfig = require("./webpack.base");
 module.exports = merge.smart(baseConfig, {
   entry: {
     app: [
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
       "@babel/polyfill",
-      "./src/app.js"
+      path.resolve(__dirname, "./src/app.js")
     ]
   },
   module: {
@@ -29,7 +32,16 @@ module.exports = merge.smart(baseConfig, {
         exclude: /node_modules/,
         loader: "babel-loader",
         options: {
-          cacheDirectory: true
+          cacheDirectory: true,
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "@babel/plugin-syntax-dynamic-import",
+            "react-hot-loader/babel"
+          ],
+          presets: [
+            "@babel/preset-react",
+            "@babel/preset-env"
+          ]
         }
       },
       {
@@ -44,7 +56,7 @@ module.exports = merge.smart(baseConfig, {
             }
           },
           "css-loader",
-          "postcss-loader",
+          //"postcss-loader",
           "sass-loader"
         ]
       },
@@ -80,6 +92,7 @@ module.exports = merge.smart(baseConfig, {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
@@ -98,10 +111,9 @@ module.exports = merge.smart(baseConfig, {
         }
       ]
     }),
-    new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       title: "Feinwaru SPPD",
-      template: "./template.html"
+      template: path.resolve(__dirname, "./template.html")
     })
   ],
   optimization: {

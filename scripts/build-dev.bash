@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set up required environment variables
-bash scripts/env-dev.bash
+source scripts/env-dev.bash
 
 # Build webpack
-npx webpack --config webpack.dev.js
+npx webpack --config ui/webpack.dev.js

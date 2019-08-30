@@ -16,7 +16,7 @@ const app = express();
 
 // Webpack HMR
 const webpack = require("webpack");
-const webpackDevConfig = require("../ui/webpack.dev.js/index.js");
+const webpackDevConfig = require("../ui/webpack.dev.js");
 const compiler = webpack(webpackDevConfig);
 //
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set up required environment variables
-bash scripts/env-dev.bash
+source scripts/env-dev.bash
 
 # Start mongo database
 bash scripts/db-run.bash &
@@ -10,7 +10,7 @@ bash scripts/db-run.bash &
 node src &
 
 # Start webpack dev server
-npx webpack-dev-server --config webpack.dev.js &
+#npx webpack-dev-server --config ui/webpack.dev.js &
 
 # Wait forever
 cat

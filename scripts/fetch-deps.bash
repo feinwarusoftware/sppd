@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install required node modules
-yarn
+yarn install
 
 # Clone mongo database
 bash scripts/db-run.bash &
