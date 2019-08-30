@@ -1,5 +1,6 @@
 export default {
   "Country Code": "PT",
+  "Go to Home": "Ir para Página Inicial",
   Home: "Página Inicial",
   "Random Card": "Carta Aleatória",
   "Discord Bot": "Bot do Discord",
@@ -10,6 +11,7 @@ export default {
   "results": "{{count}} Resultados Correspondentes",
   "Banner": "Banner:",
   "search": "A procurar {{total}} cartas para...",
+  "Search Cards": "Procurar cartas",
   "grid": "Vista de Grelha",
   "list": "Vista de Lista",
   "auto-load": "Alternar Auto-Loader de scroll",

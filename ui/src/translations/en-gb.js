@@ -1,6 +1,7 @@
 export default {
   //Navigation Bar
   "Country Code": "EN",
+  "Go to Home": "Go to Home",
   Home: "Home",
   "Random Card": "Random Card",
   "Discord Bot": "Discord Bot",
@@ -19,6 +20,7 @@ export default {
   results: "{{count}} Matching Results",
   Banner: "Banner:",
   search: "Search {{total}} cards for...",
+  "Search Cards": "Search Cards",
   grid: "Grid View",
   list: "List View",
   "auto-load": "Toggle Scrolling Auto-loader",
