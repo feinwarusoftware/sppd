@@ -2,11 +2,26 @@
 
 const path = require("path");
 
+const devMode = process.env.NODE_ENV !== "production";
+
 module.exports = {
   mode: "development",
   output: {
-    filename: "[name].[contenthash].js",
+    filename: devMode ? "[name].js" : "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist")
+  },
+  optimization: {
+    moduleIds: "hashed",
+    runtimeChunk: "single",
+    splitChunk: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all"
+        }
+      }
+    }
   },
   node: {
     __filename: false,
@@ -17,5 +32,5 @@ module.exports = {
     ".js",
     ".json"
   ],
-  devtool: "source-map",
+  devtool: "source-map"
 };

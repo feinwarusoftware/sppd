@@ -1,28 +1,19 @@
 "use strict";
 
+const webpack = require("webpack");
 const merge = require("webpack-merge");
-// const spawn = require("child_process").spawn;
 
 const baseConfig = require("./webpack.common");
 
 module.exports = merge.smart(baseConfig, {
-  resolve: {
-    alias: {
-      "react-dom": "@hot-loader/react-dom"
-    }
+  entry: {
+    app: [
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      "@babel/polyfill",
+      "./src/app.js"
+    ]
   },
-  devServer: {
-    port: 80,
-    compress: true,
-    noInfo: true,
-    stats: "errors-only",
-    inline: true,
-    hot: true,
-    headers: { "Access-Control-Allow_Origin": "*" },
-    historyApiFallback: {
-      verbose: true,
-      disableDotRule: false
-    }
-    // temp
-  }
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 });
