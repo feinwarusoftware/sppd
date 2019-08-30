@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "set-env": "",
     "clone-db": "",
     "init": "",
     "build-dev": "",
