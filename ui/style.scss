@@ -21,7 +21,7 @@ $Sci-Fi: #db571d;
 $Superhero: #fd6cf8;
 
 //Imports
-// @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
 @import "src/components/footer";
 @import "src/components/navbar";
 @import "src/components/search";
@@ -31,11 +31,8 @@ $Superhero: #fd6cf8;
 
 @font-face {
     font-family: "South Park Ext";
-    src: url("src/static/font/southpark/SouthParkExt-Regular.eot");
-    src: url("src/static/font/southpark/SouthParkExt-Regular.eot?#iefix") format("embedded-opentype"),
-        url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
+    src: url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
         url("src/static/font/southpark/SouthParkExt-Regular.woff") format("woff"),
-        url("src/static/font/southpark/SouthParkExt-Regular.ttf") format("truetype"),
         url("src/static/font/southpark/SouthParkExt-Regular.svg#SouthParkExt-Regular") format("svg");
     font-weight: normal;
     font-style: normal;

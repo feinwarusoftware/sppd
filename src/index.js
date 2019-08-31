@@ -11,14 +11,9 @@ const mongoose = require("mongoose");
 const api_routes = require("./api_routes");
 
 const port = process.env.WEBSERVER_PORT || (() => { throw("port not specified"); })();;
-const env = "dev"; // dev | prod
 const app = express();
 
-// Webpack HMR
-const webpack = require("webpack");
-const webpackDevConfig = require("../ui/webpack.dev.js");
-const compiler = webpack(webpackDevConfig);
-//
+const devMode = process.env.NODE_ENV !== "production";
 
 mongoose.connect(`mongodb://${process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? "" : `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`}${process.env.MONGO_HOST || "localhost"}/sppd?authSource=${process.env.MONGO_AUTHDB || "admin"}`, {
   useNewUrlParser: true,
@@ -34,17 +29,28 @@ const db = mongoose.connection;
 db.on("error", console.error);
 db.on("open", () => console.log("db conn"))
 
-app.use(morgan(env === "dev" ? "dev" : "combined"));
+// Webpack HMR
+if (devMode) {
+  const webpack = require("webpack");
+  const webpackDevConfig = require("../ui/webpack.dev.js");
+  const compiler = webpack(webpackDevConfig);
+  
+  app.use(require("webpack-dev-middleware")(compiler, {
+    hot: true,
+    noInfo: true,
+    stats: false,
+    publicPath: webpackDevConfig.output.publicPath
+  }));
+  app.use(require("webpack-hot-middleware")(compiler));
+}
+//
+
+app.use(morgan(devMode ? "dev" : "combined"));
 
 app.use(express.static(path.join(__dirname, "..", "ui", "dist")));
 app.use(express.static(path.join(__dirname, "..", "static")));
 
 app.use(express.json());
-
-// Webpack HMR
-app.use(require("webpack-dev-middleware")(compiler, { noInfo: true, publicPath: webpackDevConfig.output.publicPath }));
-app.use(require("webpack-hot-middleware")(compiler));
-//
 
 app.use("/api/v1", api_routes);
 
@@ -70,7 +76,7 @@ app.use((err, req, res) => {
   }
 
   res.locals.message = err.message;
-  res.locals.error = env === "dev" ? err : {};
+  res.locals.error = devMode ? err : {};
 
   res.status(err.status || 500);
   res.json({ error: "error" });

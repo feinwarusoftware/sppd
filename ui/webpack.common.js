@@ -9,7 +9,6 @@ const merge = require("webpack-merge");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -20,7 +19,7 @@ const baseConfig = require("./webpack.base");
 module.exports = merge.smart(baseConfig, {
   entry: {
     app: [
-      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      ...devMode ? [ "react-hot-loader/patch", "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000" ] : [],
       "@babel/polyfill",
       path.resolve(__dirname, "./src/app.js")
     ]
@@ -56,14 +55,19 @@ module.exports = merge.smart(baseConfig, {
             }
           },
           "css-loader",
-          //"postcss-loader",
+          "postcss-loader",
           "sass-loader"
         ]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         use: [
-          "file-loader"
+          {
+            loader: "file-loader",
+            options: {
+              name: devMode ? "./img/[name].[ext]" : "./img/[name].[hash].[ext]"
+            }
+          }
         ]
       },
       {
@@ -79,7 +83,7 @@ module.exports = merge.smart(baseConfig, {
             mimetype: "application/font-woff",
 
             // Output below fonts directory
-            name: "./fonts/[name].[ext]"
+            name: devMode ? "./font/[name].[ext]" : "./font/[name].[hash].[ext]"
           }
         }
       },
@@ -93,27 +97,14 @@ module.exports = merge.smart(baseConfig, {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: "Feinwaru SPPD",
+      template: path.resolve(__dirname, "./template.html")
+    }),
     new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
       ignoreOrder: false
-    }),
-    new GoogleFontsPlugin({
-      fonts: [
-        {
-          family: "Roboto",
-          variants: [
-            "300",
-            "400",
-            "700",
-            "900"
-          ]
-        }
-      ]
-    }),
-    new HtmlWebpackPlugin({
-      title: "Feinwaru SPPD",
-      template: path.resolve(__dirname, "./template.html")
     })
   ],
   optimization: {
