@@ -1,31 +1,23 @@
 "use strict";
 
+const path = require("path");
+
+const webpack = require("webpack");
 const merge = require("webpack-merge");
 
-const common = require("./webpack.common");
+const baseConfig = require("./webpack.common");
 
-module.exports = merge(common, {
-  mode: "development",
-  devtool: "inline-source-map",
-  devServer: {
-    port: 80,
-    host: "0.0.0.0",
-    allowedHosts: [
-      "localhost"
-    ],
-    compress: true,
-    contentBase: "./dist"
+const devMode = process.env.NODE_ENV !== "production";
+
+module.exports = merge.smart(baseConfig, {
+  output: {
+    filename: devMode ? "[name].js" : "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/"
+    //hotUpdateChunkFilename: ".hot/[id].[hash].hot-update.js",
+    //hotUpdateMainFilename: ".hot/[hash].hot-update.json"
   },
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
-        ]
-      }
-    ]
-  }
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 });
