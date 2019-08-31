@@ -15,11 +15,11 @@ class Footer extends Component {
           />
           <div className="footer-contents">
             <div className="container">
-              <div className="row align-items-center">
-                <div className="col-xs-12 col-md-6 col-lg-3">
+              <div className="row align-items-center justify-content-center justify-content-sm-start">
+                <div className="col-8 col-sm-12 col-md-6 col-lg-3 mt-5 mt-md-0 order-last order-md-0">
                   <img
                     draggable="false"
-                    className="img-fluid mx-auto px-4 mb-3"
+                    className="img-fluid mx-auto px-0 px-sm-5 pl-md-0 px-lg-0 px-xl-4 mb-3"
                     alt=""
                     src={require("../static/img/feinwaru_logo.svg")}
                   />
@@ -27,7 +27,7 @@ class Footer extends Component {
                     &copy; 2017 - {new Date().getFullYear()} <Trans>Copyright</Trans>
                   </p>
                 </div>
-                <div className="col-12 col-sm-6 col-lg-3">
+                <div className="col-8 col-sm-6 col-lg-3">
                   <h2>{i18n.t("About Feinwaru").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
                   <h1>{i18n.t("About Feinwaru").split(" ").pop().toUpperCase()}</h1>
                   <ul>
@@ -45,7 +45,7 @@ class Footer extends Component {
                     </li>
                   </ul>
                 </div>
-                <div className="col-12 col-sm-6 col-lg-3">
+                <div className="col-8 col-sm-6 col-lg-3">
                   <h2>{i18n.t("Our Projects").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
                   <h1>{i18n.t("Our Projects").split(" ").pop().toUpperCase()}</h1>
                   <ul>
@@ -63,7 +63,7 @@ class Footer extends Component {
                     </li>
                   </ul>
                 </div>
-                <div className="col-12 col-sm-6 col-lg-3">
+                <div className="col-8 col-sm-6 col-lg-3">
                   <h2>{i18n.t("Extra Resources").split(" ").slice(0, -1).join(" ").toUpperCase()}</h2>
                   <h1>{i18n.t("Extra Resources").split(" ").pop().toUpperCase()}</h1>
                   <ul>

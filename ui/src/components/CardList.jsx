@@ -226,7 +226,7 @@ class CardGrid extends Component {
 
     return (
       <React.Fragment>
-        <div className="grid-card col-12 col-sm-6 mb-3">
+        <div className="grid-card list col-12 col-sm-6 mb-3">
           <div
             onClick={() => this.handleCardClick()}
 
@@ -269,8 +269,8 @@ class CardGrid extends Component {
                   {this.props.health}
                 </span>{" "}
                 <span className="orange-text pl-2">
-                  <i className="fas fa-swords" aria-hidden="true" />{" "}
-                  <span id="damage">{this.props.damage}</span>
+                  <i className="fa fa-swords" aria-hidden="true" />{" "}
+                  {this.props.damage}
                 </span>
               </h6>
               <p>{altered.description}</p>

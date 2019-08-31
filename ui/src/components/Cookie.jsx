@@ -34,7 +34,7 @@ class Cookie extends Component {
           <div className="container">
             <button onClick={() => {this.acceptCookie()}} className="px-4 btn btn-sm btn-sppd float-right"><Trans>Got It!</Trans></button>         
             <p className="mb-0"><Trans>Cookie Message</Trans></p>
-            <a href="https://cookiesandyou.com/"><Trans>Learn More</Trans></a>
+            <a rel="nofollow" href="https://cookiesandyou.com/"><Trans>Learn More</Trans></a>
           </div>
         </div>
       </React.Fragment>

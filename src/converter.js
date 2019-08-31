@@ -245,6 +245,7 @@ const convert = card => {
   out.min_episode_completed = parseInt(card.Requirements.MinEpisodeCompleted);
   out.min_pvp_rank = parseInt(card.Requirements.MinPlayerLevel);
   out.min_player_level = parseInt(card.Requirements.MinPVPRank);
+  out.min_pvp_arena = parseInt(card.Requirements.MinPVPArena);
 
   // tech tree
   const transformSlot = slot => {

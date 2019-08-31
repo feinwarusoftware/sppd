@@ -201,6 +201,7 @@ const cardSchema = new mongoose.Schema({
     min_episode_completed: defValidNumber,
     min_pvp_rank: defValidNumber,
     min_player_level: defValidNumber,
+    min_pvp_arena: defValidNumber,
 
     tech_tree: techTreeSchema,
 
