@@ -172,24 +172,26 @@ class Index extends Component {
     return (
       <div>
         <MetaTags>
-          <title>{i18n.t("Card List")} | Feinwaru SPPD</title>
+          <title id="meta-title">{i18n.t("Card List")} | Feinwaru SPPD</title>
           <meta
             name="description"
+            id="meta-description"
             content={i18n.t("Description")}
           />
-          <meta property="og:title" content="Card List | Feinwaru SPPD" />
+          <meta id="meta-og-title" property="og:title" content="Card List | Feinwaru SPPD" />
           <meta
+            id="meta-og-image"
             property="og:image"
             content="https://cdn.discordapp.com/attachments/558375135719981056/564821280944029716/cards.png"
           />
           {Object.keys(i18n.store.data).map((e, i) => {
-            return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
+            return <link key={i} id={`meta-lang-${e.toLowerCase()}`} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
           })}
           {Object.keys(i18n.options.fallbackLng).map((e, i) => {
             if (e === "default") {
               return
             } else {
-              return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
+              return <link key={i} id={`meta-lang-${e.toLowerCase()}`} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/?hl=" + e.toLowerCase()} />
             }
           })}
         </MetaTags>
