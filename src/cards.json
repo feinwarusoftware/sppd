@@ -18629,7 +18629,7 @@
     "PreAttackDelay": 0.0,
     "CastArea": "OwnSide",
     "ChildUnitLimit": 0,
-    "CharacterTags": ["Male", "Kid", "Human", "Indians"]
+    "CharacterTags": ["Male", "Kid", "Human", "Indian"]
   },
   {
     "Id": 41,
@@ -24184,7 +24184,7 @@
     "PreAttackDelay": 0.0,
     "CastArea": "OwnSide",
     "ChildUnitLimit": 0,
-    "CharacterTags": ["Male", "Kid", "Human", "Indians"]
+    "CharacterTags": ["Male", "Kid", "Human", "Indian"]
   },
   {
     "Id": 53,
@@ -51214,7 +51214,7 @@
     "Id": 116,
     "Visible": true,
     "CanAttack": true,
-    "Name": "Classi",
+    "Name": ["Classi"],
     "Description": "Enraged: When at half of base health or less, her base attack triples.",
     "Image": "ClassiGenCard",
     "ManaCost": 5,
@@ -53664,7 +53664,7 @@
     "Id": 121,
     "Visible": true,
     "CanAttack": true,
-    "Name": "Elven King Bradley",
+    "Name": ["Elven King Bradley"],
     "Description": "Adds +{PowerAttackBoost} attack and increases the range of Ranged allies while he is on the field.",
     "Image": "BradleyFanCard",
     "ManaCost": 3,
@@ -54154,7 +54154,7 @@
     "Id": 122,
     "Visible": true,
     "CanAttack": true,
-    "Name": "Swashbuckler Red",
+    "Name": ["Swashbuckler Red"],
     "Description": "Warcry: Attracts all enemies in range for {PowerDuration}.",
     "Image": "RedAdvCard",
     "ManaCost": 4,
@@ -58832,7 +58832,7 @@
     "Id": 133,
     "Visible": true,
     "CanAttack": true,
-    "Name": "Professor Chaos",
+    "Name": ["Professor Chaos"],
     "Description": "Immune to Mind Control. Warcry: Deals {PowerDamage} damage to enemies in front and stuns them for {PowerDuration} seconds.",
     "Image": "ButtersSupCard",
     "ManaCost": 3,
@@ -59322,19 +59322,18 @@
     "Id": 134,
     "Visible": true,
     "CanAttack": false,
-    "Name": "Lava!",
+    "Name": ["Lava!"],
     "Description": "Deals {PowerDamage} damage/sec and slows down enemies walking on it. Lasts {PowerDuration} seconds.",
     "Image": "LavaSupTrapCard",
     "ManaCost": 3,
     "Damage": "0",
     "Health": "30",
     "HealthLoss": "1",
-    "Type": "Character",
+    "Type": "Trap",
     "Targeting": {
       "AssetId": "AttackPowerRet",
       "Radius": 1.5
     },
-    "CharacterType": "Trap",
     "Ingame": "LavaSupTrapPF",
     "AttackRange": 0.6,
     "TimeToReachMaxVelocity": 0.1,
@@ -59442,7 +59441,7 @@
       "AssetId": "TargetSpellRet",
       "Radius": 0.0
     },
-    "CharacterType": "Fighter",
+    "CharacterType": "Melee",
     "Ingame": "MosquitoSupCharPF",
     "AttackRange": 0.4,
     "TimeToReachMaxVelocity": 0.1,

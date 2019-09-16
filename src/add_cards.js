@@ -94,6 +94,10 @@ try {
       process.exit(-1);
     }
     */
+
+    // if (ids.data.find(e => e.name === converted.name) != null) {
+    //   continue;
+    // }
     
     let res;
     try {
@@ -111,7 +115,7 @@ try {
     }
 
     if (res.success === false) {
-      return console.error(`failed to add cards to the api: ${JSON.stringify(res)}`); 
+      return console.error(`failed to add cards to the api: ${JSON.stringify(res)}`);
     }
     
     console.log(`${i}. ${converted.name}`);

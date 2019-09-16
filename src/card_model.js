@@ -106,7 +106,7 @@ const characterTagTypes = [
     "holy",
     "unholy",
     "flying",
-    "indian",
+    "indian", // umustalldie misspelled this as 'Indians' in some cards
     "cowboy",
     "pirate",
     "canadian",
