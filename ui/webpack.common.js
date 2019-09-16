@@ -3,6 +3,7 @@
 require("@babel/polyfill");
 
 const path = require("path");
+// const glob = require("glob");
 
 const merge = require("webpack-merge");
 
@@ -11,10 +12,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const PurgecssPlugin = require("purgecss-webpack-plugin");
 
 const devMode = process.env.NODE_ENV !== "production";
 
 const baseConfig = require("./webpack.base");
+
+/*
+const PATHS = {
+  src: path.join(__dirname, "src")
+};
+*/
 
 module.exports = merge.smart(baseConfig, {
   entry: {
@@ -55,7 +63,12 @@ module.exports = merge.smart(baseConfig, {
             }
           },
           "css-loader",
-          "postcss-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              importLoders: 1
+            }
+          },
           "sass-loader"
         ]
       },
@@ -106,6 +119,11 @@ module.exports = merge.smart(baseConfig, {
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
       ignoreOrder: false
     })
+    // new PurgecssPlugin({
+    //   paths: glob.sync(`${PATHS.src}/**/*`, {
+    //     nodir: true
+    //   })
+    // })
   ],
   optimization: {
     minimizer: [

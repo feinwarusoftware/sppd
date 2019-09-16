@@ -8,6 +8,7 @@ module.exports = {
   mode: "development",
   output: {
     filename: devMode ? "[name].js" : "[name].[contenthash].js",
+    chunkFilename: devMode ? "[name].js" : "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist")
   },
   optimization: {
@@ -18,7 +19,8 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
-          chunks: "all"
+          chunks: "all",
+          enforce: true
         }
       }
     }

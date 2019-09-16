@@ -2,7 +2,7 @@ import { hot } from "react-hot-loader/root";
 import React from "react";
 import "bootstrap/scss/bootstrap.scss";
 import "../src/static/css/fa_all.scss";
-import "../style.scss";
+import "./style.scss";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import ScrollToTop from "./components/ScrollToTop.jsx";

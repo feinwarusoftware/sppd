@@ -1,7 +1,4 @@
 #!/bin/bash
 
-# Create db directory if it doesnt already exist
-mkdir temp/db
-
-# Runs mongo in the correct dir
+# Run mongo in temp/db
 mongod --dbpath=temp/db
