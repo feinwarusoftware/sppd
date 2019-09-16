@@ -97,6 +97,7 @@ const upgradeTypes = [
 ];
 
 const characterTagTypes = [
+    "kid", // umustalldie forgot to mention this one
     "male",
     "female",
     "adult",
