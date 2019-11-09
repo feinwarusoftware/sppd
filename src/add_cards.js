@@ -95,9 +95,9 @@ try {
     }
     */
 
-    // if (ids.data.find(e => e.name === converted.name) != null) {
-    //   continue;
-    // }
+     /*if (ids.data.find(e => e.name === converted.name) != null) {
+       continue;
+     }*/
     
     let res;
     try {
@@ -107,7 +107,7 @@ try {
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "rlxGeii!112"
+          "xxx-access-token": "youReallyThoughThisWasTheToken"
         }
       }).then(res => res.json())
     } catch(error) {
