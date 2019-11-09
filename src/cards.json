@@ -62038,7 +62038,7 @@
     "PowerMaxHPLoss": null,
     "PowerSummonLevel": null,
     "PowerDamage": 220,
-    "PowerHeroDamage": null,
+    "PowerHeroDamage": 22,
     "PowerPoisonAmount": null,
     "PowerHeroPoison": null,
     "PowerAttackBoost": null,
