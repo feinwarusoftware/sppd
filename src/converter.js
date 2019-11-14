@@ -128,7 +128,8 @@ const convert = card => {
   out.powers = [];
 
   // cock magic
-  if (card.Name[0] === "Cock Magic") {
+  // some assumptions taken in this: power target will only be incremented in 'levels' AND it will always be incremented in at least the first level up
+  if (card.TechTree2.Evolve[0].Slots.reduce((p, c) => p || c.property === "PowerTargetAbs", false)) {
     out.powers.push({
       type: "power_target",
       amount: 1,

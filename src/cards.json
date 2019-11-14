@@ -9167,7 +9167,8 @@
     "Rarity": 3,
     "Theme": "Adv",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 11.0
@@ -9513,9 +9514,11 @@
           "value": 1.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 70.0
@@ -9529,7 +9532,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 210.0
@@ -9543,7 +9547,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 140.0
@@ -9557,7 +9562,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 70.0
@@ -9571,7 +9577,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 70.0
@@ -9585,7 +9592,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 70.0
@@ -28388,7 +28396,8 @@
     "Rarity": 1,
     "Theme": "Adv",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 3.0
@@ -28734,9 +28743,11 @@
           "value": 7.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 11.0
@@ -28750,7 +28761,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 23.0
@@ -28764,7 +28776,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 34.0
@@ -28778,7 +28791,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 46.0
@@ -28792,7 +28806,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 34.0
@@ -28806,7 +28821,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 23.0
@@ -29331,7 +29347,8 @@
     "Rarity": 1,
     "Theme": "Sci",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 3.0
@@ -29677,9 +29694,11 @@
           "value": 6.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 11.0
@@ -29693,7 +29712,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 23.0
@@ -29707,7 +29727,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 34.0
@@ -29721,7 +29742,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 46.0
@@ -29735,7 +29757,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 34.0
@@ -29749,7 +29772,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 23.0
@@ -29821,7 +29845,8 @@
     "Rarity": 0,
     "Theme": "Gen",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 1.0
@@ -30167,9 +30192,11 @@
           "value": 1.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 1.0
@@ -30183,7 +30210,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 2.0
@@ -30197,7 +30225,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 2.0
@@ -30211,7 +30240,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 3.0
@@ -30225,7 +30255,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 5.0
@@ -30239,7 +30270,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 6.0
@@ -31394,7 +31426,8 @@
     "Rarity": 1,
     "Theme": "Mys",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 3.0
@@ -31740,9 +31773,11 @@
           "value": 6.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 12.0
@@ -31756,7 +31791,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -31770,7 +31806,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 37.0
@@ -31784,7 +31821,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 50.0
@@ -31798,7 +31836,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 37.0
@@ -31812,7 +31851,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -31884,7 +31924,8 @@
     "Rarity": 1,
     "Theme": "Fan",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 3.0
@@ -32230,9 +32271,11 @@
           "value": 6.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 12.0
@@ -32246,7 +32289,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -32260,7 +32304,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 37.0
@@ -32274,7 +32319,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 50.0
@@ -32288,7 +32334,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 37.0
@@ -32302,7 +32349,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -37935,7 +37983,8 @@
     "Rarity": 0,
     "Theme": "Gen",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 1.0
@@ -38281,9 +38330,11 @@
           "value": 1.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 2.0
@@ -38297,7 +38348,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 3.0
@@ -38311,7 +38363,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 3.0
@@ -38325,7 +38378,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 4.0
@@ -38339,7 +38393,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 7.0
@@ -38353,7 +38408,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 9.0
@@ -38425,7 +38481,8 @@
     "Rarity": 1,
     "Theme": "Fan",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 1.0
@@ -38771,9 +38828,11 @@
           "value": 1.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 2.0
@@ -38787,7 +38846,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 5.0
@@ -38801,7 +38861,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 7.0
@@ -38815,7 +38876,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 9.0
@@ -38829,7 +38891,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 7.0
@@ -38843,7 +38906,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 5.0
@@ -53703,7 +53767,8 @@
     "Theme": "Fan",
 
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 6.0
@@ -54049,9 +54114,11 @@
           "value": 2.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 24.0
@@ -54065,7 +54132,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 48.0
@@ -54079,7 +54147,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 72.0
@@ -54093,7 +54162,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 96.0
@@ -54107,7 +54177,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 72.0
@@ -54121,7 +54192,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 48.0
