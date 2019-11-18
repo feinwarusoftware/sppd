@@ -55,8 +55,8 @@ class CardGrid extends Component {
     let charTypeString;
     if (this.props.type === "spell") {
       charTypeString = "spell";
-    } else if (this.props.type === "trap"){
-      charTypeString = "trap"
+    } else if (this.props.type === "trap") {
+      charTypeString = "trap";
     } else {
       charTypeString = this.props.characterType;
     }

@@ -212,6 +212,8 @@ export default class Card extends Component {
 
     alteredCard = [alteredStats].reduce((a, c) => {
       for (let [k, v] of Object.entries(c)) {
+        console.log(a);
+        console.log(c);
         if (k.startsWith("stat_")) {
           if (a[k.slice(5)] != null) {
             a[k.slice(5)] += v;

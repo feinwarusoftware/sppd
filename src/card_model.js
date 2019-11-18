@@ -70,6 +70,10 @@ const powerTypes = [
     // spell target count
     "power_target",
 
+    // cos redlynx cant describe everything using
+    // data and theres always that one exception
+    "power_special",
+
     null
 ];
 
