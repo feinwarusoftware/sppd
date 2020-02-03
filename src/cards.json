@@ -23701,7 +23701,7 @@
     "Visible": true,
     "CanAttack": true,
     "Name": ["Shaman Token", "Shaman"],
-    "Description": "Charged:  Removes all negative effects from allies.",
+    "Description": "Charged: Removes all negative effects from allies.",
     "Image": "TokenAdvCard",
     "ManaCost": 3,
     "Damage": "30",
