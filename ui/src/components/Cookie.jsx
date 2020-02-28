@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { Trans } from "react-i18next";
 
 const cookies = new Cookies();
 
@@ -31,9 +32,9 @@ class Cookie extends Component {
       <React.Fragment>
         <div id="cookie" ref={this.cookie}>
           <div className="container">
-            <button onClick={() => {this.acceptCookie()}} className="px-4 btn btn-sm btn-sppd float-right">Got it!</button>         
-            <p className="mb-0">This website uses cookies to ensure you get the best experience on our website.</p>
-            <a href="https://cookiesandyou.com/">Learn More</a>
+            <button onClick={() => {this.acceptCookie()}} className="px-4 btn btn-sm btn-sppd float-right"><Trans>Got It!</Trans></button>         
+            <p className="mb-0"><Trans>Cookie Message</Trans></p>
+            <a rel="nofollow" href="https://cookiesandyou.com/"><Trans>Learn More</Trans></a>
           </div>
         </div>
       </React.Fragment>

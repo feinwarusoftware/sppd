@@ -1,0 +1,9 @@
+node_modules/
+ui/dist/
+src/
+scripts/
+static/
+docs/
+.github/
+.vscode/
+temp/

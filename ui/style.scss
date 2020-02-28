@@ -22,21 +22,19 @@ $Superhero: #fd6cf8;
 
 //Imports
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900");
+@import "node_modules/bootstrap/scss/bootstrap";
 @import "src/components/footer";
 @import "src/components/navbar";
-@import "src/components/langbar";
 @import "src/components/search";
 @import "src/components/cards";
 @import "src/components/news";
 @import "src/components/cookie";
+@import "src/components/loading-indicator";
 
 @font-face {
     font-family: "South Park Ext";
-    src: url("src/static/font/southpark/SouthParkExt-Regular.eot");
-    src: url("src/static/font/southpark/SouthParkExt-Regular.eot?#iefix") format("embedded-opentype"),
-        url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
+    src: url("src/static/font/southpark/SouthParkExt-Regular.woff2") format("woff2"),
         url("src/static/font/southpark/SouthParkExt-Regular.woff") format("woff"),
-        url("src/static/font/southpark/SouthParkExt-Regular.ttf") format("truetype"),
         url("src/static/font/southpark/SouthParkExt-Regular.svg#SouthParkExt-Regular") format("svg");
     font-weight: normal;
     font-style: normal;
@@ -78,4 +76,8 @@ svg {
 
 .orange-text {
     color: #ff9800 !important;
+}
+
+.green-text {
+    color: #2eab18 !important;
 }

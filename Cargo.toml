@@ -1,9 +1,0 @@
-[package]
-name = "Feinwaru Software"
-version = "0.1.0"
-authors = ["Lukasz Niezabitowski <lukasznie1320@gmail.com>", "Matthew Watt <mattheousfans@gmail.com>"]
-edition = "2018"
-
-[dependencies]
-rocket = "0.4.0"
-rocket_contrib = "0.4.0"

@@ -75,7 +75,7 @@ const convert = card => {
   
   //
   out.type = card.Type.toLowerCase();
-  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock") {
+  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock" || card.Name[0] === "Mosquito Swarm") {
     out.type = "spawn";
   }
   //
@@ -128,7 +128,8 @@ const convert = card => {
   out.powers = [];
 
   // cock magic
-  if (card.Name[0] === "Cock Magic") {
+  // some assumptions taken in this: power target will only be incremented in 'levels' AND it will always be incremented in at least the first level up
+  if (card.TechTree2.Evolve[0].Slots.reduce((p, c) => p || c.property === "PowerTargetAbs", false)) {
     out.powers.push({
       type: "power_target",
       amount: 1,
@@ -181,6 +182,18 @@ const convert = card => {
         });
       }
     }
+  }
+  // the special snowflake case
+  if (card.Name[0] === "Shaman Token") {
+    out.powers.push({
+      type: "power_special",
+      amount: 0,
+      duration: null,
+      radius: -1,
+      is_charged: true,
+      charged_regen: parseFloat(card.ChargedPowerRegen),
+      locked: false
+    });
   }
   if (out.powers.length === 0 && card.PowerDuration != null) {
     let duration, radius, is_charged, charged_regen;
@@ -245,6 +258,7 @@ const convert = card => {
   out.min_episode_completed = parseInt(card.Requirements.MinEpisodeCompleted);
   out.min_pvp_rank = parseInt(card.Requirements.MinPlayerLevel);
   out.min_player_level = parseInt(card.Requirements.MinPVPRank);
+  out.min_pvp_arena = parseInt(card.Requirements.MinPVPArena);
 
   // tech tree
   const transformSlot = slot => {
@@ -275,10 +289,13 @@ const convert = card => {
   }
 
   //
-  if (card.Name[0] === "Snake" || card.Name[0] === "A Cock") {
+  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock" || card.Name[0] === "Mosquito Swarm") {
     out.tech_tree.slots = [];
   }
   //
+
+  // new
+  out.character_tags = card.CharacterTags == null ? [] : card.CharacterTags.map(e => e.replace(/\ /g, "_")).map(f => f.toLowerCase());
 
   return out;
 }

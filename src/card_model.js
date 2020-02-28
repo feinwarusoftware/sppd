@@ -70,6 +70,10 @@ const powerTypes = [
     // spell target count
     "power_target",
 
+    // cos redlynx cant describe everything using
+    // data and theres always that one exception
+    "power_special",
+
     null
 ];
 
@@ -94,6 +98,23 @@ const upgradeTypes = [
     "stat_max_health",
     "stat_damage",
     "stat_charged_power_regen"
+];
+
+const characterTagTypes = [
+    "kid", // umustalldie forgot to mention this one
+    "male",
+    "female",
+    "adult",
+    "human",
+    "animal",
+    "holy",
+    "unholy",
+    "flying",
+    "indian", // umustalldie misspelled this as 'Indians' in some cards
+    "cowboy",
+    "pirate",
+    "canadian",
+    "special_needs"
 ];
 
 const slotSchema = new mongoose.Schema({
@@ -185,8 +206,12 @@ const cardSchema = new mongoose.Schema({
     min_episode_completed: defValidNumber,
     min_pvp_rank: defValidNumber,
     min_player_level: defValidNumber,
+    min_pvp_arena: defValidNumber,
 
     tech_tree: techTreeSchema,
+
+    // new
+    character_tags: [ defValidEnum(characterTagTypes) ],
 
     updated_at: {
         type: Date,

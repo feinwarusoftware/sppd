@@ -22,6 +22,8 @@ nav {
   img {
     height: 60px;
     padding: 10px;
+    user-select: none;
+    -moz-user-select: none;
   }
 
   ul {
@@ -71,18 +73,25 @@ nav {
     }
   }
 
+  #language-dropdown-container {
+    float: right;
+    @media (max-width: 767px){
+      float: none;
+    }
+  }
+
   #language-dropdown {
-    position: absolute;
     display: none;
     position: absolute;
     background-color: white;
-    border-radius: 4px;
+    border-radius: 10px 0 10px 10px;
     -webkit-box-shadow: rgba(0,0,0,.1) 0 1px 3px;
     box-shadow: 0 1px 3px rgba(0,0,0,.1);
     overflow-x: hidden;
     overflow-y: auto;
-    transform: translateX(calc(-100% + (55px - 15px)));
-    margin-top: 10px;
+    transform: translateX(-100%);
+    margin-top: 32px;
+    min-width: 250px;
 
     ul {
       float: none;
@@ -121,6 +130,9 @@ nav {
   
       #language-dropdown {
         transform: translateX(0px);
+        margin-top: 10px;
+        border-radius: 0px 10px 10px 10px;
+        max-height: calc(100vh - 370px);
       }
 
       ul, li {

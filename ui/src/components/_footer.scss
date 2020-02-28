@@ -10,12 +10,18 @@ footer {
     margin-top: 0;
     width: 101%;
     user-select: none;
+    -moz-user-select: none;
   }
 
   .footer-contents {
     background-color: $darkgrey;
     padding-top: 40px;
     padding-bottom: 40px
+  }
+
+  img {
+    user-select: none;
+    -moz-user-select: none;
   }
 
   p {

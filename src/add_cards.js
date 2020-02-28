@@ -94,16 +94,20 @@ try {
       process.exit(-1);
     }
     */
+
+     /*if (ids.data.find(e => e.name === converted.name) != null) {
+       continue;
+     }*/
     
     let res;
     try {
-      //res = await fetch("https://sppd.feinwaru.com/api/v1/cards", {
-      res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
-        method: "patch",
+      res = await fetch("http://localhost/api/v1/cards", {
+      //res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
+        method: "post",
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "1fuck2red3lynx"
+          "xxx-access-token": "rawrxd"
         }
       }).then(res => res.json())
     } catch(error) {
@@ -111,7 +115,7 @@ try {
     }
 
     if (res.success === false) {
-      return console.error(`failed to add cards to the api: ${JSON.stringify(res)}`); 
+      return console.error(`failed to add cards to the api: ${JSON.stringify(res)}`);
     }
     
     console.log(`${i}. ${converted.name}`);

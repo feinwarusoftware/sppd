@@ -1,6 +1,4 @@
-# react
-ui/node_modules
+temp
 ui/dist
-
-# node
-src/node_modules
+node_modules
+bash.exe.stackdump
