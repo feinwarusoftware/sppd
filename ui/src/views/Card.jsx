@@ -217,7 +217,7 @@ export default class Card extends Component {
             a[k.slice(5)] += v;
           } else if (a[k.slice(9)] != null) {
             a[k.slice(9)] += v;
-       9  } else {
+         } else {
             return console.error("error applying upgrade stats 1: " + k);
           }
         } else if (k.startsWith("power_")) {
