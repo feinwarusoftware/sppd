@@ -217,7 +217,7 @@ export default class Card extends Component {
             a[k.slice(5)] += v;
           } else if (a[k.slice(9)] != null) {
             a[k.slice(9)] += v;
-         } else {
+          } else {
             return console.error("error applying upgrade stats 1: " + k);
           }
         } else if (k.startsWith("power_")) {
@@ -293,8 +293,7 @@ export default class Card extends Component {
           return alteredCard.power_damage / 10;
         }*/
         if (bracketless === "power_hero_damage") {
-          let powerAmount = original.image === "CraigAdvCard" ? Math.floor(getPowerAmount("power_damage")/5) : Math.floor(getPowerAmount("power_damage")/10);
-            return powerAmount;
+          return original.image === "CraigAdvCard" ? Math.floor(getPowerAmount("power_damage")/5) : Math.floor(getPowerAmount("power_damage")/10);
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
         } else if (bracketless === "power_duration_max") {

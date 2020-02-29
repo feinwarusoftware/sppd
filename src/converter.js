@@ -145,7 +145,7 @@ const convert = card => {
     if (k.startsWith("Power") && k !== "PowerDuration" && v != null) {
       let duration, radius, is_charged, charged_regen;
 
-      const chargedPowerRegen = card.Type!== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+      const chargedPowerRegen = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
       if (chargedPowerRegen == null || chargedPowerRegen === 0) {
         is_charged = false;
         charged_regen = null;
