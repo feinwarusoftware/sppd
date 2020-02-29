@@ -145,7 +145,7 @@ const convert = card => {
     if (k.startsWith("Power") && k !== "PowerDuration" && v != null) {
       let duration, radius, is_charged, charged_regen;
 
-      const chargedPowerRegen = card.Type !== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
+      const chargedPowerRegen = card.Type!== "Spell" && card.Type !== "Trap" && card.CharacterType !== "Totem" ? parseFloat(card.ChargedPowerRegen) : null;
       if (chargedPowerRegen == null || chargedPowerRegen === 0) {
         is_charged = false;
         charged_regen = null;
@@ -256,7 +256,7 @@ const convert = card => {
 
     return {
       property: slot.property.startsWith("Power") ? slot.property === "PowerPoisonAmountAbs" ? `power_poison` : `power_${snakeify(slot.property.slice(5, slot.property.length - 3))}` : slot.property.endsWith("Power") ? "power_unlock" : slot.property === "SP200" ? "power_unlock" : slot.property === "ChargedPowerRegenRate" ? "stat_charged_power_regen" : `stat_${snakeify(slot.property)}`,
-      value: parseInt(slot.value)
+      value: parseFloat(slot.value)
     };
   }
 

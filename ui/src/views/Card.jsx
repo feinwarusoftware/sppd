@@ -217,7 +217,7 @@ export default class Card extends Component {
             a[k.slice(5)] += v;
           } else if (a[k.slice(9)] != null) {
             a[k.slice(9)] += v;
-          } else {
+       9  } else {
             return console.error("error applying upgrade stats 1: " + k);
           }
         } else if (k.startsWith("power_")) {
@@ -293,13 +293,8 @@ export default class Card extends Component {
           return alteredCard.power_damage / 10;
         }*/
         if (bracketless === "power_hero_damage") {
-          let powerAmount = getPowerAmount("power_hero_damage");
-          if (powerAmount == null) {
-            return getPowerAmount("power_damage") / 10;
-          }
-          else {
+          let powerAmount = original.image === "CraigAdvCard" ? Math.floor(getPowerAmount("power_damage")/5) : Math.floor(getPowerAmount("power_damage")/10);
             return powerAmount;
-          }
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
         } else if (bracketless === "power_duration_max") {
@@ -687,10 +682,10 @@ export default class Card extends Component {
                         <option>{i18n.t("level", {num: 1})}</option>
                         <option>{i18n.t("level", {num: 2})}</option>
                         <option>{i18n.t("level", {num: 3})}</option>
-                        <option>{i18n.t("level", {num: 3})}</option>
                         <option>{i18n.t("level", {num: 4})}</option>
                         <option>{i18n.t("level", {num: 5})}</option>
                         <option>{i18n.t("level", {num: 6})}</option>
+                        <option>{i18n.t("level", {num: 7})}</option>
                       </> :
                       <>
                         <option>{i18n.t("upgrade", {num: 1, total: 70})}</option>
