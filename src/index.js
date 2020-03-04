@@ -15,7 +15,7 @@ const app = express();
 
 const devMode = process.env.NODE_ENV !== "production";
 
-mongoose.connect(`mongodb://${process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? "" : `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`}${process.env.MONGO_SOURCE || "localhost"}/sppd?authSource=admin`, {
+mongoose.connect(`mongodb://${process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? "" : `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`}${process.env.MONGO_HOST || "localhost"}/sppd?authSource=${process.env.MONGO_AUTHDB || "admin"}`, {
   useNewUrlParser: true,
   ...process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? {} : {
     auth: {

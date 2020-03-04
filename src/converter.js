@@ -75,7 +75,7 @@ const convert = card => {
   
   //
   out.type = card.Type.toLowerCase();
-  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock" || card.Name[0] === "Mosquito Swarm") {
+  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock") {
     out.type = "spawn";
   }
   //
@@ -183,18 +183,6 @@ const convert = card => {
       }
     }
   }
-  // the special snowflake case
-  if (card.Name[0] === "Shaman Token") {
-    out.powers.push({
-      type: "power_special",
-      amount: 0,
-      duration: null,
-      radius: -1,
-      is_charged: true,
-      charged_regen: parseFloat(card.ChargedPowerRegen),
-      locked: false
-    });
-  }
   if (out.powers.length === 0 && card.PowerDuration != null) {
     let duration, radius, is_charged, charged_regen;
 
@@ -289,7 +277,7 @@ const convert = card => {
   }
 
   //
-  if (card.Name[0] === "Snake" || card.Name[0] === "Auto-Vacuum" || card.Name[0] === "Little Choirboy" || card.Name[0] === "Indian Brave" || card.Name[0] === "A Cock" || card.Name[0] === "Mosquito Swarm") {
+  if (card.Name[0] === "Snake" || card.Name[0] === "A Cock") {
     out.tech_tree.slots = [];
   }
   //

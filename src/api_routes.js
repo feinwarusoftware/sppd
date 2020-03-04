@@ -198,7 +198,7 @@ router.get("/cards/list", (req, res) => {
     allowCors(res);
 
     CardModel
-        .find({}, "_id name aliases image updated_at")
+        .find({}, "_id name image updated_at")
 
         .then(cards => {
             res.json({

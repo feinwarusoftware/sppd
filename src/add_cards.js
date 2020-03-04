@@ -101,13 +101,13 @@ try {
     
     let res;
     try {
-      res = await fetch("http://localhost/api/v1/cards", {
-      //res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
-        method: "post",
+      //res = await fetch("https://sppd.feinwaru.com/api/v1/cards", {
+      res = await fetch(`https://sppd.feinwaru.com/api/v1/cards/${ids.data.find(e => e.name === converted.name)._id}`, {
+        method: "patch",
         body: JSON.stringify(converted),
         headers: {
           "Content-Type": "application/json",
-          "xxx-access-token": "rawrxd"
+          "xxx-access-token": "youReallyThoughThisWasTheToken"
         }
       }).then(res => res.json())
     } catch(error) {

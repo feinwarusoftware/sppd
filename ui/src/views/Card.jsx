@@ -212,8 +212,6 @@ export default class Card extends Component {
 
     alteredCard = [alteredStats].reduce((a, c) => {
       for (let [k, v] of Object.entries(c)) {
-        console.log(a);
-        console.log(c);
         if (k.startsWith("stat_")) {
           if (a[k.slice(5)] != null) {
             a[k.slice(5)] += v;
@@ -295,7 +293,13 @@ export default class Card extends Component {
           return alteredCard.power_damage / 10;
         }*/
         if (bracketless === "power_hero_damage") {
-          return original.image === "CraigAdvCard" ? Math.floor(getPowerAmount("power_damage")/5) : Math.floor(getPowerAmount("power_damage")/10);
+          if (original.image === "CraigAdvCard") {
+            return Math.floor(getPowerAmount("power_damage")/5);
+          } else if (original.image === "TimmyAdvCard") {
+            return Math.floor(getPowerAmount("power_damage")/2);
+          } else {
+            return Math.floor(getPowerAmount("power_damage")/10);
+          }
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
         } else if (bracketless === "power_duration_max") {
@@ -311,6 +315,8 @@ export default class Card extends Component {
           return getPowerAmount("power_damage");
         } else if (bracketless === "power_attack_boost") {
           return getPowerAmount("power_attack_boost");
+        } else if (bracketless === "power_hero_heal") {
+          return Math.floor(getPowerAmount("power_heal")/10);
         } else if (bracketless === "power_heal") {
           return getPowerAmount("power_heal");
         } else if (bracketless === "power_max_hp_gain") {
