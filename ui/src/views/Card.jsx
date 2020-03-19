@@ -295,8 +295,7 @@ export default class Card extends Component {
           return alteredCard.power_damage / 10;
         }*/
 
-        if (bracketless === "power_hero_damage") {
-           
+        if (bracketless === "power_hero_damage") {   
           const powerHeroDamage = getPowerAmount("power_damage");
 
           if (original.image === "CraigAdvCard") {
