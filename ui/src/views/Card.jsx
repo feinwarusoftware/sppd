@@ -294,13 +294,29 @@ export default class Card extends Component {
           console.log ('é nulo' + alteredCard);
           return alteredCard.power_damage / 10;
         }*/
+
         if (bracketless === "power_hero_damage") {
-          let powerAmount = getPowerAmount("power_hero_damage");
-          if (powerAmount == null) {
-            return getPowerAmount("power_damage") / 10;
-          }
-          else {
-            return powerAmount;
+           
+          const powerHeroDamage = getPowerAmount("power_damage");
+
+          if (original.image === "CraigAdvCard") {
+            if (powerHeroDamage % 10 > 5) {
+              return Math.ceil(powerHeroDamage/5);
+            } else {
+              return Math.floor(powerHeroDamage/5);
+            }
+          } else if (original.image === "TimmyAdvCard") {
+            if (powerHeroDamage % 10 > 5) {
+              return Math.ceil(powerHeroDamage/2);
+            } else {
+              return Math.floor(powerHeroDamage/2);
+            }
+          } else {
+            if (powerHeroDamage % 10 > 5) {
+              return Math.ceil(powerHeroDamage/10);
+            } else {
+              return Math.floor(powerHeroDamage/10);
+            }
           }
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
@@ -319,6 +335,13 @@ export default class Card extends Component {
           return getPowerAmount("power_attack_boost");
         } else if (bracketless === "power_heal") {
           return getPowerAmount("power_heal");
+        } else if (bracketless === "power_hero_heal") {
+          const powerHeroHeal = getPowerAmount("power_heal")
+          if (powerHeroHeal % 10 > 5) {
+            return Math.ceil(powerHeroHeal/10);
+          } else {
+            return Math.floor(powerHeroHeal/10);
+          }
         } else if (bracketless === "power_max_hp_gain") {
           return getPowerAmount("power_max_hp_gain");
         } else if (bracketless === "power_target") {
@@ -574,7 +597,7 @@ export default class Card extends Component {
           power = {
             ...power,
             "Charged Power Regen": e.charged_regen,
-            "Charged Power Radius": e.radius
+            "Power Range": e.radius
           };
         }
 
@@ -689,10 +712,10 @@ export default class Card extends Component {
                         <option>{i18n.t("level", {num: 1})}</option>
                         <option>{i18n.t("level", {num: 2})}</option>
                         <option>{i18n.t("level", {num: 3})}</option>
-                        <option>{i18n.t("level", {num: 3})}</option>
                         <option>{i18n.t("level", {num: 4})}</option>
                         <option>{i18n.t("level", {num: 5})}</option>
                         <option>{i18n.t("level", {num: 6})}</option>
+                        <option>{i18n.t("level", {num: 7})}</option>
                       </> :
                       <>
                         <option>{i18n.t("upgrade", {num: 1, total: 70})}</option>

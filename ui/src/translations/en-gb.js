@@ -41,7 +41,7 @@ export default {
   Theme: "Theme",
   adventure: "adventure",
   fantasy: "fantasy",
-  general: "general",
+  general: "neutral",
   mystical: "mystical",
   "sci-fi": "sci-fi",
   superhero: "superhero",
