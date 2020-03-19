@@ -116,6 +116,8 @@ Thanks for making out day easier by taking care of the 10s of thousands of lines
 
 **Website Maintenance**
 
+Thanks for fixing the bugs that should never been there in the first time.
+
 - [Tweeno](https://github.com/iTweeno)
 
 ## Copyright and license

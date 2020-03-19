@@ -300,23 +300,11 @@ export default class Card extends Component {
           const powerHeroDamage = getPowerAmount("power_damage");
 
           if (original.image === "CraigAdvCard") {
-            if (powerHeroDamage % 10 > 5) {
-              return Math.ceil(powerHeroDamage/5);
-            } else {
-              return Math.floor(powerHeroDamage/5);
-            }
+              return Math.round((powerHeroDamage -1)/5);
           } else if (original.image === "TimmyAdvCard") {
-            if (powerHeroDamage % 10 > 5) {
-              return Math.ceil(powerHeroDamage/2);
-            } else {
-              return Math.floor(powerHeroDamage/2);
-            }
+              return Math.round((powerHeroDamage -1)/2);
           } else {
-            if (powerHeroDamage % 10 > 5) {
-              return Math.ceil(powerHeroDamage/10);
-            } else {
-              return Math.floor(powerHeroDamage/10);
-            }
+              return Math.round((powerHeroDamage -1)/10);
           }
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
@@ -337,11 +325,7 @@ export default class Card extends Component {
           return getPowerAmount("power_heal");
         } else if (bracketless === "power_hero_heal") {
           const powerHeroHeal = getPowerAmount("power_heal")
-          if (powerHeroHeal % 10 > 5) {
-            return Math.ceil(powerHeroHeal/10);
-          } else {
-            return Math.floor(powerHeroHeal/10);
-          }
+            return Math.round((powerHeroHeal - 1)/10);
         } else if (bracketless === "power_max_hp_gain") {
           return getPowerAmount("power_max_hp_gain");
         } else if (bracketless === "power_target") {
