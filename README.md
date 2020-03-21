@@ -116,7 +116,7 @@ Thanks for making out day easier by taking care of the 10s of thousands of lines
 
 **Website Maintenance**
 
-Thanks for fixing the bugs that should never been there in the first time.
+Thanks for fixing the bugs that never should have been there in the first place.
 
 - [Tweeno](https://github.com/iTweeno)
 
