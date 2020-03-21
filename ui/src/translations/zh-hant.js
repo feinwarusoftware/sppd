@@ -20,7 +20,7 @@ export default {
   Theme: "主題",
   adventure: "冒險",
   fantasy: "奇幻",
-  general: "中性",
+  general: "中立",
   mystical: "神話",
   "sci-fi": "科幻",
   superhero: "超級英雄",

@@ -11,14 +11,6 @@ class Navbar extends Component {
     this.navbar = React.createRef();
   }
 
-  componentDidMount() {
-    /* ~~ Fancy OwO Console Log UwU ycnaF ~~ */
-    console.log(`%cSPPD by Feinwaru`, "font-weight: bold; font-size: 50px; color: #1E98A1");
-    console.log("GitHub: https://github.com/feinwarusoftware/sppd");
-    console.log("Discord: https://discord.feinwaru.com/");
-    console.log("API Docs: https://github.com/feinwarusoftware/sppd/blob/master/docs/api.md");
-  }
-
   mobileDropdown = () => {
     if (this.navbar.current.classList.contains("dropped")) {
       this.navbar.current.classList.remove("dropped");
@@ -31,14 +23,12 @@ class Navbar extends Component {
     fetch("api/v1/cards/list")
       .then(res => res.json())
       .then(
-        (result) => {
+        result => {
           let random = result.data[Math.floor(Math.random() * result.data.length)];
 
           window.location.href = "/" + random.image
         },
-        (error) => {
-          console.error("AHHHHHHHHH")
-        }
+        console.error
       );
   }
   render() {

@@ -163,8 +163,6 @@ export default class Card extends Component {
 
     alteredCard = [alteredStats].reduce((a, c) => {
       for (let [k, v] of Object.entries(c)) {
-        console.log(a);
-        console.log(c);
         if (k.startsWith("stat_")) {
           if (a[k.slice(5)] != null) {
             a[k.slice(5)] += v;
@@ -419,14 +417,13 @@ export default class Card extends Component {
       altered = { aliases: [] };
     } else {
       altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
-      console.log("aaa");
       this._redrawCard(altered);
     }
 
     // sections
     const sections = [];
 
-    const createSection = (title, stats) => {
+    const createSection = (title, stats, key) => {
       const createSubSection = stats => {
         return (
           <ul className="list-unstyled align">
@@ -441,7 +438,7 @@ export default class Card extends Component {
       };
 
       return (
-        <div key={title}>
+        <div key={key}>
           <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-sm fa-times red-text "></i></span> : ""}</h4>
           <div className="divider" />
           {stats instanceof Array ? stats.length > 0 ? stats.map((e, i) => <div key={i}>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : ""}
@@ -467,7 +464,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(<Trans>General Information</Trans>, general));
+    sections.push(createSection(<Trans>General Information</Trans>, general, "general"));
 
     let powers = [];
     if ((card.powers == null ? 0 : card.powers.length) !== 0) {
@@ -499,7 +496,7 @@ export default class Card extends Component {
       });
     }
 
-    sections.push(createSection(<Trans>Power Information</Trans>, powers));
+    sections.push(createSection(<Trans>Power Information</Trans>, powers, "powers"));
 
     let attack = {};
     if (card.can_attack === true) {
@@ -513,7 +510,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(<Trans>Can Attack?</Trans>, attack));
+    sections.push(createSection(<Trans>Can Attack?</Trans>, attack, "attack"));
 
     let aoe = {};
     if (card.has_aoe === true) {
@@ -527,7 +524,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(Object.keys(aoe).length === 0 ? <Trans>AOE Attacks?</Trans> : <span><Trans>AOE Attacks?</Trans> <span>{aoe.aoe_type}</span></span>, aoe))
+    sections.push(createSection(Object.keys(aoe).length === 0 ? <Trans>AOE Attacks?</Trans> : <span><Trans>AOE Attacks?</Trans> <span>{aoe.aoe_type}</span></span>, aoe, "aoe"));
 
     let requirements = {
       "Minimum Episode Completed": card.min_episode_completed,
@@ -536,7 +533,7 @@ export default class Card extends Component {
       "Minimum PVP Arena": card.min_pvp_arena
     };
 
-    sections.push(createSection(<Trans>Requirements</Trans>, requirements));
+    sections.push(createSection(<Trans>Requirements</Trans>, requirements, "requirements"));
 
     //Matt section
     const awCommands = <ul className="list-unstyled">{[...altered.aliases, altered.name].map((e, i) => (
