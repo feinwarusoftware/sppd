@@ -209,18 +209,8 @@ export default class Card extends Component {
 
       if (alteredCard[bracketless] == null) {
 
-<<<<<<< HEAD
         if (bracketless === "power_hero_damage") {
            
-=======
-
-        /*if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
-          console.log ('é nulo' + alteredCard);
-          return alteredCard.power_damage / 10;
-        }*/
-
-        if (bracketless === "power_hero_damage") {   
->>>>>>> 130
           const powerHeroDamage = getPowerAmount("power_damage");
 
           if (original.image === "CraigAdvCard") {
