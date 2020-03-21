@@ -83,32 +83,13 @@ export default class Card extends Component {
         .then(res => res.json())
         .then(res => {
           if (res.error != null) {
-            /*
-            return this.setState({
-              loaded: true,
-              error: res.error
-            });
-            */
 
             return reject(error);
           }
 
-          /*
-          this.setState({
-            loaded: true,
-            data: res.data
-          });
-          */
-
           resolve(res.data)
         })
         .catch(error => {
-          /*
-          this.setState({
-            loaded: true,
-            error
-          });
-          */
 
           reject(error);
         });
@@ -180,40 +161,8 @@ export default class Card extends Component {
       delete alteredStats.power_unlock;
     }
 
-    /*
     alteredCard = [alteredStats].reduce((a, c) => {
       for (let [k, v] of Object.entries(c)) {
-        if (k.startsWith("stat_")) {
-          if (a[k.slice(5)] != null) {
-            a[k.slice(5)] += v;
-          } else if (a[k.slice(9)] != null) { 
-            a[k.slice(9)] += v;
-          } else {
-            return console.error("error applying upgrade stats 1");
-          }
-        } else if (k.startsWith("power_")) {
-          if (a.power_type === k) {
-            a.power_amount += v;
-          } else {
-            if (a[k] != null) {
-              a[k] += v;
-            } else {
-              return console.error("error applying upgrade stats 2");
-            }
-          }
-        } else {
-          return console.error("error applying upgrade stats 3");
-        }
-      }
-
-      return a;
-    }, alteredCard);
-    */
-
-    alteredCard = [alteredStats].reduce((a, c) => {
-      for (let [k, v] of Object.entries(c)) {
-        console.log(a);
-        console.log(c);
         if (k.startsWith("stat_")) {
           if (a[k.slice(5)] != null) {
             a[k.slice(5)] += v;
@@ -238,17 +187,6 @@ export default class Card extends Component {
               return console.error("error applying upgrade stats 2: " + k);
             }
           }
-          /*
-          if (a.power_type === k) {
-            a.power_amount += v;
-          } else {
-            if (a[k] != null) {
-              a[k] += v;
-            } else {
-              return console.error("error applying upgrade stats 2");
-            }
-          }
-          */
         } else {
           return console.error("error applying upgrade stats 3");
         }
@@ -257,29 +195,9 @@ export default class Card extends Component {
       return a;
     }, alteredCard);
 
-    /*
-    alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
-      const bracketless = match.slice(1, match.length - 1);
-
-      if (alteredCard[bracketless] == null) {
-        if (bracketless === alteredCard.power_type) {
-          return alteredCard.power_amount;
-        } else {
-          return "undefined";
-        }
-      } else {
-        return alteredCard[bracketless];
-      }
-    });
-
-    if (alteredCard.is_power_locked === true) {
-      alteredCard.description = "Power locked at this level/upgrade."
-    }
-    */
 
     alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
       const bracketless = match.slice(1, match.length - 1);
-      //console.log(alteredCard);
 
       function getPowerAmount(powerType) {
         return alteredCard.powers.find(power => {
@@ -289,13 +207,17 @@ export default class Card extends Component {
 
       if (alteredCard[bracketless] == null) {
 
-
-        /*if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
-          console.log ('é nulo' + alteredCard);
-          return alteredCard.power_damage / 10;
-        }*/
         if (bracketless === "power_hero_damage") {
-          return original.image === "CraigAdvCard" ? Math.floor(getPowerAmount("power_damage")/5) : Math.floor(getPowerAmount("power_damage")/10);
+           
+          const powerHeroDamage = getPowerAmount("power_damage");
+
+          if (original.image === "CraigAdvCard") {
+              return Math.round((powerHeroDamage -1)/5);
+          } else if (original.image === "TimmyAdvCard") {
+              return Math.round((powerHeroDamage -1)/2);
+          } else {
+              return Math.round((powerHeroDamage -1)/10);
+          }
         } else if (bracketless === "power_duration_min") {
           return alteredCard.powers[0].duration - 1;
         } else if (bracketless === "power_duration_max") {
@@ -313,6 +235,9 @@ export default class Card extends Component {
           return getPowerAmount("power_attack_boost");
         } else if (bracketless === "power_heal") {
           return getPowerAmount("power_heal");
+        } else if (bracketless === "power_hero_heal") {
+          const powerHeroHeal = getPowerAmount("power_heal")
+            return Math.round((powerHeroHeal - 1)/10);
         } else if (bracketless === "power_max_hp_gain") {
           return getPowerAmount("power_max_hp_gain");
         } else if (bracketless === "power_target") {
@@ -492,16 +417,13 @@ export default class Card extends Component {
       altered = { aliases: [] };
     } else {
       altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
-      console.log("aaa");
       this._redrawCard(altered);
     }
-
-    //console.log(altered);
 
     // sections
     const sections = [];
 
-    const createSection = (title, stats) => {
+    const createSection = (title, stats, key) => {
       const createSubSection = stats => {
         return (
           <ul className="list-unstyled align">
@@ -516,7 +438,7 @@ export default class Card extends Component {
       };
 
       return (
-        <div key={title}>
+        <div key={key}>
           <h4 className="font-weight-bold mt-5">{title}{Object.keys(stats).length === 0 ? <span> <i className="fas fa-sm fa-times red-text "></i></span> : ""}</h4>
           <div className="divider" />
           {stats instanceof Array ? stats.length > 0 ? stats.map((e, i) => <div key={i}>{createSubSection(e)}</div>) : "" : Object.keys(stats).length > 0 ? createSubSection(stats) : ""}
@@ -530,8 +452,6 @@ export default class Card extends Component {
     // utility
     const card = altered;
 
-    //console.log(card);
-
     let general = {
       "Cast Area": upperCase(deSnake(card.cast_area))
     };
@@ -544,7 +464,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(<Trans>General Information</Trans>, general));
+    sections.push(createSection(<Trans>General Information</Trans>, general, "general"));
 
     let powers = [];
     if ((card.powers == null ? 0 : card.powers.length) !== 0) {
@@ -568,7 +488,7 @@ export default class Card extends Component {
           power = {
             ...power,
             "Charged Power Regen": e.charged_regen,
-            "Charged Power Radius": e.radius
+            "Power Range": e.radius
           };
         }
 
@@ -576,7 +496,7 @@ export default class Card extends Component {
       });
     }
 
-    sections.push(createSection(<Trans>Power Information</Trans>, powers));
+    sections.push(createSection(<Trans>Power Information</Trans>, powers, "powers"));
 
     let attack = {};
     if (card.can_attack === true) {
@@ -590,7 +510,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(<Trans>Can Attack?</Trans>, attack));
+    sections.push(createSection(<Trans>Can Attack?</Trans>, attack, "attack"));
 
     let aoe = {};
     if (card.has_aoe === true) {
@@ -604,7 +524,7 @@ export default class Card extends Component {
       };
     }
 
-    sections.push(createSection(Object.keys(aoe).length === 0 ? <Trans>AOE Attacks?</Trans> : <span><Trans>AOE Attacks?</Trans> <span>{aoe.aoe_type}</span></span>, aoe))
+    sections.push(createSection(Object.keys(aoe).length === 0 ? <Trans>AOE Attacks?</Trans> : <span><Trans>AOE Attacks?</Trans> <span>{aoe.aoe_type}</span></span>, aoe, "aoe"));
 
     let requirements = {
       "Minimum Episode Completed": card.min_episode_completed,
@@ -613,7 +533,7 @@ export default class Card extends Component {
       "Minimum PVP Arena": card.min_pvp_arena
     };
 
-    sections.push(createSection(<Trans>Requirements</Trans>, requirements));
+    sections.push(createSection(<Trans>Requirements</Trans>, requirements, "requirements"));
 
     //Matt section
     const awCommands = <ul className="list-unstyled">{[...altered.aliases, altered.name].map((e, i) => (
