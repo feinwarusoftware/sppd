@@ -83,32 +83,13 @@ export default class Card extends Component {
         .then(res => res.json())
         .then(res => {
           if (res.error != null) {
-            /*
-            return this.setState({
-              loaded: true,
-              error: res.error
-            });
-            */
 
             return reject(error);
           }
 
-          /*
-          this.setState({
-            loaded: true,
-            data: res.data
-          });
-          */
-
           resolve(res.data)
         })
         .catch(error => {
-          /*
-          this.setState({
-            loaded: true,
-            error
-          });
-          */
 
           reject(error);
         });
@@ -180,36 +161,6 @@ export default class Card extends Component {
       delete alteredStats.power_unlock;
     }
 
-    /*
-    alteredCard = [alteredStats].reduce((a, c) => {
-      for (let [k, v] of Object.entries(c)) {
-        if (k.startsWith("stat_")) {
-          if (a[k.slice(5)] != null) {
-            a[k.slice(5)] += v;
-          } else if (a[k.slice(9)] != null) { 
-            a[k.slice(9)] += v;
-          } else {
-            return console.error("error applying upgrade stats 1");
-          }
-        } else if (k.startsWith("power_")) {
-          if (a.power_type === k) {
-            a.power_amount += v;
-          } else {
-            if (a[k] != null) {
-              a[k] += v;
-            } else {
-              return console.error("error applying upgrade stats 2");
-            }
-          }
-        } else {
-          return console.error("error applying upgrade stats 3");
-        }
-      }
-
-      return a;
-    }, alteredCard);
-    */
-
     alteredCard = [alteredStats].reduce((a, c) => {
       for (let [k, v] of Object.entries(c)) {
         console.log(a);
@@ -238,17 +189,6 @@ export default class Card extends Component {
               return console.error("error applying upgrade stats 2: " + k);
             }
           }
-          /*
-          if (a.power_type === k) {
-            a.power_amount += v;
-          } else {
-            if (a[k] != null) {
-              a[k] += v;
-            } else {
-              return console.error("error applying upgrade stats 2");
-            }
-          }
-          */
         } else {
           return console.error("error applying upgrade stats 3");
         }
@@ -257,29 +197,9 @@ export default class Card extends Component {
       return a;
     }, alteredCard);
 
-    /*
-    alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
-      const bracketless = match.slice(1, match.length - 1);
-
-      if (alteredCard[bracketless] == null) {
-        if (bracketless === alteredCard.power_type) {
-          return alteredCard.power_amount;
-        } else {
-          return "undefined";
-        }
-      } else {
-        return alteredCard[bracketless];
-      }
-    });
-
-    if (alteredCard.is_power_locked === true) {
-      alteredCard.description = "Power locked at this level/upgrade."
-    }
-    */
 
     alteredCard.description = alteredCard.description.replace(/\{(.*?)\}/g, match => {
       const bracketless = match.slice(1, match.length - 1);
-      //console.log(alteredCard);
 
       function getPowerAmount(powerType) {
         return alteredCard.powers.find(power => {
@@ -288,12 +208,6 @@ export default class Card extends Component {
       }
 
       if (alteredCard[bracketless] == null) {
-
-
-        /*if (bracketless === "power_hero_damage" && alteredCard.power_hero_damage == null) {
-          console.log ('é nulo' + alteredCard);
-          return alteredCard.power_damage / 10;
-        }*/
 
         if (bracketless === "power_hero_damage") {
            
@@ -509,8 +423,6 @@ export default class Card extends Component {
       this._redrawCard(altered);
     }
 
-    //console.log(altered);
-
     // sections
     const sections = [];
 
@@ -542,8 +454,6 @@ export default class Card extends Component {
 
     // utility
     const card = altered;
-
-    //console.log(card);
 
     let general = {
       "Cast Area": upperCase(deSnake(card.cast_area))
