@@ -2027,7 +2027,7 @@
     "KnockbackImpulse": "100.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 0.75,
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Adv",
@@ -7173,7 +7173,7 @@
     "KnockbackImpulse": "15.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Mys",
@@ -11158,7 +11158,7 @@
         {
           "x": 2,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 3,
@@ -11203,7 +11203,7 @@
         {
           "x": 11,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 12,
@@ -11248,7 +11248,7 @@
         {
           "x": 20,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 21,
@@ -11293,7 +11293,7 @@
         {
           "x": 29,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 30,
@@ -11338,7 +11338,7 @@
         {
           "x": 38,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 39,
@@ -11383,7 +11383,7 @@
         {
           "x": 47,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 48,
@@ -11428,7 +11428,7 @@
         {
           "x": 56,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 57,
@@ -11473,7 +11473,7 @@
         {
           "x": 65,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 66,
@@ -11630,7 +11630,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": 1.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 2,
     "Theme": "Fan",
@@ -13105,7 +13105,8 @@
     "Rarity": 1,
     "Theme": "Fan",
     "TechTree2": {
-      "Slots": [{
+      "Slots": [
+        {
           "x": 0,
           "property": "MaxHealth",
           "value": 3.0
@@ -13123,7 +13124,7 @@
         {
           "x": 3,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 4,
@@ -13168,7 +13169,7 @@
         {
           "x": 12,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 13,
@@ -13213,7 +13214,7 @@
         {
           "x": 21,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 22,
@@ -13258,7 +13259,7 @@
         {
           "x": 30,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 31,
@@ -13303,7 +13304,7 @@
         {
           "x": 39,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 40,
@@ -13348,7 +13349,7 @@
         {
           "x": 48,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 49,
@@ -13393,7 +13394,7 @@
         {
           "x": 57,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 58,
@@ -13438,7 +13439,7 @@
         {
           "x": 66,
           "property": "PowerDurationAbs",
-          "value": 0.25
+          "value": 0.3
         },
         {
           "x": 67,
@@ -13451,9 +13452,11 @@
           "value": 7.0
         }
       ],
-      "Evolve": [{
+      "Evolve": [
+        {
           "StarLevel": 0,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 13.0
@@ -13467,7 +13470,8 @@
         },
         {
           "StarLevel": 1,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -13481,7 +13485,8 @@
         },
         {
           "StarLevel": 2,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 38.0
@@ -13495,7 +13500,8 @@
         },
         {
           "StarLevel": 3,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 50.0
@@ -13509,7 +13515,8 @@
         },
         {
           "StarLevel": 4,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 38.0
@@ -13523,7 +13530,8 @@
         },
         {
           "StarLevel": 5,
-          "Slots": [{
+          "Slots": [
+            {
               "x": 0,
               "property": "MaxHealth",
               "value": 25.0
@@ -14217,7 +14225,7 @@
         {
           "x": 5,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 6,
@@ -14262,7 +14270,7 @@
         {
           "x": 14,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 15,
@@ -14307,7 +14315,7 @@
         {
           "x": 23,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 24,
@@ -14352,7 +14360,7 @@
         {
           "x": 32,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 33,
@@ -14397,7 +14405,7 @@
         {
           "x": 41,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 42,
@@ -14442,7 +14450,7 @@
         {
           "x": 50,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 51,
@@ -14487,7 +14495,7 @@
         {
           "x": 59,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 60,
@@ -14532,7 +14540,7 @@
         {
           "x": 68,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         }
       ],
       "Evolve": [{
@@ -16174,7 +16182,7 @@
     "KnockbackImpulse": "80.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.05,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRadius": 5.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 1,
     "Theme": "Fan",
@@ -20225,7 +20233,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0714285746,
-    "ChargedPowerRadius": 4.0,
+    "ChargedPowerRadius": 2.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 1,
     "Theme": "Adv",
@@ -20248,7 +20256,7 @@
         {
           "x": 3,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 4,
@@ -20293,7 +20301,7 @@
         {
           "x": 12,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 13,
@@ -20338,7 +20346,7 @@
         {
           "x": 21,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 22,
@@ -20383,7 +20391,7 @@
         {
           "x": 30,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 31,
@@ -20428,7 +20436,7 @@
         {
           "x": 39,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 40,
@@ -20518,7 +20526,7 @@
         {
           "x": 57,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 58,
@@ -20563,7 +20571,7 @@
         {
           "x": 66,
           "property": "PowerRangeAbs",
-          "value": 0.1
+          "value": 0.05
         },
         {
           "x": 67,
@@ -23773,7 +23781,7 @@
     "KnockbackImpulse": "50.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.06700002,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "CleansePowerRet",
     "Rarity": 0,
     "Theme": "Adv",
@@ -24754,7 +24762,7 @@
     "KnockbackImpulse": "50.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.05882353,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Sci",
@@ -25244,7 +25252,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRadius": 1.5,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 2,
     "Theme": "Adv",
@@ -26224,7 +26232,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.5,
     "ChargedPowerReticle": "TotemAuraPowerRet",
     "Rarity": 0,
     "Theme": "Mys",
@@ -26732,7 +26740,7 @@
         {
           "x": 2,
           "property": "PowerRangeAbs",
-          "value": 0.2
+          "value": 0.1
         },
         {
           "x": 3,
@@ -26812,7 +26820,7 @@
         {
           "x": 18,
           "property": "PowerRangeAbs",
-          "value": 0.2
+          "value": 0.1
         },
         {
           "x": 19,
@@ -26892,7 +26900,7 @@
         {
           "x": 34,
           "property": "PowerRangeAbs",
-          "value": 0.2
+          "value": 0.1
         },
         {
           "x": 35,
@@ -26972,7 +26980,7 @@
         {
           "x": 50,
           "property": "PowerRangeAbs",
-          "value": 0.2
+          "value": 0.1
         },
         {
           "x": 51,
@@ -27052,7 +27060,7 @@
         {
           "x": 66,
           "property": "PowerRangeAbs",
-          "value": 0.2
+          "value": 0.1
         },
         {
           "x": 67,
@@ -27900,7 +27908,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.3,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Mys",
@@ -28108,7 +28116,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Adv",
@@ -28316,7 +28324,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.5,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Mys",
@@ -28422,7 +28430,7 @@
     "KnockbackImpulse": "10.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.08,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Adv",
@@ -29373,7 +29381,7 @@
     "KnockbackImpulse": "10.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 0.75,
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Sci",
@@ -32448,7 +32456,7 @@
     "KnockbackImpulse": "50.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 1,
     "Theme": "Sci",
@@ -33501,7 +33509,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 2.7,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Sci",
@@ -36560,7 +36568,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 3.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Gen",
@@ -37540,7 +37548,7 @@
     "KnockbackImpulse": "60.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.5,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 1,
     "Theme": "Gen",
@@ -45449,7 +45457,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.0,
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Gen",
@@ -45915,7 +45923,7 @@
     "Type": "Character",
     "Targeting": {
       "AssetId": "TargetSpellRet",
-      "Radius": 3.0
+      "Radius": 0.0
     },
     "CharacterType": "Tank",
     "Ingame": "FathermaxiMysCharPF",
@@ -45939,7 +45947,7 @@
     "KnockbackImpulse": "60.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 3.0,
     "ChargedPowerReticle": "HealingPowerRet",
     "Rarity": 0,
     "Theme": "Mys",
@@ -48388,8 +48396,8 @@
     "AgroRangeMultiplier": 1.2,
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "HealingPowerRet",
     "Rarity": 1,
     "Theme": "Mys",
@@ -50409,7 +50417,7 @@
     "KnockbackImpulse": "100.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Gen",
@@ -51386,8 +51394,8 @@
     "AgroRangeMultiplier": 2.5,
     "KnockbackImpulse": "30.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.07000002,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Gen",
@@ -51875,8 +51883,8 @@
     "AgroRangeMultiplier": 1.2,
     "KnockbackImpulse": "40.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.08,
-    "ChargedPowerRadius": 3.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Sci",
@@ -53347,7 +53355,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 0.5,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Mys",
@@ -53837,7 +53845,7 @@
     "KnockbackImpulse": "60.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 1,
     "Theme": "Fan",
@@ -54312,7 +54320,7 @@
     "Type": "Character",
     "Targeting": {
       "AssetId": "AttractPowerRet",
-      "Radius": 6.0
+      "Radius": 0.0
     },
     "CharacterType": "Melee",
     "Ingame": "RedAdvCharPF",
@@ -54335,7 +54343,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 6.0,
     "ChargedPowerReticle": "AttractPowerRet",
     "Rarity": 2,
     "Theme": "Adv",
@@ -54928,8 +54936,8 @@
     "AgroRangeMultiplier": 1.14,
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "ConeSelectorPowerRet",
     "Rarity": 3,
     "Theme": "Sup",
@@ -55418,7 +55426,7 @@
     "AgroRangeMultiplier": 4.0,
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.2,
+    "ChargedPowerRegen": 0.0,
     "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 2,
@@ -56398,8 +56406,8 @@
     "AgroRangeMultiplier": 2.86,
     "KnockbackImpulse": "10.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Sup",
@@ -57415,7 +57423,7 @@
     "KnockbackImpulse": "40.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRadius": 6.0,
     "ChargedPowerReticle": "ConeSelectorPowerRet",
     "Rarity": 0,
     "Theme": "Sup",
@@ -57520,8 +57528,8 @@
     "AgroRangeMultiplier": 4.76,
     "KnockbackImpulse": "40.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 3.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 2,
     "Theme": "Sup",
@@ -58010,8 +58018,8 @@
     "AgroRangeMultiplier": 2.5,
     "KnockbackImpulse": "30.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "ChargedPowerRet",
     "Rarity": 2,
     "Theme": "Sup",
@@ -58530,8 +58538,8 @@
     "AgroRangeMultiplier": 3.33,
     "KnockbackImpulse": "10.0000",
     "KnockbackAngleDeg": 45.0,
-    "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRegen": 0.0,
+    "ChargedPowerRadius": 0.0,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Sup",
@@ -59510,7 +59518,7 @@
     "KnockbackImpulse": "5",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 1.5,
     "ChargedPowerReticle": "",
     "Rarity": 0,
     "Theme": "Sup",
@@ -61104,7 +61112,7 @@
     "KnockbackImpulse": "60.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 3.0,
     "ChargedPowerReticle": "AttackPowerRet",
     "Rarity": 2,
     "Theme": "Fan",
@@ -61632,7 +61640,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 4.0,
+    "ChargedPowerRadius": 2.5,
     "ChargedPowerReticle": "LineSelectorPowerRet",
     "Rarity": 3,
     "Theme": "Sup",
@@ -62130,7 +62138,7 @@
     "KnockbackImpulse": "30.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.06666667,
-    "ChargedPowerRadius": 2.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "",
     "Rarity": 2,
     "Theme": "Gen",
@@ -63624,7 +63632,7 @@
     "KnockbackImpulse": "0.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.1,
-    "ChargedPowerRadius": 1.0,
+    "ChargedPowerRadius": "Global",
     "ChargedPowerReticle": "",
     "Rarity": 1,
     "Theme": "Gen",
@@ -64098,7 +64106,7 @@
     "Type": "Character",
     "Targeting": {
       "AssetId": "ConeSelectorPowerRet",
-      "Radius": 2.0
+      "Radius": 0.0
     },
     "CharacterType": "Melee",
     "Ingame": "StuartSciCharPF",
@@ -64122,7 +64130,7 @@
     "KnockbackImpulse": "30.0000",
     "KnockbackAngleDeg": 45.0,
     "ChargedPowerRegen": 0.0,
-    "ChargedPowerRadius": 0.0,
+    "ChargedPowerRadius": 2.0,
     "ChargedPowerReticle": "",
     "Rarity": 3,
     "Theme": "Sci",
