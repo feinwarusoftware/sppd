@@ -27,7 +27,8 @@ const bgHeight = bgWidth * bgHeightWidthRatio;
 
 const testingCardId = "5ca253c86a4a8125802add88";
 
-const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const API_ROOT = process.env.NODE_ENV === "development" ? STATIC_ROOT : `${STATIC_ROOT}/api/v1`;
 
 export default class Card extends Component {
   constructor(props) {
@@ -281,7 +282,7 @@ export default class Card extends Component {
     let assets;
 
     try {
-      assets = (await Promise.all([document.fonts.load('17px "South Park Ext"'), loadRequiredImages(cardData)])).slice(1);      
+      assets = (await Promise.all([document.fonts.load('17px "South Park Ext"'), loadRequiredImages(cardData)])).slice(1);
       assets = objectFromEntries(assets[0].map(e => [e.asset.split("-").map((f, i) => i === 0 ? f : f[0].toUpperCase() + f.slice(1)).join(""), e.image]));
 
     } catch(error) {
@@ -296,7 +297,7 @@ export default class Card extends Component {
     ctxDrawImageRounded(ctx, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight, 60, assets.background, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
     ctx.drawImage(assets.frameOverlay, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
     ctx.drawImage(assets.frameOutline, canvas.width / 2 - bgWidth / 2, canvas.height / 2 - bgHeight / 2, bgWidth, bgHeight);
-    
+
     if (assets.frameTop != null) {
       ctx.drawImage(assets.frameTop, canvas.width / 2 - bgWidth / 2 - 33, canvas.height / 2 - bgHeight / 2 - 45, bgWidth + 49, 200);
     }
@@ -558,7 +559,7 @@ export default class Card extends Component {
             content={i18n.t("Description")}
           />
           <meta property="og:title" content={altered.name + " | Feinwaru SPPD"} />
-          <meta property="og:image" content={`http://localhost:1337${this.props.image_url}`} />
+          <meta property="og:image" content={`${STATIC_ROOT}${this.props.image_url || `/backgrounds/${this.props.image}.jpg`}`} />
           {Object.keys(i18n.store.data).map((e, i) => {
             return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/" + altered.image + "?hl=" + e.toLowerCase()} />
           })}

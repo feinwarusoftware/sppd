@@ -15,7 +15,7 @@ const defaultView = "grid";
 const defaultAutoload = false;
 const defaultHover = true;
 
-const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com/api/v1";
 
 class Search extends Component {
   constructor(props) {

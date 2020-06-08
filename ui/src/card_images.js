@@ -2,7 +2,8 @@
 
 import { checkImages } from "./image_load";
 
-const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const API_ROOT = process.env.NODE_ENV === "development" ? STATIC_ROOT : `${STATIC_ROOT}/api/v1`;
 
 // All the card assets
 const images = [
@@ -647,7 +648,7 @@ export const getRequiredImages = card => {
 
 // Loads all the required images for a given card
 export const loadRequiredImages = card => {
-  const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `${API_ROOT}${card.image_url}` } ];
+  const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `${STATIC_ROOT}${card.image_url || `/backgrounds/${card.image}.jpg`}` } ];
 
   return new Promise((resolve, reject) => {
     checkImages(requiredImages.map(e => e.source))

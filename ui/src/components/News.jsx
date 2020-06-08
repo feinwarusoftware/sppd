@@ -4,7 +4,7 @@ import { Trans } from 'react-i18next';
 
 const cookies = new Cookies();
 
-const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com/api/v1";
 
 class News extends Component {
 
