@@ -99,7 +99,7 @@ If possible we plan to update the website within a few days of new information b
 Lukasz Niezabitowski
 
 - **GitHub:** [Dragon1320](https://github.com/Dragon1320)
-- **Discord:** !Dragon1320#1893
+- **Discord:** Dragon1320#7777
 
 Matthew Watt
 
@@ -114,6 +114,12 @@ Thanks for making out day easier by taking care of the 10s of thousands of lines
 
 - [Umustalldie2](https://github.com/Umustalldie2)
 
+**Website Maintenance**
+
+Thanks for fixing the bugs that never should have been there in the first place.
+
+- [Tweeno](https://github.com/iTweeno)
+
 ## Copyright and license
 
-Code and documentation copyright 2017-2019 the [SPPD Contributors](https://github.com/feinwarusoftware/sppd/graphs/contributors) and [Feinwaru Software](https://github.com/feinwarusoftware). If you want to use any of the code in the repo, please seek explicit permission from [the project creators](#creators).
+Code and documentation copyright 2017-2020 the [SPPD Contributors](https://github.com/feinwarusoftware/sppd/graphs/contributors) and [Feinwaru Software](https://github.com/feinwarusoftware). If you want to use any of the code in the repo, please seek explicit permission from [the project creators](#creators).

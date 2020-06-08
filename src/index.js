@@ -6,28 +6,15 @@ const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 
-const mongoose = require("mongoose");
+const {
+  NODE_ENV,
+  WEBSERVER_PORT,
+} = process.env;
 
-const api_routes = require("./api_routes");
-
-const port = process.env.WEBSERVER_PORT || (() => { throw("port not specified"); })();;
+const port = WEBSERVER_PORT || (() => { throw("port not specified"); })();;
 const app = express();
 
-const devMode = process.env.NODE_ENV !== "production";
-
-mongoose.connect(`mongodb://${process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? "" : `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`}${process.env.MONGO_SOURCE || "localhost"}/sppd?authSource=admin`, {
-  useNewUrlParser: true,
-  ...process.env.MONGO_USER == null && process.env.MONGO_PASS == null ? {} : {
-    auth: {
-      authdb: "admin"
-    }
-  }
-});
-mongoose.Promise = global.Promise;
-
-const db = mongoose.connection;
-db.on("error", console.error);
-db.on("open", () => console.log("db conn"))
+const devMode = NODE_ENV === "dev";
 
 // Webpack HMR
 if (devMode) {
@@ -50,9 +37,9 @@ app.use(morgan(devMode ? "dev" : "combined"));
 app.use(express.static(path.join(__dirname, "..", "ui", "dist")));
 app.use(express.static(path.join(__dirname, "..", "static")));
 
-app.use(express.json());
+// app.use(express.json());
 
-app.use("/api/v1", api_routes);
+// app.use("/api/v1", api_routes);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "ui", "dist", "index.html"));
@@ -63,14 +50,12 @@ app.get("/:card", (req, res) => {
 });
 
 app.use((req, res, next) => {
-
   const err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
 
 app.use((err, req, res) => {
-
   if (err.status === 404) {
     return res.json({ error: "404" });
   }
@@ -85,7 +70,6 @@ app.use((err, req, res) => {
 const server = http.createServer(app);
 
 server.on("error", err => {
-
   if (err.syscall !== "listen") {
     console.error(`Could not start http server: ${err}`);
     process.exit(-1);
@@ -93,11 +77,11 @@ server.on("error", err => {
 
   switch(err.code) {
   case "EACCES":
-    console.error(`Port ${process.env.WEBSERVER_PORT} requires elevated privileges`);
+    console.error(`Port ${process.env.port} requires elevated privileges`);
     process.exit(-1);
     break;
   case "EADDRINUSE":
-    console.error(`Port ${process.env.WEBSERVER_PORT} is already in use`);
+    console.error(`Port ${process.env.port} is already in use`);
     process.exit(-1);
     break;
   default:

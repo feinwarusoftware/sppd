@@ -1,0 +1,4 @@
+github: feinwarusoftware
+branch: master
+namespace: awsppd
+port: 3000

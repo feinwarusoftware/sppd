@@ -4,6 +4,8 @@ import { Trans } from 'react-i18next';
 
 const cookies = new Cookies();
 
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+
 class News extends Component {
 
   constructor(props) {
@@ -17,7 +19,7 @@ class News extends Component {
   }
 
   componentDidMount() {
-    fetch("api/v1/updates?sort=date&order=-1&limit=1")
+    fetch(`${API_ROOT}/updates?sort=date&order=-1&limit=1`)
       .then(res => res.json())
       .then(
         (result) => {
