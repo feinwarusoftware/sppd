@@ -2,6 +2,8 @@
 
 import { checkImages } from "./image_load";
 
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+
 // All the card assets
 const images = [
   // Frame outlines
@@ -645,7 +647,7 @@ export const getRequiredImages = card => {
 
 // Loads all the required images for a given card
 export const loadRequiredImages = card => {
-  const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `/backgrounds/${card.image}.jpg` } ];
+  const requiredImages = [ ...getRequiredImages(card), { asset: "background", source: `${API_ROOT}${card.image_url}` } ];
 
   return new Promise((resolve, reject) => {
     checkImages(requiredImages.map(e => e.source))

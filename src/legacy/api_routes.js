@@ -82,7 +82,6 @@ router.get("/cards", (req, res) => {
     // sort (name | theme | rarity | energy | damage | health)
     // order (1 | -1)
 
-
     const name = req.query.name;
     const theme = req.query.theme;
     const rarity = req.query.rarity;

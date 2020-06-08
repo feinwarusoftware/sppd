@@ -42,4 +42,5 @@ const App = () => {
   );
 };
 
-export default hot(App);
+const app = process.env.NODE_ENV === "development" ? hot(App) : App;
+export default app;

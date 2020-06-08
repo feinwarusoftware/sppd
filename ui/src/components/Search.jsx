@@ -15,6 +15,8 @@ const defaultView = "grid";
 const defaultAutoload = false;
 const defaultHover = true;
 
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +74,7 @@ class Search extends Component {
   }
 
   _fetchCards(params) {
-    const baseUrl = "api/v1/cards";
+    const baseUrl = `${API_ROOT}/cards`;
 
     // its called mana cost in the json
     if (params.sort === "energy") {
@@ -402,6 +404,7 @@ class Search extends Component {
               id={e._id}
               name={e.name}
               image={e.image}
+              image_url={e.image_url}
               rarity={e.rarity}
               theme={e.theme}
               health={e.health}
@@ -420,6 +423,7 @@ class Search extends Component {
               name={e.name}
               description={e.description}
               image={e.image}
+              image_url={e.image_url}
               rarity={e.rarity}
               theme={e.theme}
               health={e.health}

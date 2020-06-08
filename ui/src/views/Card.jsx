@@ -27,6 +27,8 @@ const bgHeight = bgWidth * bgHeightWidthRatio;
 
 const testingCardId = "5ca253c86a4a8125802add88";
 
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+
 export default class Card extends Component {
   constructor(props) {
     super(props);
@@ -72,9 +74,9 @@ export default class Card extends Component {
     let url;
 
     if (this.props.location.state == null) {
-      url = `api/v1/cards/image/${this.props.location.pathname.slice(1)}`;
+      url = `${API_ROOT}/cards/image/${this.props.location.pathname.slice(1)}`;
     } else {
-      url = `api/v1/cards/${this.props.location.state.id}`;
+      url = `${API_ROOT}/cards/${this.props.location.state.id}`;
     }
 
     return new Promise((resolve, reject) => {
@@ -272,7 +274,8 @@ export default class Card extends Component {
       theme: cardThemeFromDb(card.theme),
       type: card.type,
       character_type: card.character_type,
-      image: card.image
+      image: card.image,
+      image_url: card.image_url,
     };
 
     let assets;
@@ -402,6 +405,8 @@ export default class Card extends Component {
     }
 
     value = num;
+
+    console.log(type, value);
 
     this.setState({
       utype: type,
@@ -553,7 +558,7 @@ export default class Card extends Component {
             content={i18n.t("Description")}
           />
           <meta property="og:title" content={altered.name + " | Feinwaru SPPD"} />
-          <meta property="og:image" content={"/backgrounds/" + altered.image + ".jpg"} />
+          <meta property="og:image" content={`http://localhost:1337${this.props.image_url}`} />
           {Object.keys(i18n.store.data).map((e, i) => {
             return <link key={i} rel="alternate" hrefLang={e.toLowerCase()} href={"https://sppd.feinwaru.com/" + altered.image + "?hl=" + e.toLowerCase()} />
           })}

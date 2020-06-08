@@ -3,6 +3,8 @@ import { colours } from "../utils";
 import { Trans } from "react-i18next";
 import { Redirect } from "react-router";
 
+const API_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
+
 class CardGrid extends Component {
   constructor(props) {
     super(props);
@@ -69,11 +71,7 @@ class CardGrid extends Component {
 
             className="grid-img img-fluid"
             style={{
-              backgroundImage: `url(${
-                this.props.image.includes("/")
-                  ? this.props.image
-                  : require(`../static/img/backgrounds/${this.props.image}.jpg`)
-              })`,
+              backgroundImage: `url(${API_ROOT}${this.props.image_url})`,
               borderImageSource: `linear-gradient(180deg, ${
                 colours[
                   rarityString === "common"
