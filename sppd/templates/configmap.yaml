@@ -4,4 +4,4 @@ metadata:
   name: "{{ .Release.Name }}-config"
   namespace: {{ .Values.namespace }}
 data:
-  WEBSERVER_PORT: {{ .Values.port }}
+  WEBSERVER_PORT: "{{ .Values.port }}"
