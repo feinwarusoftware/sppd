@@ -3,7 +3,7 @@ import { colours } from "../utils";
 import { Trans } from "react-i18next";
 import { Redirect } from "react-router";
 
-const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://beta-sppd.feinwaru.com";
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://cunt.feinwaru.com";
 const API_ROOT = `${STATIC_ROOT}/api/v1`;
 
 class CardGrid extends Component {
