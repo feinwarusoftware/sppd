@@ -11,8 +11,19 @@ class CardGrid extends Component {
     super(props);
 
     this.state = {
-      redirect: false
+      hasError: false,
+      redirect: false,
     };
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+    };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(error, errorInfo);
   }
 
   handleCardClick = () => {
@@ -22,8 +33,14 @@ class CardGrid extends Component {
   }
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <h1>something went wrong :(</h1>
+      );
+    }
+
     if (this.state.redirect === true) {
-      return ( 
+      return (
         <Redirect
           push
           to={{

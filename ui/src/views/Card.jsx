@@ -35,10 +35,11 @@ export default class Card extends Component {
     super(props);
 
     this.state = {
+      hasError: false,
       loaded: false,
       error: null,
       utype: null,
-      uvalue: null
+      uvalue: null,
     }
 
     this.card = null;
@@ -65,6 +66,16 @@ export default class Card extends Component {
           error
         });
       });
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+    };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(error, errorInfo);
   }
 
   changeLang = lang => {
@@ -407,8 +418,6 @@ export default class Card extends Component {
 
     value = num;
 
-    console.log(type, value);
-
     this.setState({
       utype: type,
       uvalue: value
@@ -416,14 +425,28 @@ export default class Card extends Component {
   }
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <h1>something went wrong :(</h1>
+      );
+    }
+
     let altered = null;
     if (this.state.loaded === false || this.state.error != null) {
       // aliases referenced later, set to a default value to prevent null reference
       // same with name
       altered = { aliases: [] };
     } else {
-      altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
-      this._redrawCard(altered);
+      try {
+        // most non-react handled errors will happen here
+        altered = this._calculateCardAugmentData(this.card, this.state.utype, this.state.uvalue);
+        this._redrawCard(altered);
+      } catch (error) {
+        // set the altered to level 1 so the rest of the page has something to work with
+        altered = this._calculateCardAugmentData(this.card, "l", 1);
+        // log the error, the canvas will be fucked, but the rest of the page should be relatively ok
+        console.error(error);
+      }
     }
 
     // sections

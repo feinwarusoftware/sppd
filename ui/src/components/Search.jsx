@@ -22,6 +22,7 @@ class Search extends Component {
     super(props);
 
     this.state = {
+      hasError: false,
       cards: {
         loaded: false,
         error: null,
@@ -56,6 +57,16 @@ class Search extends Component {
 
     //
     this.loadingMoreCards = false;
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+    };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(error, errorInfo);
   }
 
   _encodeUrl(url, params) {
@@ -393,6 +404,12 @@ class Search extends Component {
   };
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <h1>something went wrong :(</h1>
+      );
+    }
+
     let cardsYay = [];
 
     if (this.state.cards.loaded === true && this.state.error == null) {

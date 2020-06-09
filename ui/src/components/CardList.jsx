@@ -11,8 +11,19 @@ class CardGrid extends Component {
     super(props);
 
     this.state = {
-      redirect: false
+      hasError: false,
+      redirect: false,
     };
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+    };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(error, errorInfo);
   }
 
   // Copied from Card.jsx, would add to a lib file but running out of time.
@@ -183,6 +194,12 @@ class CardGrid extends Component {
   }
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <h1>something went wrong :(</h1>
+      );
+    }
+
     if (this.state.redirect === true) {
       return ( 
         <Redirect
@@ -225,7 +242,21 @@ class CardGrid extends Component {
       charTypeString = this.props.characterType;
     }
 
-    const altered = this._calculateCardAugmentData({ ...this.props.card, tech_tree: { slots: [], levels: [] } }, "l", 1);
+    // shitty temp error handling
+    let altered = null;
+    try {
+      altered = this._calculateCardAugmentData({ ...this.props.card, tech_tree: { slots: [], levels: [] } }, "l", 10);
+    
+      if (altered == null) {
+        throw new Error("well... something went wrong here");
+      }
+    } catch (error) {
+      altered = {
+        description: "something went wrong :(",
+      };
+
+      console.error(error);
+    }
 
     return (
       <React.Fragment>
