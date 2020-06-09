@@ -27,8 +27,8 @@ const bgHeight = bgWidth * bgHeightWidthRatio;
 
 const testingCardId = "5ca253c86a4a8125802add88";
 
-const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
-const API_ROOT = process.env.NODE_ENV === "development" ? STATIC_ROOT : `${STATIC_ROOT}/api/v1`;
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://beta-sppd.feinwaru.com";
+const API_ROOT = `${STATIC_ROOT}/api/v1`;
 
 export default class Card extends Component {
   constructor(props) {

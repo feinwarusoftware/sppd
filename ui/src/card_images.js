@@ -2,8 +2,8 @@
 
 import { checkImages } from "./image_load";
 
-const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://sppd.feinwaru.com";
-const API_ROOT = process.env.NODE_ENV === "development" ? STATIC_ROOT : `${STATIC_ROOT}/api/v1`;
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://beta-sppd.feinwaru.com";
+const API_ROOT = `${STATIC_ROOT}/api/v1`;
 
 // All the card assets
 const images = [
