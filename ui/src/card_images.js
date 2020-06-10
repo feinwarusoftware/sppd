@@ -2,7 +2,7 @@
 
 import { checkImages } from "./image_load";
 
-const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://cunt.feinwaru.com";
+const STATIC_ROOT = process.env.NODE_ENV === "development" ? "http://localhost:1337" : "https://dick.feinwaru.com";
 const API_ROOT = `${STATIC_ROOT}/api/v1`;
 
 // All the card assets
